@@ -4,20 +4,22 @@ public class Video_source {
 	
 	private String video_title;
 	private String video_img;
-	private String video_number;
-	private String video_station_num;
+	private int video_number;
+	private int video_station_num;
 	private String video_url;
 	private String video_room_url;
-	private int video_id;
-	private int video_host_id;
+	private String video_id;
+	private int video_platform;
+	private int video_type;
+	private int video_status;
 	
-	public int getVideo_host_id() {
-		return video_host_id;
-	}
-	public void setVideo_host_id(int video_host_id) {
-		this.video_host_id = video_host_id;
-	}
 	
+	public int getVideo_status() {
+		return video_status;
+	}
+	public void setVideo_status(int video_status) {
+		this.video_status = video_status;
+	}
 	public String getVideo_title() {
 		return video_title;
 	}
@@ -30,17 +32,29 @@ public class Video_source {
 	public void setVideo_img(String video_img) {
 		this.video_img = video_img;
 	}
-	public String getVideo_number() {
+	public int getVideo_number() {
 		return video_number;
 	}
-	public void setVideo_number(String video_number) {
+	public void setVideo_number(int video_number) {
 		this.video_number = video_number;
 	}
-	public String getVideo_station_num() {
+	public int getVideo_station_num() {
 		return video_station_num;
 	}
-	public void setVideo_station_num(String video_station_num) {
+	public void setVideo_station_num(int video_station_num) {
 		this.video_station_num = video_station_num;
+	}
+	public int getVideo_platform() {
+		return video_platform;
+	}
+	public void setVideo_platform(int video_platform) {
+		this.video_platform = video_platform;
+	}
+	public int getVideo_type() {
+		return video_type;
+	}
+	public void setVideo_type(int video_type) {
+		this.video_type = video_type;
 	}
 	public String getVideo_url() {
 		return video_url;
@@ -54,12 +68,12 @@ public class Video_source {
 	public void setVideo_room_url(String video_room_url) {
 		this.video_room_url = video_room_url;
 	}
-	public int getVideo_id() {
+	public String getVideo_id() {
 		return video_id;
 	}
-	public void setVideo_id(int video_id) {
+	public void setVideo_id(String video_id) {
 		this.video_id = video_id;
 	}
- 
+	
 	
 }

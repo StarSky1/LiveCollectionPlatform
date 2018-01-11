@@ -1,6 +1,8 @@
 package com.yj.dao;
 
-import org.apache.ibatis.annotations.Delete;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
 
 import com.yj.pojo.Video_source;
@@ -11,8 +13,8 @@ public interface Video_sourceDao {
 	
 	public int insert_video_source(Video_source video_source);
 	
-	@Delete("delete from `video-source`")
-	public int deleteAllVideo_source();
+	@Update("update `video-source` set `video-status`=#{1,jdbcType=INTEGER}")
+	public int updateAllVideo_source_status(int video_status);
 	
-
+	public int replace_source_list(List<Video_source> source_list);
 }

@@ -5,7 +5,14 @@ public class Video_platform {
 	private int video_platform_id;
 	private String video_platform;
 	private String video_platform_domain;
+	private String video_platform_img;
 	
+	public String getVideo_platform_img() {
+		return video_platform_img;
+	}
+	public void setVideo_platform_img(String video_platform_img) {
+		this.video_platform_img = video_platform_img;
+	}
 	public int getVideo_platform_id() {
 		return video_platform_id;
 	}

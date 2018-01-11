@@ -1,6 +1,8 @@
 package com.yj.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,5 +36,14 @@ public class Video_categoryService {
 			video_categoryDao.update_video_img_url(cate.getVideo_type_id(), cate.getVideo_type_img());
 			htmlSpider.downloadImg_url(cate.getVideo_type_img(), cate.getVideo_type());
 		}
+	}
+	
+	public Map<String,Video_category> getVideo_cateMap(){
+		Map<String,Video_category> map=new HashMap<>();
+		List<Video_category> list=video_categoryDao.selectAll_Video_category();
+		for (Video_category cate : list) {
+			map.put(cate.getVideo_type(), cate);
+		}
+		return map;
 	}
 }

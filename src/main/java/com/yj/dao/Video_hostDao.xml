@@ -2,27 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yj.dao.Video_hostDao">
 	<resultMap id="video_host_ResultMap" type="com.yj.pojo.Video_host">
-		<id column="video-host-id" jdbcType="INTEGER" property="video_host_id" />
+		<id column="video-host-id" jdbcType="VARCHAR" property="video_host_id" />
 		<result column="video-host-nickname" jdbcType="VARCHAR" property="video_host_nickname"/>
 		<result column="video-host-level" jdbcType="INTEGER" property="video_host_level"/>
-		<result column="video-platform" jdbcType="INTEGER" property="video_platform"/>
-		<result column="video-type" jdbcType="INTEGER" property="video_type"/>
 		<result column="video-host-avatar" jdbcType="VARCHAR" property="video_host_avatar"/>
+		<result column="video-room-id" jdbcType="VARCHAR" property="video_room_id"/>
 	</resultMap>
 	<!-- 因为现在主键不是自增长，去除useGeneratedKeys="true" keyProperty="video_host_id" -->
 	<insert id="insertVideo_host"  parameterType="com.yj.pojo.Video_host">
 		insert into `video-host`(`video-host-id`,`video-host-nickname`,`video-host-level`,
-		`video-platform`,`video-type`,`video-host-avatar`) values(#{video_host_id,jdbcType=INTEGER},#{video_host_nickname,jdbcType=VARCHAR},
-		#{video_host_level,jdbcType=INTEGER},#{video_platform,jdbcType=INTEGER},
-		#{video_type,jdbcType=INTEGER},#{video_host_avatar,jdbcType=VARCHAR})
+		`video-host-avatar`,`video-room-id`) values(#{video_host_id,jdbcType=VARCHAR},#{video_host_nickname,jdbcType=VARCHAR},
+		#{video_host_level,jdbcType=INTEGER},#{video_host_avatar,jdbcType=VARCHAR},
+		#{video_room_id,jdbcType=VARCHAR})
 	</insert>
 	
 	<update id="updateVideo_host" parameterType="com.yj.pojo.Video_host">
 		update `video-host` set `video-host-level`=#{video_host_level,jdbcType=INTEGER},
-		`video-platform`=#{video_platform,jdbcType=INTEGER},
-		`video-type`=#{video_type,jdbcType=INTEGER},
-		`video-host-avatar`=#{video_host_avatar,jdbcType=VARCHAR}
+		`video-host-avatar`=#{video_host_avatar,jdbcType=VARCHAR},
+		`video-room-url`=#{video_room_url,jdbcType=VARCHAR}
 		where `video-host-id`=#{video_host_id,jdbcType=INTEGER}
 	</update>
+	
+	<insert id="replace_host_list" parameterType="java.util.List">  
+	    REPLACE INTO `video-host`  
+	    (`video-host-id`,`video-host-nickname`,`video-host-level`,
+		`video-host-avatar`,`video-room-id`)  
+	    VALUES  
+	    <foreach collection="list" index="index" item="item"  
+	        separator=",">  
+	        (#{item.video_host_id,jdbcType=VARCHAR},#{item.video_host_nickname,jdbcType=VARCHAR},
+		#{item.video_host_level,jdbcType=INTEGER},#{item.video_host_avatar,jdbcType=VARCHAR},
+		#{item.video_room_id,jdbcType=VARCHAR})  
+	    </foreach>  
+	</insert>  
 	
 </mapper>

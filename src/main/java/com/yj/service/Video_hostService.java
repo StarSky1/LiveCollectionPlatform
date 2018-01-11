@@ -1,5 +1,7 @@
 package com.yj.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +20,15 @@ public class Video_hostService {
 	 * @return
 	 */
 	public int insertVideo_host(Video_host video_host){
-		Video_host previous_video_host=video_hostDao.selectHostByhost_nickname(video_host.getVideo_host_nickname());
-		if(previous_video_host==null){
-			int video_host_id=video_hostDao.selectMax_host_id()+1;
-			video_host.setVideo_host_id(video_host_id);
-			return video_hostDao.insertVideo_host(video_host);
-		}else{
-			video_host.setVideo_host_id(previous_video_host.getVideo_host_id());
-			return video_hostDao.updateVideo_host(video_host);
-		}
+		return video_hostDao.insertVideo_host(video_host);
+	}
+	
+	/**
+	 * 使用replace into批量更新主播表
+	 * @param host_list
+	 * @return
+	 */
+	public int replace_host_list(List<Video_host> host_list){
+		return video_hostDao.replace_host_list(host_list);
 	}
 }

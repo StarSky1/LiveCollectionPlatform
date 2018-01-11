@@ -1,5 +1,7 @@
 package com.yj.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -15,9 +17,8 @@ public interface Video_hostDao {
 	@ResultMap(value={"video_host_ResultMap"})
 	public Video_host selectHostByhost_nickname(String host_nickname);
 	
-	@Select("select max(`video-host-id`) from `video-host`")
-	public int selectMax_host_id();
-	
 	public int updateVideo_host(Video_host video_host);
+	
+	public int replace_host_list(List<Video_host> host_list);
 	
 }

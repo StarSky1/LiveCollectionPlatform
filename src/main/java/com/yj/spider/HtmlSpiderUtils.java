@@ -30,12 +30,12 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.yj.dao.Video_categoryDao;
 import com.yj.dao.Video_platformDao;
 import com.yj.pojo.Video_category;
 import com.yj.pojo.Video_host;
 import com.yj.pojo.Video_platform;
 import com.yj.pojo.Video_source;
+import com.yj.service.Video_categoryService;
 
 /** * @author  wenchen 
  * @date 创建时间：2017年8月15日 下午2:03:23 
@@ -45,7 +45,7 @@ import com.yj.pojo.Video_source;
 public class HtmlSpiderUtils {
 	
 	@Autowired
-	public Video_categoryDao video_categoryDao;
+	public Video_categoryService video_categoryService;
 	
 	@Autowired
 	public Video_platformDao video_platformDao;
@@ -265,24 +265,26 @@ public class HtmlSpiderUtils {
 		Matcher matcher=pattern.matcher(bodyStr);
 		while(matcher.find()){
 			String video_type=matcher.group(8);
-			Video_category video_category=video_categoryDao.selectVideo_type_idByVideo_type(video_type);
-			if(video_category==null){
+			Map<String,Video_category> map=video_categoryService.getVideo_cateMap();
+			if(!map.containsKey(video_type)){
 				continue;
 			}
-			int video_type_id=video_category.getVideo_type_id();
+			int video_type_id=map.get(video_type).getVideo_type_id();
 			Video_source video_source=new Video_source();
 			video_source.setVideo_room_url(matcher.group(1));
 			video_source.setVideo_img(matcher.group(2));
 			video_source.setVideo_title(matcher.group(3));
-			video_source.setVideo_number(matcher.group(6));
-			video_source.setVideo_station_num(matcher.group(7));
+			video_source.setVideo_number(Integer.parseInt(matcher.group(6)));
+			video_source.setVideo_station_num(Integer.parseInt(matcher.group(7)));
+			video_source.setVideo_type(video_type_id);
+			Video_platform video_platform=video_platformDao.selectVideo_platformByName("熊猫tv");
+			video_source.setVideo_platform(video_platform.getVideo_platform_id());
+			video_source.setVideo_id(video_platform.getVideo_platform_id()+"_"+video_source.getVideo_room_url());
 			
 			Video_host video_host=new Video_host();
 			video_host.setVideo_host_level(Integer.parseInt(matcher.group(5)));
 			video_host.setVideo_host_nickname(matcher.group(4));
-			video_host.setVideo_type(video_type_id);
-			Video_platform video_platform=video_platformDao.selectVideo_platformByName("熊猫tv");
-			video_host.setVideo_platform(video_platform.getVideo_platform_id());
+			video_host.setVideo_room_id(video_source.getVideo_id());
 			
 			JSONObject json=new JSONObject();
 			json.put("video_host", video_host);
@@ -336,27 +338,32 @@ public class HtmlSpiderUtils {
 			for(int j=0;j<items.size();j++){
 				json=items.getJSONObject(j);
 				String video_type=json.getJSONObject("classification").getString("cname");
-				Video_category video_category=video_categoryDao.selectVideo_type_idByVideo_type(video_type);
-				if(video_category==null){
+				Map<String,Video_category> cate_map=video_categoryService.getVideo_cateMap();
+				if(!cate_map.containsKey(video_type)){
 					continue;
 				}
-				int video_type_id=video_category.getVideo_type_id();
+				int video_type_id=cate_map.get(video_type).getVideo_type_id();
 				Video_source source=new Video_source();
 				source.setVideo_room_url(json.getString("id"));
 				source.setVideo_img(json.getJSONObject("pictures").getString("img"));
 				source.setVideo_title(json.getString("name"));
-				source.setVideo_number(json.getString("person_num"));
-				source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score")+"");
+				source.setVideo_number(Integer.parseInt(json.getString("person_num")));
+				source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));
+				source.setVideo_type(video_type_id);
+				Video_platform video_platform=video_platformDao.selectVideo_platformByName("熊猫tv");
+				source.setVideo_platform(video_platform.getVideo_platform_id());
+				source.setVideo_id("PandaTv_"+source.getVideo_room_url());
+				source.setVideo_status(1);
 				
 				Video_host host=new Video_host();
 				if(json.getJSONObject("host_level_info")!=null){
 					host.setVideo_host_level(json.getJSONObject("host_level_info").getIntValue("c_lv"));
 				}
+				host.setVideo_host_id("PandaTv"+json.getJSONObject("userinfo").getIntValue("rid"));
 				host.setVideo_host_nickname(json.getJSONObject("userinfo").getString("nickName"));
 				host.setVideo_host_avatar(json.getJSONObject("userinfo").getString("avatar"));
-				host.setVideo_type(video_type_id);
-				Video_platform video_platform=video_platformDao.selectVideo_platformByName("熊猫tv");
-				host.setVideo_platform(video_platform.getVideo_platform_id());
+				host.setVideo_room_id(source.getVideo_id());
+				
 				
 				json=new JSONObject();
 				json.put("video_host", host);

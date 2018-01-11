@@ -1,6 +1,7 @@
 package com.yj.service;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,37 +36,28 @@ public class Video_sourceService {
 			System.out.println("无数据录入");
 			return;
 		}
-		//删除直播间表所有数据，重新导入直播间数据，已获取最新直播信息
-		video_sourceDao.deleteAllVideo_source();
-		Date beginDate1=new Date();
-		Date beginDate=null;
-		Date endDate=null;
-		long time=0;
+		//将直播间表中现有直播间的直播状态全部修改为0  未开播
+		video_sourceDao.updateAllVideo_source_status(0);
+		List<Video_host> host_list=new ArrayList<>();
+		List<Video_source> source_list=new ArrayList<>();
 		for(int i=0;i<jsonArray.size();i++){
 			JSONObject json=jsonArray.getJSONObject(i);
 			Video_host host=(Video_host) json.get("video_host");
 			Video_source source=(Video_source) json.get("video_source");
-			source.setVideo_id(i);
-			beginDate=new Date();
-			System.out.println("开始录入\""+host.getVideo_host_nickname()+
-					"\"主播和\""+source.getVideo_title()+"\"直播间数据...");
-			//添加主播信息
-			video_hostService.insertVideo_host(host);
-			source.setVideo_host_id(host.getVideo_host_id());
-			//添加直播间信息
-			video_sourceDao.insert_video_source(source);
-			endDate=new Date();
-			time=endDate.getTime()-beginDate.getTime();
-			System.out.println("录入成功，耗时："+time/1000.0+"s");
+			host_list.add(host);
+			source_list.add(source);
 		}
-		endDate=new Date();
-		time=endDate.getTime()-beginDate1.getTime();
-		System.out.println("总耗时："+time/1000.0+"s");
+		//使用replace into语句批量更新直播间表所有数据，重新导入直播间数据，已获取最新直播信息
+		//批量添加直播间信息
+		video_sourceDao.replace_source_list(source_list);
+		//批量添加主播信息
+		video_hostService.replace_host_list(host_list);
+		
 	}
 	
 	@Test
 	public void testGetPanda_video_source(){
-		getPanda_video_source("https://www.panda.tv/all","https://www.panda.tv/live_lists");
+		getPanda_video_source("https://www.panda.tv/all?pdt=1.r_26668.psbar-co.a1.3f5g2qe91vj","https://www.panda.tv/live_lists");
 	}
 	
 	

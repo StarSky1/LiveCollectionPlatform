@@ -5,6 +5,7 @@
 		<id column="video-platform-id" jdbcType="INTEGER" property="video_platform_id" />
 		<result column="video-platform" jdbcType="VARCHAR" property="video_platform"/>
 		<result column="video-platform-domain" jdbcType="VARCHAR" property="video_platform_domain"/>
+		<result column="video-platform-img" jdbcType="VARCHAR" property="video_platform_img"/>
 	</resultMap>
 	
 </mapper>
