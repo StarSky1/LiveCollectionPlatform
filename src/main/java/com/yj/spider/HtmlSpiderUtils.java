@@ -330,6 +330,13 @@ public class HtmlSpiderUtils {
 		Map<String,String> requestHeadersMap=new HashMap<>();
 		requestHeadersMap.put("accept", "application/json, text/javascript, */*; q=0.01");
 		requestHeadersMap.put("x-requested-with", "XMLHttpRequest");
+		requestHeadersMap.put("accept-encoding", "gzip, deflate, sdch, br");
+		requestHeadersMap.put("accept-language", "zh-CN,zh;q=0.8");
+		requestHeadersMap.put("cookie", "__guid=96554777.2648944975772524000.1501862232102.666; _uab_collina=150607002895625586773494; smid=bee10a7d-fa4d-472e-bff4-86d957707c86; pdftv1=fe374|160c9d24169|2daa|ca6e82d8|14; R=r%3D36899590%26u%3DCnaqnGi36899590%26n%3Dnaablrq_zna%26le%3D%26m%3DZGHjAmR0ZQx3AQp%3D%26im%3DnUE0pPHmDFHlEvHlEzx2YaOxnJ0hM3ZyZxMvAmp3BJAwAwLjMGR0ZGqxLGRkMGZlMzZjA2LlAwOzMP5jozp%3D%26p%3D%26i%3D; M=t%3D1515218898%26v%3D1.0%26mt%3D1515218898%26s%3D8daeff458d39c06c8e8387e32d0b0258; pdft=20171014200614cbe62ca9188877887e0c1f37bc4da476000a265399b9f417; I=r%3D36899590%26t%3Dd97d32fdcf0ba279fa1d203038e80116; webp=1; _umdata=55F3A8BFC9C50DDA758664CC93A838EDD5A971655D10D9E5FC2D18C03EDC34E234204B6550F9F8B1CD43AD3E795C914CBEA0FBFA2A2FB339224E7B05648E127D; GED_PLAYLIST_ACTIVITY=W3sidSI6ImZuU1QiLCJ0c2wiOjE1MTU2NTA2ODksIm52IjoxLCJ1cHQiOjE1MTU2NDM2NDEsImx0IjoxNTE1NjUwNjg5fV0.; smidV9=20171014200614cbe62ca9188877887e0c1f37bc4da476000a265399b9f417; monitor_count=33; Hm_lvt_204071a8b1d0b2a04c782c44b88eb996=1515220313,1515325866,1515468839,1515643644; Hm_lpvt_204071a8b1d0b2a04c782c44b88eb996=1515657075");
+		requestHeadersMap.put("referer", "https://www.panda.tv/all?pdt=1.24.psbar-en.a0.7ns5gda8vbk");
+		
+		Map<String,Video_category> cate_map=video_categoryService.getVideo_cateMap();
+		Video_platform video_platform=video_platformDao.selectVideo_platformByName("熊猫tv");
 		for(int i=1;i<=total_page;i++){
 			map.put("pageno", i);
 			String live_dataStr=getRequestStr(live_lists_url, "GET", map,requestHeadersMap);
@@ -338,7 +345,6 @@ public class HtmlSpiderUtils {
 			for(int j=0;j<items.size();j++){
 				json=items.getJSONObject(j);
 				String video_type=json.getJSONObject("classification").getString("cname");
-				Map<String,Video_category> cate_map=video_categoryService.getVideo_cateMap();
 				if(!cate_map.containsKey(video_type)){
 					continue;
 				}
@@ -350,7 +356,7 @@ public class HtmlSpiderUtils {
 				source.setVideo_number(Integer.parseInt(json.getString("person_num")));
 				source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));
 				source.setVideo_type(video_type_id);
-				Video_platform video_platform=video_platformDao.selectVideo_platformByName("熊猫tv");
+				
 				source.setVideo_platform(video_platform.getVideo_platform_id());
 				source.setVideo_id("PandaTv_"+source.getVideo_room_url());
 				source.setVideo_status(1);
