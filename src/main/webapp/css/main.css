@@ -1,0 +1,45 @@
+
+body {
+  padding-top: 70px;
+  background-color: #2CAC9A;
+}
+
+/* 轮播图样式 */
+#carousel-pictures {
+  margin: 0 auto;
+}
+
+.carousel {
+  width: 750px;
+  height: 400px;
+}
+
+.carousel .item {
+  width: 750px;
+  height: 400px;
+}
+
+.carousel-img {
+  width: 750px;
+  height: 400px;
+}
+
+.carousel-caption {
+  z-index: 10;
+}
+
+/*  well背景样式 */
+.well {
+  border: 1px solid #ccc;
+  background-color: #eee;
+}
+
+/* 推荐视频和直播间样式 */
+.suggested_video {
+  height: 474px;
+}
+
+.suggested_LiveRoom {
+  padding: 5px 10px;
+}
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.dao.Video_sourceDao">
+	<resultMap id="video_source_ResultMap" type="com.yj.pojo.Video_source">
+		<id column="video-id" jdbcType="INTEGER" property="video_id" />
+		<result column="video-host-id" jdbcType="INTEGER" property="video_host_id"/>
+		<result column="video-title" jdbcType="VARCHAR" property="video_title"/>
+		<result column="video-img" jdbcType="VARCHAR" property="video_img"/>
+		<result column="video-number" jdbcType="VARCHAR" property="video_number"/>
+		<result column="video-station-number" jdbcType="VARCHAR" property="video_station_number"/>
+		<result column="video-url" jdbcType="VARCHAR" property="video_url"/>
+		<result column="video-room-url" jdbcType="VARCHAR" property="video_room_url"/>
+	</resultMap>
+	
+	<!-- 因为主键现在不是自增长，去除useGeneratedKeys="true" keyProperty="video_id" -->
+	<insert id="insert_video_source"  parameterType="com.yj.pojo.Video_source">
+		insert into `video-source` (`video-id`,`video-host-id`,`video-title`,`video-img`,
+			`video-number`,`video-station-num`,`video-url`,`video-room-url`) 
+			values(#{video_id,jdbcType=INTEGER},#{video_host_id,jdbcType=INTEGER},#{video_title,jdbcType=VARCHAR},
+			#{video_img,jdbcType=VARCHAR},#{video_number,jdbcType=VARCHAR},
+			#{video_station_num,jdbcType=VARCHAR},#{video_url,jdbcType=VARCHAR},
+			#{video_room_url,jdbcType=VARCHAR})
+	</insert>
+	
+</mapper>
