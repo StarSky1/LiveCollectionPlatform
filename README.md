@@ -1,0 +1,2 @@
+# LiveCollectionPlatform
+用Java编写的一个直播汇总平台网站，收集各大直播平台热门有趣的直播，享受直播的乐趣吧！
