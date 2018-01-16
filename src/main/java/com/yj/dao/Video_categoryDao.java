@@ -6,11 +6,11 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.yj.pojo.Video_category;
 
-@Component
+@Repository
 public interface Video_categoryDao {
 	
 	@Update("update `video-category` set `video-type-img`=#{img_url,jdbcType=VARCHAR}"

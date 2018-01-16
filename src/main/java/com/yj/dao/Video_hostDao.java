@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.yj.pojo.Video_host;
 
-@Component
+@Repository
 public interface Video_hostDao {
 
 	public int insertVideo_host(Video_host video_host);
