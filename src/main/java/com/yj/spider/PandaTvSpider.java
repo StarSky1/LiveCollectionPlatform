@@ -213,7 +213,8 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 			t.start();
 		}
 		while(waitThread<threadCount){
-			System.out.println("还有"+(threadCount-waitThread)+"爬虫线程在执行...");
+			//等待所有爬虫线程执行完后返回数据...
+			System.out.println("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
 		};
 		return json;
 	}

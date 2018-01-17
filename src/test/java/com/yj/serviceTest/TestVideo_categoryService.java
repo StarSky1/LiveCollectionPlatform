@@ -33,4 +33,13 @@ public class TestVideo_categoryService {
 			htmlSpider.downloadImg_url(cate.getVideo_type_img(), cate.getVideo_type(),"./src/main/webapp/res/cate_img/");
 		}
 	}
+	
+	@Test
+	public void downloadVideo_category_img(){
+		List<Video_category> list=video_categoryService.getVideo_categoryList();
+		for (Video_category cate : list) {
+			System.out.println("开始下载 "+cate.getVideo_type()+" 图片");
+			htmlSpider.downloadImg_url(cate.getVideo_type_img(), cate.getVideo_type(), "./src/main/webapp/res/cate_img/");
+		}
+	}
 }

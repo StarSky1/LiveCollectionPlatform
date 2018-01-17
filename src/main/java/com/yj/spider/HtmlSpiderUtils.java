@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 import org.junit.Test;
 import org.lf.utils.StringUtils;
@@ -75,7 +76,7 @@ public class HtmlSpiderUtils {
 			conn.setUseCaches(false);
 			// 设置请求属性
 			if(requestHeaderMap!=null){
-				Set<String> set=map.keySet();
+				Set<String> set=requestHeaderMap.keySet();
 				for (String s : set) {
 					conn.setRequestProperty(s, requestHeaderMap.get(s));
 				}
@@ -87,9 +88,16 @@ public class HtmlSpiderUtils {
 			conn.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400"); //user-agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400
             
             // 建立实际的连接  
-            conn.connect();  
-            // 定义 BufferedReader输入流来读取URL的响应  
-			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            conn.connect();
+            String content_encoding=conn.getHeaderField("content-encoding");
+            if(content_encoding.toLowerCase().equals("gzip")){
+            	// 定义 BufferedReader输入流来读取URL的响应  
+            	InputStreamReader in=new InputStreamReader(new GZIPInputStream(conn.getInputStream()));
+    			reader = new BufferedReader(in);
+            }else{
+            	// 定义 BufferedReader输入流来读取URL的响应  
+    			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            }
 			String line;
 			while((line=reader.readLine())!=null){
 				resultSb.append(line);
@@ -220,7 +228,7 @@ public class HtmlSpiderUtils {
 	 * @param video_platform_all_url
 	 * @return
 	 */
-	public int getTv_videos_totalPage(String video_platform_all_url){
+	public int getTv_videos_totalPage(String live_lists_url){
 		throw new UnsupportedOperationException();
 	}
 	

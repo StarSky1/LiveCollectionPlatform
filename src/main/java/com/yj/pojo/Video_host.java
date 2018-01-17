@@ -4,8 +4,8 @@ public class Video_host {
 	
 	private String video_host_id;
 	private String video_host_nickname;
-	private int video_host_level;
-	private String video_host_avatar;
+	private int video_host_level=1;
+	private String video_host_avatar="null";
 	private String video_room_id;
 	
 	
