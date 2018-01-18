@@ -28,4 +28,9 @@ public class TestVideo_sourceService {
 	public void testGetZhanqi_video_source(){
 		Video_sourceService.getZhanqi_video_source("http://www.zhanqi.tv/api/static/v2.1/live/list/20");
 	}
+	
+	@Test
+	public void testGetHuya_video_source(){
+		Video_sourceService.getHuya_video_source("http://www.huya.com/cache.php");
+	}
 }

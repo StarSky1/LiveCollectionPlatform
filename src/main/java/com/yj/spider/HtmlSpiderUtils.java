@@ -90,7 +90,7 @@ public class HtmlSpiderUtils {
             // 建立实际的连接  
             conn.connect();
             String content_encoding=conn.getHeaderField("content-encoding");
-            if(content_encoding.toLowerCase().equals("gzip")){
+            if(content_encoding!=null && content_encoding.toLowerCase().equals("gzip")){
             	// 定义 BufferedReader输入流来读取URL的响应  
             	InputStreamReader in=new InputStreamReader(new GZIPInputStream(conn.getInputStream()));
     			reader = new BufferedReader(in);

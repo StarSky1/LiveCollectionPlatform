@@ -8,7 +8,7 @@ public class Video_source {
 	private int video_station_num;
 	private String video_url;
 	private String video_room_url;
-	private String video_id;
+	private long video_id;
 	private int video_platform;
 	private int video_type;
 	private int video_status;
@@ -68,10 +68,10 @@ public class Video_source {
 	public void setVideo_room_url(String video_room_url) {
 		this.video_room_url = video_room_url;
 	}
-	public String getVideo_id() {
+	public long getVideo_id() {
 		return video_id;
 	}
-	public void setVideo_id(String video_id) {
+	public void setVideo_id(long video_id) {
 		this.video_id = video_id;
 	}
 	

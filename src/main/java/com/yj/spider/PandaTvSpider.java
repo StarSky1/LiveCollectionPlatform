@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -28,7 +30,7 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 
 	public static final Object signal = new Object();   //线程间通信变量  
 	
-	int threadCount=10;	//线程数量
+	int threadCount=20;	//线程数量
 	
 	int waitThread=0;	//等待线程的数量
 	
@@ -39,6 +41,8 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 	private Map<String,Video_category> cate_map;
 	
 	private Video_platform video_platform;
+	
+	private Logger logger=LoggerFactory.getLogger(PandaTvSpider.class);
 	
 	/**
 	 * 获取熊猫tv 直播分类图片url
@@ -149,14 +153,14 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 			source.setVideo_type(video_type_id);
 			
 			source.setVideo_platform(video_platform.getVideo_platform_id());
-			source.setVideo_id("PandaTv_"+source.getVideo_room_url());
+			source.setVideo_id(Long.parseLong(source.getVideo_room_url()));
 			source.setVideo_status(1);
 			
 			Video_host host=new Video_host();
 			if(json.getJSONObject("host_level_info")!=null){
 				host.setVideo_host_level(json.getJSONObject("host_level_info").getIntValue("c_lv"));
 			}
-			host.setVideo_host_id("PandaTv"+json.getJSONObject("userinfo").getIntValue("rid"));
+			host.setVideo_host_id(json.getJSONObject("userinfo").getIntValue("rid"));
 			host.setVideo_host_nickname(json.getJSONObject("userinfo").getString("nickName"));
 			host.setVideo_host_avatar(json.getJSONObject("userinfo").getString("avatar"));
 			host.setVideo_room_id(source.getVideo_id());
@@ -192,7 +196,7 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 							if(crawled_page<total_page){
 								crawled_page++;
 								pageno=crawled_page;
-								System.out.println(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
+								logger.debug(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
 							}else{
 								break;
 							}
@@ -214,7 +218,7 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 		}
 		while(waitThread<threadCount){
 			//等待所有爬虫线程执行完后返回数据...
-			System.out.println("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
+			logger.trace("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
 		};
 		return json;
 	}

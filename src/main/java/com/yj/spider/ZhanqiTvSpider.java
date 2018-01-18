@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -28,7 +30,7 @@ import com.yj.pojo.Video_source;
 public class ZhanqiTvSpider extends HtmlSpiderUtils{
 	public static final Object signal = new Object();   //线程间通信变量  
 	
-	int threadCount=10;	//线程数量
+	int threadCount=20;	//线程数量
 	
 	int waitThread=0;	//等待线程的数量
 	
@@ -39,6 +41,8 @@ public class ZhanqiTvSpider extends HtmlSpiderUtils{
 	private Map<String,Video_category> cate_map;
 	
 	private Video_platform video_platform;
+	
+	private Logger logger=LoggerFactory.getLogger(ZhanqiTvSpider.class);
 
 	@Override
 	public int getTv_videos_totalPage(String live_lists_url) {
@@ -53,7 +57,7 @@ public class ZhanqiTvSpider extends HtmlSpiderUtils{
 	@Override
 	public String getTv_Video_source(String live_lists_url, int pageno) {
 		Map<String,Object> map=null;
-		//斗鱼tv 当前页直播信息获取地址格式 https://www.douyu.com/gapi/rkc/directory/0_0/2
+		//战旗tv 当前页直播信息获取地址格式 http://www.zhanqi.tv/api/static/v2.1/live/list/20/1.json
 		live_lists_url=live_lists_url+"/"+pageno+".json";
 		//request params
 		//null
@@ -94,14 +98,14 @@ public class ZhanqiTvSpider extends HtmlSpiderUtils{
 			source.setVideo_type(video_type_id);
 			
 			source.setVideo_platform(video_platform.getVideo_platform_id());
-			source.setVideo_id("ZhanqiTv_"+json.getString("code"));
+			source.setVideo_id(Long.parseLong(json.getString("code")));
 			source.setVideo_status(1);
 			
 			Video_host host=new Video_host();
 			if(json.getString("hotsLevel")!=null){
 				host.setVideo_host_level(Integer.parseInt(json.getString("hotsLevel")));
 			}
-			host.setVideo_host_id("ZhanqiTv"+json.getString("uid"));
+			host.setVideo_host_id(Long.parseLong(json.getString("uid")));
 			host.setVideo_host_nickname(json.getString("nickname"));
 //			host.setVideo_host_avatar(json.getJSONObject("userinfo").getString("avatar"));
 			host.setVideo_room_id(source.getVideo_id());
@@ -135,7 +139,7 @@ public class ZhanqiTvSpider extends HtmlSpiderUtils{
 							if(crawled_page<total_page){
 								crawled_page++;
 								pageno=crawled_page;
-								System.out.println(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
+								logger.debug(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
 							}else{
 								break;
 							}
@@ -175,7 +179,7 @@ public class ZhanqiTvSpider extends HtmlSpiderUtils{
 //					break;
 //				}
 //			}
-			System.out.println("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
+			logger.trace("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
 		}
 		
 		return json;
