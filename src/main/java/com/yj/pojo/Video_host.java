@@ -2,11 +2,11 @@ package com.yj.pojo;
 
 public class Video_host {
 	
-	private long video_host_id;
+	private String video_host_id;
 	private String video_host_nickname;
 	private int video_host_level=1;
 	private String video_host_avatar="null";
-	private long video_room_id;
+	private String video_room_id;
 	
 	
 	public String getVideo_host_avatar() {
@@ -27,16 +27,16 @@ public class Video_host {
 	public void setVideo_host_level(int video_host_level) {
 		this.video_host_level = video_host_level;
 	}
-	public long getVideo_host_id() {
+	public String getVideo_host_id() {
 		return video_host_id;
 	}
-	public void setVideo_host_id(long video_host_id) {
+	public void setVideo_host_id(String video_host_id) {
 		this.video_host_id = video_host_id;
 	}
-	public long getVideo_room_id() {
+	public String getVideo_room_id() {
 		return video_room_id;
 	}
-	public void setVideo_room_id(long video_room_id) {
+	public void setVideo_room_id(String video_room_id) {
 		this.video_room_id = video_room_id;
 	}
 	

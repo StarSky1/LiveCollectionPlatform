@@ -1,14 +1,11 @@
 package com.yj.spider;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +14,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yj.pojo.Video_category;
 import com.yj.pojo.Video_host;
-import com.yj.pojo.Video_platform;
 import com.yj.pojo.Video_source;
 
 /**
@@ -28,21 +24,14 @@ import com.yj.pojo.Video_source;
 @Component(value="pandaSpider")
 public class PandaTvSpider extends HtmlSpiderUtils{
 
-	public static final Object signal = new Object();   //线程间通信变量  
-	
-	int threadCount=20;	//线程数量
-	
-	int waitThread=0;	//等待线程的数量
-	
-	int crawled_page=0;	//已爬取的页数
-	
-	int pagenum=120;
-	
-	private Map<String,Video_category> cate_map;
-	
-	private Video_platform video_platform;
-	
-	private Logger logger=LoggerFactory.getLogger(PandaTvSpider.class);
+	public PandaTvSpider(){
+		threadCount=25;	//线程数量
+		waitThread=0;	//等待线程的数量
+		crawled_page=0;	//已爬取的页数
+		pagenum=120;
+		platform="熊猫tv";
+		logger=LoggerFactory.getLogger(PandaTvSpider.class);
+	}
 	
 	/**
 	 * 获取熊猫tv 直播分类图片url
@@ -149,18 +138,22 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 			source.setVideo_img(json.getJSONObject("pictures").getString("img"));
 			source.setVideo_title(json.getString("name"));
 			source.setVideo_number(Integer.parseInt(json.getString("person_num")));
+			//如果直播间观看人数小于10，则不录入数据库
+			if(source.getVideo_number()<10){
+				continue;
+			}
 			source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));
 			source.setVideo_type(video_type_id);
 			
 			source.setVideo_platform(video_platform.getVideo_platform_id());
-			source.setVideo_id(Long.parseLong(source.getVideo_room_url()));
+			source.setVideo_id("Pandatv_"+source.getVideo_room_url());
 			source.setVideo_status(1);
 			
 			Video_host host=new Video_host();
 			if(json.getJSONObject("host_level_info")!=null){
 				host.setVideo_host_level(json.getJSONObject("host_level_info").getIntValue("c_lv"));
 			}
-			host.setVideo_host_id(json.getJSONObject("userinfo").getIntValue("rid"));
+			host.setVideo_host_id("Pandatv"+json.getJSONObject("userinfo").getIntValue("rid"));
 			host.setVideo_host_nickname(json.getJSONObject("userinfo").getString("nickName"));
 			host.setVideo_host_avatar(json.getJSONObject("userinfo").getString("avatar"));
 			host.setVideo_room_id(source.getVideo_id());
@@ -170,56 +163,4 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 		}
 	}
 	
-	/**
-	 * 开启10个线程，并行获取1-total_page页的熊猫tv 所有正在直播的直播间和主播信息
-	 * @param live_lists_url
-	 * @param total_page
-	 * @return
-	 */
-	public JSONObject getTv_Video_sourceBymulti_thread(String live_lists_url,int total_page){
-		JSONObject json=new JSONObject();
-		List<Video_host> host_list=Collections.synchronizedList(new ArrayList<>());
-		List<Video_source> source_list=Collections.synchronizedList(new ArrayList<>());
-		json.put("host_list", host_list);
-		json.put("source_list", source_list);
-		
-		cate_map=video_categoryService.getVideo_cateMap();
-		video_platform=video_platformService.getVideo_platformByName("熊猫tv");
-		
-		for(int i=1;i<=threadCount;i++){
-			Thread t=new Thread(new Runnable(){
-				@Override
-				public void run() {
-					int pageno=0;
-					while(crawled_page<total_page){
-						synchronized(signal){
-							if(crawled_page<total_page){
-								crawled_page++;
-								pageno=crawled_page;
-								logger.debug(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
-							}else{
-								break;
-							}
-						}
-						String data_str=getTv_Video_source(live_lists_url, pageno);
-						parseVideo_items_JSONStr(data_str, host_list, source_list);
-					}
-					synchronized(signal){
-						waitThread++;
-						try {
-							signal.wait();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			},"线程"+i);
-			t.start();
-		}
-		while(waitThread<threadCount){
-			//等待所有爬虫线程执行完后返回数据...
-			logger.trace("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
-		};
-		return json;
-	}
 }

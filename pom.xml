@@ -155,6 +155,14 @@
 	    <version>2.53.0</version>
 	</dependency>
   <!-- selenium浏览器自动化工具 end -->
+  <!-- apache httpclient start -->
+  <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+	<dependency>
+	    <groupId>org.apache.httpcomponents</groupId>
+	    <artifactId>httpclient</artifactId>
+	    <version>4.5.4</version>
+	</dependency>
+  <!-- apache httpclient end -->
   </dependencies>
   <build>
     <plugins>

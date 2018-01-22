@@ -1,24 +1,16 @@
 package com.yj.spider;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.yj.pojo.Video_category;
 import com.yj.pojo.Video_host;
-import com.yj.pojo.Video_platform;
 import com.yj.pojo.Video_source;
 
 /**
@@ -28,21 +20,15 @@ import com.yj.pojo.Video_source;
  */
 @Component(value="huyaSpider")
 public class HuyaLiveSpider extends HtmlSpiderUtils{
-	public static final Object signal = new Object();   //线程间通信变量  
 	
-	int threadCount=30;	//线程数量
-	
-	int waitThread=0;	//等待线程的数量
-	
-	int crawled_page=0;	//已爬取的页数
-	
-	int pagenum=120;
-	
-	private Map<String,Video_category> cate_map;
-	
-	private Video_platform video_platform;
-	
-	private Logger logger=LoggerFactory.getLogger(HuyaLiveSpider.class);
+	public HuyaLiveSpider(){
+		threadCount=25;	//线程数量
+		waitThread=0;	//等待线程的数量
+		crawled_page=0;	//已爬取的页数
+		pagenum=120;
+		platform="虎牙直播";
+		logger=LoggerFactory.getLogger(HuyaLiveSpider.class);
+	}
 
 	@Override
 	public int getTv_videos_totalPage(String live_lists_url) {
@@ -95,18 +81,22 @@ public class HuyaLiveSpider extends HtmlSpiderUtils{
 			source.setVideo_img(json.getString("screenshot"));
 			source.setVideo_title(json.getString("introduction"));
 			source.setVideo_number(Integer.parseInt(json.getString("totalCount")));
+			//如果直播间观看人数小于10，则不录入数据库
+			if(source.getVideo_number()<10){
+				continue;
+			}
 			//source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));
 			source.setVideo_type(video_type_id);
 			
 			source.setVideo_platform(video_platform.getVideo_platform_id());
-			source.setVideo_id(Long.parseLong(json.getString("liveChannel")));
+			source.setVideo_id("Huyalive_"+json.getString("privateHost"));
 			source.setVideo_status(1);
 			
 			Video_host host=new Video_host();
 //			if(json.getString("hotsLevel")!=null){
 //				host.setVideo_host_level(Integer.parseInt(json.getString("hotsLevel")));
 //			}
-			host.setVideo_host_id(Long.parseLong(json.getString("uid")));
+			host.setVideo_host_id("Huyalive"+json.getString("uid"));
 			host.setVideo_host_nickname(json.getString("nick"));
 			host.setVideo_host_avatar(json.getString("avatar180"));
 			host.setVideo_room_id(source.getVideo_id());
@@ -116,73 +106,4 @@ public class HuyaLiveSpider extends HtmlSpiderUtils{
 		}
 	}
 	
-	/**
-	 * 爬虫 多线程 启动入口
-	 */
-	@Override
-	public JSONObject getTv_Video_sourceBymulti_thread(String live_lists_url, int total_page) {
-		JSONObject json=new JSONObject();
-		List<Video_host> host_list=Collections.synchronizedList(new ArrayList<>());
-		List<Video_source> source_list=Collections.synchronizedList(new ArrayList<>());
-		json.put("host_list", host_list);
-		json.put("source_list", source_list);
-		
-		cate_map=video_categoryService.getVideo_cateMap();
-		video_platform=video_platformService.getVideo_platformByName("战旗tv");
-		
-		for(int i=1;i<=threadCount;i++){
-			Thread t=new Thread(new Runnable(){
-				@Override
-				public void run() {
-					int pageno=0;
-					while(crawled_page<total_page){
-						synchronized(signal){
-							if(crawled_page<total_page){
-								crawled_page++;
-								pageno=crawled_page;
-								logger.debug(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
-							}else{
-								break;
-							}
-						}
-						String data_str=getTv_Video_source(live_lists_url, pageno);
-						parseVideo_items_JSONStr(data_str, host_list, source_list);
-					}
-					synchronized(signal){
-						waitThread++;
-						try {
-							signal.wait();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			},"线程"+i);
-			t.start();
-		}
-		try {
-			System.setOut(new PrintStream(new File("./log.txt")));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		while(waitThread<threadCount){
-			//等待所有爬虫线程执行完后返回数据...
-//			synchronized(signal){
-//				if(waitThread<threadCount){
-//					try {
-//						signal.wait();
-//					} catch (InterruptedException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				}else{
-//					break;
-//				}
-//			}
-			logger.trace("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
-		}
-		
-		return json;
-	}
 }

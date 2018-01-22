@@ -1,14 +1,14 @@
 package com.yj.spider;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -16,16 +16,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.junit.Test;
-import org.lf.utils.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSONObject;
 import com.yj.pojo.Video_category;
 import com.yj.pojo.Video_host;
+import com.yj.pojo.Video_platform;
 import com.yj.pojo.Video_source;
 import com.yj.service.Video_categoryService;
 import com.yj.service.Video_platformService;
@@ -43,18 +50,132 @@ public class HtmlSpiderUtils {
 	@Autowired
 	public Video_platformService video_platformService;
 	
+	public Map<String,Video_category> cate_map;
+	
+	public Video_platform video_platform;
+	
+	String platform;
+	
+	static int connectionTimeout = 1000;// 连接超时时间,毫秒  
+    static int soTimeout = 30000;// 读取数据超时时间，毫秒  
+    /** HttpClient对象 */  
+    static CloseableHttpClient httpclient = HttpClients.  
+                custom().disableAutomaticRetries().build();  
+    /*** 超时设置 ****/  
+    static RequestConfig requestConfig = RequestConfig.custom()  
+                                                    .setSocketTimeout(soTimeout)  
+                                                    .setConnectTimeout(connectionTimeout)  
+                                                    .build();//设置请求和传输超时时间  
+	
+	public static final Object signal = new Object();   //线程间通信变量  
+	
+	int threadCount=25;	//线程数量
+	
+	int waitThread=0;	//等待线程的数量
+	
+	int crawled_page=0;	//已爬取的页数
+	
+	int pagenum=120;
+	
+	public Logger logger;
+	
+//	/**
+//	 * 以特定方式向这个url发送请求，获得请求的字符串
+//	 * @param url
+//	 * @param method
+//	 * @return
+//	 */
+//	public static String getRequestStr(String url,String method,Map<String,?> map,Map<String,String> requestHeaderMap) {
+//		HttpURLConnection conn = null;
+//		BufferedReader reader = null;
+//		URL reuqestUrl = null;
+//		StringBuilder resultSb = new StringBuilder();
+//		if (map != null) {
+//			Set<String> set = map.keySet();
+//			StringBuilder queryParam = new StringBuilder("?");
+//			for (String s : set) {
+//				queryParam.append(s).append("=").append(map.get(s).toString()).append("&");
+//			}
+//			queryParam.deleteCharAt(queryParam.length()-1);
+//			url += queryParam.toString();
+//		}
+//		try {
+//			reuqestUrl = new URL(url);
+//			conn = (HttpURLConnection) reuqestUrl.openConnection();
+//			if (StringUtils.isEmpty(method)) {
+//				conn.setRequestMethod("GET");
+//			} else {
+//				conn.setRequestMethod(method);
+//			}
+//			conn.setDoInput(true);
+//			conn.setDoOutput(true);
+//			conn.setUseCaches(false);
+//			// 设置请求属性
+//			if(requestHeaderMap!=null){
+//				Set<String> set=requestHeaderMap.keySet();
+//				for (String s : set) {
+//					conn.setRequestProperty(s, requestHeaderMap.get(s));
+//				}
+//			}else{
+//				conn.setRequestProperty("accept", "*/*");  
+//	            conn.setRequestProperty("connection", "Keep-Alive"); 
+//			}
+//			conn.setUseCaches(false);//设置不要缓存
+//			conn.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400"); //user-agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400
+//            
+//            // 建立实际的连接  
+//            conn.connect();
+//            long startTime=System.currentTimeMillis();
+//            long endTime=System.currentTimeMillis();
+//            while(conn.getInputStream().available()==0 && (endTime-startTime)<5000){
+//            	endTime=System.currentTimeMillis();
+//            }
+//            if((endTime-startTime)>5000){
+//            	System.out.println("连接服务器失败");
+//            }
+//            String content_encoding=conn.getHeaderField("content-encoding");
+//            if(content_encoding!=null && content_encoding.toLowerCase().equals("gzip")){
+//            	// 定义 BufferedReader输入流来读取URL的响应  
+//            	InputStreamReader in=new InputStreamReader(new GZIPInputStream(conn.getInputStream()));
+//    			reader = new BufferedReader(in);
+//            }else{
+//            	// 定义 BufferedReader输入流来读取URL的响应  
+//    			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//            }
+//			String line;
+//			while((line=reader.readLine())!=null){
+//				resultSb.append(line);
+//			}
+//			
+//		} catch (MalformedURLException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally {
+//			if (reader != null) {
+//				try {
+//					reader.close();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//			if (conn != null) {
+//				conn.disconnect();
+//			}
+//		}
+//		return resultSb.toString();
+//	}
+	
 	/**
 	 * 以特定方式向这个url发送请求，获得请求的字符串
+	 * 使用httpclient发送http连接
 	 * @param url
 	 * @param method
 	 * @return
 	 */
-	public static String getRequestStr(String url,String method,Map<String,?> map,Map<String,String> requestHeaderMap) {
-		HttpURLConnection conn = null;
-		BufferedReader reader = null;
-		URL reuqestUrl = null;
-		StringBuilder resultSb = new StringBuilder();
-		if (map != null) {
+    public String executeGetMethod(String url,Map<String,?> map) {  
+    	String strResult = "";  
+        if (map != null) {
 			Set<String> set = map.keySet();
 			StringBuilder queryParam = new StringBuilder("?");
 			for (String s : set) {
@@ -62,65 +183,34 @@ public class HtmlSpiderUtils {
 			}
 			queryParam.deleteCharAt(queryParam.length()-1);
 			url += queryParam.toString();
-		}
-		try {
-			reuqestUrl = new URL(url);
-			conn = (HttpURLConnection) reuqestUrl.openConnection();
-			if (StringUtils.isEmpty(method)) {
-				conn.setRequestMethod("GET");
-			} else {
-				conn.setRequestMethod(method);
-			}
-			conn.setDoInput(true);
-			conn.setDoOutput(true);
-			conn.setUseCaches(false);
-			// 设置请求属性
-			if(requestHeaderMap!=null){
-				Set<String> set=requestHeaderMap.keySet();
-				for (String s : set) {
-					conn.setRequestProperty(s, requestHeaderMap.get(s));
-				}
-			}else{
-				conn.setRequestProperty("accept", "*/*");  
-	            conn.setRequestProperty("connection", "Keep-Alive"); 
-			}
-			conn.setUseCaches(false);//设置不要缓存
-			conn.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400"); //user-agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400
-            
-            // 建立实际的连接  
-            conn.connect();
-            String content_encoding=conn.getHeaderField("content-encoding");
-            if(content_encoding!=null && content_encoding.toLowerCase().equals("gzip")){
-            	// 定义 BufferedReader输入流来读取URL的响应  
-            	InputStreamReader in=new InputStreamReader(new GZIPInputStream(conn.getInputStream()));
-    			reader = new BufferedReader(in);
-            }else{
-            	// 定义 BufferedReader输入流来读取URL的响应  
-    			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            }
-			String line;
-			while((line=reader.readLine())!=null){
-				resultSb.append(line);
-			}
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				conn.disconnect();
-			}
-		}
-		return resultSb.toString();
-	}
+		}  
+        HttpGet httpget = new HttpGet(url);  
+        httpget.setConfig(requestConfig);  
+        CloseableHttpResponse response=null;  
+        try {  
+            response = httpclient.execute(httpget);  
+            HttpEntity entity = response.getEntity();  
+            int iGetResultCode = response.getStatusLine().getStatusCode();  
+            if (iGetResultCode >= 200 && iGetResultCode < 303) {  
+                strResult = EntityUtils.toString(entity);  
+            } else if (iGetResultCode >= 400 && iGetResultCode < 500) {  
+                strResult = "请求的目标地址不存在：" + iGetResultCode;  
+            } else {  
+                strResult = "请求错误：" + iGetResultCode;  
+            }  
+        } catch (Exception ex) {  
+            ex.printStackTrace();  
+        } finally {  
+             try {  
+                if(response !=null){  
+                    response.close();  
+                }  
+            } catch (Exception e) {  
+                e.printStackTrace();  
+            }  
+        }  
+        return strResult;  
+    }  
 	
 	/**
 	 * 将html页面中body里面的内容得到
@@ -257,8 +347,52 @@ public class HtmlSpiderUtils {
 	 * @param total_page
 	 * @return
 	 */
-	public JSONObject getTv_Video_sourceBymulti_thread(String live_lists_url,int total_page){
-		throw new UnsupportedOperationException();
+	public JSONObject getTv_Video_sourceBymulti_thread(String live_lists_url, int total_page) {
+		JSONObject json=new JSONObject();
+		List<Video_host> host_list=Collections.synchronizedList(new ArrayList<>());
+		List<Video_source> source_list=Collections.synchronizedList(new ArrayList<>());
+		json.put("host_list", host_list);
+		json.put("source_list", source_list);
+		
+		cate_map=video_categoryService.getVideo_cateMap();
+		video_platform=video_platformService.getVideo_platformByName(platform);
+		
+		for(int i=1;i<=threadCount;i++){
+			Thread t=new Thread(new Runnable(){
+				@Override
+				public void run() {
+					int pageno=0;
+					while(crawled_page<total_page){
+						synchronized(signal){
+							if(crawled_page<total_page){
+								crawled_page++;
+								pageno=crawled_page;
+								logger.debug(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
+							}else{
+								break;
+							}
+						}
+						String data_str=getTv_Video_source(live_lists_url, pageno);
+						parseVideo_items_JSONStr(data_str, host_list, source_list);
+					}
+					synchronized(signal){
+						waitThread++;
+						try {
+							signal.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			},"线程"+i);
+			t.start();
+		}
+		while(waitThread<threadCount){
+			//等待所有爬虫线程执行完后返回数据...
+			logger.trace("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
+		}
+		
+		return json;
 	}
 	
 //	/**
