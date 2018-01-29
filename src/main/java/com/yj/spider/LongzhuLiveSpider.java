@@ -4,13 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
@@ -37,60 +31,60 @@ public class LongzhuLiveSpider extends HtmlSpiderUtils{
 		logger=LoggerFactory.getLogger(LongzhuLiveSpider.class);
 	}
 
-	/**
-	 * 使用selenium web自动化测试工具来控制浏览器滚动条滚动，以动态加载龙珠直播页面信息
-	 * @param live_lists_url
-	 * @return
-	 * @throws InterruptedException
-	 */
-	public JSONObject getTv_Video_source(String live_lists_url) throws InterruptedException {
-        //等待数据加载的时间
-        //为了防止服务器封锁，这里的时间要模拟人的行为，随机且不能太短
-        long waitLoadBaseTime = 3000;
-        int waitLoadRandomTime = 3000;
-        Random random = new Random(System.currentTimeMillis());
-
-        //火狐浏览器
-        System.setProperty ( "webdriver.firefox.bin" , "E:/火狐浏览器/firefox.exe" );
-        WebDriver driver = new FirefoxDriver();
-        //要抓取的网页
-        driver.get(live_lists_url);
-        //等待页面动态加载完毕
-        Thread.sleep(waitLoadBaseTime+random.nextInt(waitLoadRandomTime));
-        List<WebElement> elements=driver.findElements(By.className("livecard-modal-username"));
-        
-        //要加载多少页数据
-        String lastNickname=elements.get(elements.size()-1).getText();
-        String nickname="";
-        while(!nickname.equals(lastNickname)){
-        	lastNickname=nickname;
-            //滚动加载下一页
-        	//使用js的scrollBy语句，相当于滚动条移动了5000像素  
-        	//创建一个javascript 执行实例  
-            JavascriptExecutor je = (JavascriptExecutor) driver; 
-            je.executeScript("window.scrollBy(0, 5000)"); 
-            //等待页面动态加载完毕
-            Thread.sleep(waitLoadBaseTime+random.nextInt(waitLoadRandomTime));
-            elements=driver.findElements(By.className("livecard-modal-username"));
-            nickname=elements.get(elements.size()-1).getText();
-        }
-        //输出内容
-        //找到标题元素
-        elements = driver.findElements(By.className("title"));
-        int j=1;
-        for(int i=0;i<elements.size();i++) {
-            try {
-                WebElement element = elements.get(i).findElement(By.tagName("a"));
-                //输出标题
-                System.out.println((j++) + "、" + element.getText() + " " + element.getAttribute("href"));
-            }catch (Exception e){
-                System.out.println("ignore "+elements.get(i).getText()+" because "+e.getMessage());
-            }
-        }
-        //关闭浏览器
-        driver.close();
-		return null;
-	}
+//	/**
+//	 * 使用selenium web自动化测试工具来控制浏览器滚动条滚动，以动态加载龙珠直播页面信息
+//	 * @param live_lists_url
+//	 * @return
+//	 * @throws InterruptedException
+//	 */
+//	public JSONObject getTv_Video_source(String live_lists_url) throws InterruptedException {
+//        //等待数据加载的时间
+//        //为了防止服务器封锁，这里的时间要模拟人的行为，随机且不能太短
+//        long waitLoadBaseTime = 3000;
+//        int waitLoadRandomTime = 3000;
+//        Random random = new Random(System.currentTimeMillis());
+//
+//        //火狐浏览器
+//        System.setProperty ( "webdriver.firefox.bin" , "E:/火狐浏览器/firefox.exe" );
+//        WebDriver driver = new FirefoxDriver();
+//        //要抓取的网页
+//        driver.get(live_lists_url);
+//        //等待页面动态加载完毕
+//        Thread.sleep(waitLoadBaseTime+random.nextInt(waitLoadRandomTime));
+//        List<WebElement> elements=driver.findElements(By.className("livecard-modal-username"));
+//        
+//        //要加载多少页数据
+//        String lastNickname=elements.get(elements.size()-1).getText();
+//        String nickname="";
+//        while(!nickname.equals(lastNickname)){
+//        	lastNickname=nickname;
+//            //滚动加载下一页
+//        	//使用js的scrollBy语句，相当于滚动条移动了5000像素  
+//        	//创建一个javascript 执行实例  
+//            JavascriptExecutor je = (JavascriptExecutor) driver; 
+//            je.executeScript("window.scrollBy(0, 5000)"); 
+//            //等待页面动态加载完毕
+//            Thread.sleep(waitLoadBaseTime+random.nextInt(waitLoadRandomTime));
+//            elements=driver.findElements(By.className("livecard-modal-username"));
+//            nickname=elements.get(elements.size()-1).getText();
+//        }
+//        //输出内容
+//        //找到标题元素
+//        elements = driver.findElements(By.className("title"));
+//        int j=1;
+//        for(int i=0;i<elements.size();i++) {
+//            try {
+//                WebElement element = elements.get(i).findElement(By.tagName("a"));
+//                //输出标题
+//                System.out.println((j++) + "、" + element.getText() + " " + element.getAttribute("href"));
+//            }catch (Exception e){
+//                System.out.println("ignore "+elements.get(i).getText()+" because "+e.getMessage());
+//            }
+//        }
+//        //关闭浏览器
+//        driver.close();
+//		return null;
+//	}
 
 	@Override
 	public int getTv_videos_totalPage(String live_lists_url) {
@@ -122,7 +116,7 @@ public class LongzhuLiveSpider extends HtmlSpiderUtils{
 		requestHeadersMap.put("accept-language", "zh-CN,zh;q=0.8");
 		requestHeadersMap.put("cookie", "pluguest=254B324D2CDAF9521D8B59FAEF7B150EB1A627500CB09D9B6DBC3DB0DDBFBC5929F814806AA3240495B972F54E8F27325E8598C3C73CBC1D");
 		requestHeadersMap.put("referer", "http://longzhu.com/channels/all?from=rmlive");
-		requestHeadersMap.put("Connection", "keep-alive");
+		//requestHeadersMap.put("Connection", "keep-alive");
 		requestHeadersMap.put("Host", "api.plu.cn");
 		
 		//获取当前直播页面中所有直播间信息的json字符串

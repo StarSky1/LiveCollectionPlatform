@@ -1,9 +1,11 @@
 package com.yj.spider;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
@@ -23,7 +26,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,8 +175,9 @@ public class HtmlSpiderUtils {
 	 * @param method
 	 * @return
 	 */
-    public String executeGetMethod(String url,Map<String,?> map) {  
-    	String strResult = "";  
+    public String getRequestStr(String url, String method, Map<String,?> map, Map<String,String> requestHeaderMap) {  
+    	BufferedReader reader = null;
+		StringBuilder resultSb = new StringBuilder();
         if (map != null) {
 			Set<String> set = map.keySet();
 			StringBuilder queryParam = new StringBuilder("?");
@@ -185,32 +188,62 @@ public class HtmlSpiderUtils {
 			url += queryParam.toString();
 		}  
         HttpGet httpget = new HttpGet(url);  
-        httpget.setConfig(requestConfig);  
+        httpget.setConfig(requestConfig);
+        // 设置请求属性
+		if(requestHeaderMap!=null){
+			Set<String> set=requestHeaderMap.keySet();
+			for (String s : set) {
+				httpget.setHeader(s, requestHeaderMap.get(s));
+			}
+		}else{
+			httpget.setHeader("accept", "*/*");  
+		}
+		httpget.setHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400"); //user-agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400
         CloseableHttpResponse response=null;  
         try {  
             response = httpclient.execute(httpget);  
             HttpEntity entity = response.getEntity();  
             int iGetResultCode = response.getStatusLine().getStatusCode();  
             if (iGetResultCode >= 200 && iGetResultCode < 303) {  
-                strResult = EntityUtils.toString(entity);  
+                if(entity.getContentEncoding()!=null && entity.getContentEncoding().getValue().toLowerCase().equals("gzip")){
+                	// 定义 BufferedReader输入流来读取URL的响应  
+                	InputStreamReader in=new InputStreamReader(new GZIPInputStream(entity.getContent()));
+        			reader = new BufferedReader(in);
+                }else{
+                	// 定义 BufferedReader输入流来读取URL的响应  
+        			reader = new BufferedReader(new InputStreamReader(entity.getContent()));
+                }
+      			String line;
+      			while((line=reader.readLine())!=null){
+      				resultSb.append(line);
+      			}  
             } else if (iGetResultCode >= 400 && iGetResultCode < 500) {  
-                strResult = "请求的目标地址不存在：" + iGetResultCode;  
+            	resultSb.append("请求的目标地址不存在：" + iGetResultCode);  
             } else {  
-                strResult = "请求错误：" + iGetResultCode;  
+            	resultSb.append("请求错误：" + iGetResultCode);  
             }  
-        } catch (Exception ex) {  
-            ex.printStackTrace();  
-        } finally {  
-             try {  
-                if(response !=null){  
-                    response.close();  
-                }  
-            } catch (Exception e) {  
-                e.printStackTrace();  
-            }  
-        }  
-        return strResult;  
-    }  
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if (response != null) {
+				try {
+					response.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				};
+			}
+		}
+		return resultSb.toString();
+	}  
 	
 	/**
 	 * 将html页面中body里面的内容得到

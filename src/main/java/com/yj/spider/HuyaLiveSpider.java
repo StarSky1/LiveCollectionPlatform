@@ -56,7 +56,7 @@ public class HuyaLiveSpider extends HtmlSpiderUtils{
 		requestHeadersMap.put("accept-language", "zh-CN,zh;q=0.8");
 		requestHeadersMap.put("cookie", "__yamid_tt1=0.7154031259899476; __yamid_new=C7D6BF7F37200001F8514D5081F01767; PHPSESSID=i380cn4nrd5arlgmbh1i4cnq34; SoundValue=0.50; isInLiveRoom=; udb_passdata=1; __yasmid=0.7154031259899476; _yasids=__rootsid%3DC7D7078589C00001AF168D601D30F880; Hm_lvt_51700b6c722f5bb4cf39906a596ea41f=1516178656,1516187088,1516254179; Hm_lpvt_51700b6c722f5bb4cf39906a596ea41f=1516254181");
 		requestHeadersMap.put("referer", "http://www.huya.com/l");
-		requestHeadersMap.put("Connection", "keep-alive");
+		//requestHeadersMap.put("Connection", "keep-alive");
 		requestHeadersMap.put("Host", "www.huya.com");
 		
 		//获取当前直播页面中所有直播间信息的json字符串

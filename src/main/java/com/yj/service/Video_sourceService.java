@@ -17,13 +17,19 @@ public class Video_sourceService {
 	@Autowired
 	public Video_hostService video_hostService;
 	
+	/**
+	 * status为0表示未开播，1表示正在直播
+	 * @param status
+	 */
+	public void updateAllVideo_source_status(int status){
+		video_sourceDao.updateAllVideo_source_status(status);
+	}
+	
 	public void updateVideo_source(JSONObject json){
 		if(json==null || json.size()==0){
 			System.out.println("无数据录入");
 			return;
 		}
-		//将直播间表中现有直播间的直播状态全部修改为0  未开播
-		video_sourceDao.updateAllVideo_source_status(0);
 		@SuppressWarnings("unchecked")
 		List<Video_host> host_list=(List<Video_host>) json.get("host_list");
 		@SuppressWarnings("unchecked")

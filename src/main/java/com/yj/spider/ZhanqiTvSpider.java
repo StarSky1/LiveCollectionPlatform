@@ -55,7 +55,7 @@ public class ZhanqiTvSpider extends HtmlSpiderUtils{
 		requestHeadersMap.put("accept-language", "zh-CN,zh;q=0.8");
 		requestHeadersMap.put("cookie", "PHPSESSID=rf9dp3k087ogc8sp28ltih8f02; gid=1872174635; cookie_ip=%2C3396240088; myLocationCacheKey=%u6E56%u5317%u6B66%u6C49%u6E56%u5317%u7B2C%u4E8C%u5E08%u8303%u5B66%u9662; myIpCacheKey=202.197.149.141; myIspCacheKey=%u6559%u80B2%u7F51; myContryCacheKey=%u4E2D%u56FD; Hm_lvt_299cfc89fdba155674e083d478408f29=1516170631; Hm_lpvt_299cfc89fdba155674e083d478408f29=1516171628");
 		requestHeadersMap.put("referer", "http://www.zhanqi.tv/lives");
-		requestHeadersMap.put("Connection", "keep-alive");
+		//requestHeadersMap.put("Connection", "keep-alive");
 		requestHeadersMap.put("Host", "www.zhanqi.tv");
 		
 		//获取当前直播页面中所有直播间信息的json字符串
