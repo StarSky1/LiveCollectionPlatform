@@ -1,31 +1,16 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  padding-top: 70px;
+  padding-top: 60px;
   background-color: #2CAC9A;
+  font: 14px "Consolas","Microsoft Yahei",Arial,monospace;
 }
 
-/* 轮播图样式 */
-#carousel-pictures {
-  margin: 0 auto;
-}
-
-.carousel {
-  width: 750px;
-  height: 400px;
-}
-
-.carousel .item {
-  width: 750px;
-  height: 400px;
-}
-
-.carousel-img {
-  width: 750px;
-  height: 400px;
-}
-
-.carousel-caption {
-  z-index: 10;
+.navbar-brand {
+  padding: 15px 50px;
 }
 
 /*  well背景样式 */
@@ -34,12 +19,155 @@ body {
   background-color: #eee;
 }
 
-/* 推荐视频和直播间样式 */
-.suggested_video {
-  height: 474px;
+.main-content {
+  overflow: auto;
 }
 
-.suggested_LiveRoom {
-  padding: 5px 10px;
+/* 推荐视频和直播间样式 */
+/* .suggestion {
+  margin: 0 auto;
+} */
+
+.suggested_video{
+  padding: 0;
+  height: 720px;
 }
+
+.suggested_video video {
+  height: 100%;
+  width: 100%;
+}
+
+.suggestion_list {
+  padding: 0;
+}
+
+.suggestion ul {
+  height: auto;
+  width: 278px;
+  margin: 0 auto;
+  position: absolute;
+  right: 10px;
+}
+
+.suggestion ul li {
+  list-style: none;
+  height: 120px;
+  padding: 10px;
+  background-color: white;
+  border-bottom: 1px solid black;
+}
+
+.suggestion ul li a {
+ height: 100px;
+}
+
+/* 直播间列表样式 */
+.text-right {
+    text-align: right;
+}
+
+.liveList {
+
+}
+
+.liveList img {
+    width: 100%;
+    height: 170px;
+}
+
+.liveList img.platform-icon {
+    width: 70px;
+    height: 57px;
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+
+.liveList a {
+    color: #000;
+    text-decoration: none;
+    margin: 6px 0;
+    height: 234px;
+}
+
+.liveList h5 {
+    background-color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 10px;
+}
+
+.liveList a:hover h5 {
+    color: #EB3838;
+}
+
+.liveList .row {
+    font-size: 12px;
+    color: #787878;
+    background-color: #fff;
+    padding: 10px 0;
+    padding-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+    border-bottom: 3px solid #ececec;
+    transition: all 0.2s ease-out;
+}
+
+.liveList a:hover .row {
+    border-bottom: 3px solid #EB3838;
+}
+
+.liveList h5, .liveList div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+
+/* 轮播图样式 */
+#carousel-pictures {
+  margin: 0 auto;
+}
+
+.carousel {
+  width: 100%;
+  height: 100%;
+}
+
+/*  登陆框样式 */
+.opacity {
+   position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  background-color:  rgba(0,0,0,0.5);
+  z-index: 1031;
+}
+
+.login {
+  position: relative;
+  z-index: 1032;
+}
+
+
+
+
+/* 页脚样式 */
+footer {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  background-color: #3f3f3f;
+  text-align: center;
+  width: 100%;
+  color: #979797;
+  padding: 30px 0;
+  overflow: hidden;
+  line-height: 22px;
+}
+
+
 

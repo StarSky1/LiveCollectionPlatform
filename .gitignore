@@ -27,7 +27,7 @@ enthumbs.db
 Desktop.ini
 # my configurations
 bin
-.settings
-.classpath
-.project
+#.settings
+#.classpath
+#.project
 

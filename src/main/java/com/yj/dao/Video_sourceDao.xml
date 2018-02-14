@@ -14,6 +14,22 @@
 		<result column="video-status" jdbcType="INTEGER" property="video_status"/>
 	</resultMap>
 	
+	<select id="selectList" parameterType="java.util.Map" resultMap="video_source_ResultMap">
+		select * from `video-source`
+		<where>
+			<if test="type !=null">
+			and `video-type`=#{type}
+			</if>
+			<if test="platform !=null">
+			and `video-platform`=#{platform}
+			</if>
+		</where>
+		order by `video-status` desc,`video-number` desc
+		<if test="offset != null">
+		 limit #{start},#{offset}
+		</if>
+	</select>
+	
 	<!-- 因为主键现在不是自增长，去除useGeneratedKeys="true" keyProperty="video_id" -->
 	<insert id="insert_video_source"  parameterType="com.yj.pojo.Video_source">
 		insert into `video-source` (`video-id`,`video-title`,`video-img`,
