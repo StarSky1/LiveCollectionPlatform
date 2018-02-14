@@ -1,6 +1,8 @@
 # LiveCollectionPlatform
 用Java编写的一个直播汇总平台网站，收集各大直播平台热门有趣的直播，享受直播的乐趣吧！
 
+## 添加了dev分支，欢迎大家分享意见和代码。
+
 ## 证书License
 ```
    Copyright 2017 LiveCollectionPlatform
