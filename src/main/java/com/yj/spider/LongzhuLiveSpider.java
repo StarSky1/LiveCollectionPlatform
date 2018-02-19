@@ -186,6 +186,17 @@ public class LongzhuLiveSpider extends HtmlSpiderUtils{
 		return json;
 	}
 	
+	/**
+	 * 覆写父类的crawlData方法，使用循环来爬取数据，避免龙珠服务器没有回应时，多线程爬取死锁的问题
+	 */
+	@Override
+	public JSONObject crawlData(String live_lists_url, int total_page) {
+		// TODO Auto-generated method stub
+		return getTv_Video_sourceByCircle(live_lists_url, total_page);
+	}
+	
+	
+	
 	
 	
 	

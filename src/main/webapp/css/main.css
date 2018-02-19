@@ -77,8 +77,8 @@ body {
 }
 
 .liveList img.platform-icon {
-    width: 70px;
-    height: 57px;
+    width: 50px;
+    height: 27px;
     position: absolute;
     top: 0;
     right: 20px;
@@ -152,6 +152,22 @@ body {
   z-index: 1032;
 }
 
+/* 分页栏样式 */
+
+.pagination {
+  padding-left: 100px;
+  width: auto;
+}
+
+#InputPage {
+  width: 60px;
+}
+
+.form-inline {
+  vertical-align: middle;
+  padding: 30px 0px;
+  margin-left: -40px;
+}
 
 
 

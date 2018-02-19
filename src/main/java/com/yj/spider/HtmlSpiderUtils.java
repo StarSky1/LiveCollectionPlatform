@@ -375,6 +375,13 @@ public class HtmlSpiderUtils {
 	}
 	
 	/**
+	 * 爬取数据
+	 */
+	public JSONObject crawlData(String live_lists_url, int total_page){
+		return getTv_Video_sourceBymulti_thread(live_lists_url, total_page);
+	}
+	
+	/**
 	 * 开启多个线程，并行获取1-total_page页的直播平台 所有正在直播的直播间和主播信息
 	 * @param live_lists_url
 	 * @param total_page
