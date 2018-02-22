@@ -28,11 +28,25 @@
 			<if test="platform !=null">
 			and `video-platform`=#{platform}
 			</if>
+			and `video-status`=1
 		</where>
-		order by `video-status` desc,`video-number` desc
+		order by `video-number` desc
 		<if test="offset != null">
 		 limit #{start},#{offset}
 		</if>
+	</select>
+	
+	<select id="selectVideoCount" parameterType="java.util.Map" resultType="int">
+		select count(*) from `video-room`
+		<where>
+			<if test="type !=null">
+			and `video-type`=#{type}
+			</if>
+			<if test="platform !=null">
+			and `video-platform`=#{platform}
+			</if>
+			and `video-status`=1
+		</where>
 	</select>
 	
 </mapper>

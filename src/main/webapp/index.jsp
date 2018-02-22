@@ -221,8 +221,8 @@
           }
           pages.push({pageno: total_page});  //始终显示最后一页
         }
-        if(total_page>show_size && end>total_page-2 && end<total_page){
-          for(var i=end+1;i<total_page;i++){
+        if(total_page>show_size && end>=total_page-2 && end<total_page){
+          for(var i=end+1;i<=total_page;i++){
             pages.push({pageno: i});
           }
         }

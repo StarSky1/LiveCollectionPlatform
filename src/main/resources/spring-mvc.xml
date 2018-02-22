@@ -11,7 +11,7 @@
                         http://www.springframework.org/schema/mvc    
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
                         http://www.springframework.org/schema/task  
-						http://www.springframework.org/schema/task/spring-task-3.1.xsd  ">  
+						http://www.springframework.org/schema/task/spring-task-3.2.xsd  ">  
     
     <mvc:annotation-driven>
         <!-- 消息转换器,ajax解决返回值乱码问题 -->
@@ -68,7 +68,10 @@
         <property name="maxInMemorySize" value="40960" />    
     </bean>
     
-   
+    <!-- 添加task任务扫描注解 -->
+	<task:annotation-driven />
+	<!-- 扫描任务 -->
+    <context:component-scan base-package="com.yj.task" />
 
   	
 </beans>  

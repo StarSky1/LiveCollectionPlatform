@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.yj.pojo.Video_host;
 import com.yj.pojo.Video_source;
@@ -128,7 +129,13 @@ public class LongzhuLiveSpider extends HtmlSpiderUtils{
 	public void parseVideo_items_JSONStr(String live_dataStr, List<Video_host> host_list,
 			List<Video_source> source_list) {
 		live_dataStr=live_dataStr.replaceAll("^.*?\\(|\\)", "");
-		JSONObject json=JSON.parseObject(live_dataStr);
+		JSONObject json=null;
+		try{
+			json=JSON.parseObject(live_dataStr);
+		}catch(JSONException e){
+			logger.error("解析json字符串失败"+e.getMessage());
+			return;
+		}
 		JSONArray items=json.getJSONObject("data").getJSONArray("items");
 		
 		for(int j=0;j<items.size();j++){

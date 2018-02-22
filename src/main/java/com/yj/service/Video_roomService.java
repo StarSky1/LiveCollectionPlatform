@@ -27,8 +27,8 @@ public class Video_roomService {
 		return video_roomDao.selectList(params);
 	}
 	
-	public int getVideoCount(){
-		return video_roomDao.selectVideoCount();
+	public int getVideoCount(Map<String,Object> params){
+		return video_roomDao.selectVideoCount(params);
 	}
 	
 }

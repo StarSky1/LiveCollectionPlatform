@@ -26,7 +26,7 @@ public class HomeController {
 	public JSONObject getVideoList(int pageno){
 		List<Video_room> list=video_roomService.getVideoList(null, null, pageno, pagesize);
 		JSONArray videos=JSON.parseArray(JSON.toJSONString(list));
-		int total=video_roomService.getVideoCount();
+		int total=video_roomService.getVideoCount(null);
 		JSONObject json=new JSONObject();
 		json.put("videos", videos);
 		json.put("total", total);
