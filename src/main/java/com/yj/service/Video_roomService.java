@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.lf.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +21,17 @@ public class Video_roomService {
 		int start=(pageno-1)*pagesize;
 		int offset=pagesize;
 		Map<String,Object> params=new HashMap<>();
-		params.put("platform", platform);
-		params.put("type", type);
+		params.put("platform", StringUtils.isEmpty(platform)?null:platform);
+		params.put("type", StringUtils.isEmpty(type)?null:type);
 		params.put("start", start);
 		params.put("offset", offset);
 		return video_roomDao.selectList(params);
 	}
 	
-	public int getVideoCount(Map<String,Object> params){
+	public int getVideoCount(String platform,String type){
+		Map<String,Object> params=new HashMap<>();
+		params.put("platform", StringUtils.isEmpty(platform)?null:platform);
+		params.put("type", StringUtils.isEmpty(type)?null:type);
 		return video_roomDao.selectVideoCount(params);
 	}
 	

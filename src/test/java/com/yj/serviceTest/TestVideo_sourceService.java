@@ -64,13 +64,13 @@ public class TestVideo_sourceService {
 	}
 	
 	@Test
-	public void testUpdateQuanminSource(){
+	public void testUpdateHuyaLiveSource(){
 		String live_lists_url;
 		int total_page;
 		JSONObject json;
-		live_lists_url="http://www.quanmin.tv/json/play/list";
-		total_page=quanminTvSpider.getTv_videos_totalPage(live_lists_url);
-		json=quanminTvSpider.getTv_Video_sourceBymulti_thread(live_lists_url, total_page);
+		live_lists_url="http://www.huya.com/cache.php";
+		total_page=huyaLiveSpider.getTv_videos_totalPage(live_lists_url);
+		json=huyaLiveSpider.getTv_Video_sourceBymulti_thread(live_lists_url, total_page);
 		video_sourceService.updateVideo_source(json);
 	}
 }

@@ -35,4 +35,6 @@ public class Video_platformService {
 	public int updateVideo_platformImg(int platform_id,String platform_img){
 		return video_platformDao.updateVideo_platformImg(platform_id, platform_img);
 	}
+	
+	
 }

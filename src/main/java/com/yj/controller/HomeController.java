@@ -1,5 +1,6 @@
 package com.yj.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,17 @@ public class HomeController {
 	
 	@RequestMapping("videolist.do")
 	@ResponseBody
-	public JSONObject getVideoList(int pageno){
-		List<Video_room> list=video_roomService.getVideoList(null, null, pageno, pagesize);
+	public JSONObject getVideoList(int pageno,String platform,String cateName) throws UnsupportedEncodingException{
+		platform=platform==null?null:new String(platform.getBytes("ISO8859-1"),"utf-8");
+		cateName=cateName==null?null:new String(cateName.getBytes("ISO8859-1"),"utf-8");
+		List<Video_room> list=video_roomService.getVideoList(platform, cateName, pageno, pagesize);
 		JSONArray videos=JSON.parseArray(JSON.toJSONString(list));
-		int total=video_roomService.getVideoCount(null);
+		int total=video_roomService.getVideoCount(platform, cateName);
 		JSONObject json=new JSONObject();
 		json.put("videos", videos);
 		json.put("total", total);
 		json.put("pagesize", pagesize);
 		return json;
 	}
+	
 }

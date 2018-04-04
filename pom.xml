@@ -4,6 +4,7 @@
   <artifactId>liveplatform</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <properties>
+  <failOnMissingWebXml>true</failOnMissingWebXml>
   <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <springframework.version>4.3.9.RELEASE</springframework.version>
     <junit-version>4.12</junit-version>
@@ -217,6 +218,7 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.5.1</version>
         <configuration>
@@ -224,6 +226,47 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      <plugin>  
+	    <groupId>org.apache.maven.plugins</groupId>  
+	    <artifactId>maven-war-plugin</artifactId>  
+	    <version>2.6</version>  
+	  </plugin> 
+	  <!-- Eclipse project -->
+	  <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-eclipse-plugin</artifactId>
+			<version>2.9</version>
+			<configuration>
+			        <!-- Always download and attach dependencies source code -->
+				<downloadSources>true</downloadSources>
+				<downloadJavadocs>true</downloadJavadocs>
+				<!-- Avoid type mvn eclipse:eclipse -Dwtpversion=2.0 -->
+				<wtpversion>2.0</wtpversion>
+			</configuration>
+	  </plugin>
+	  <!-- For Maven Tomcat Plugin -->
+	  <plugin>
+		<groupId>org.apache.tomcat.maven</groupId>
+		<artifactId>tomcat7-maven-plugin</artifactId>
+		<version>2.2</version>
+		<configuration>
+			<path>/liveplatform</path>
+		</configuration>
+	  </plugin>
     </plugins>
+    <extensions>
+		<extension>
+			<groupId>org.apache.maven.wagon</groupId>
+			<artifactId>wagon-webdav-jackrabbit</artifactId>
+			<version>1.0-beta-7</version>
+		</extension>
+	</extensions>
   </build>
+  <distributionManagement>
+    <site>
+      <id>yjserver</id>
+      <url>dav:http://127.0.0.1/sites/</url>
+    </site>
+  </distributionManagement>
+  <packaging>war</packaging>
 </project>

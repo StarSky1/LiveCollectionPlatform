@@ -4,8 +4,8 @@ function getRootpath() {
   return localObj.protocol + "//" + localObj.host + "/" + contextPath;
 }
 
-function getVideolist(vm,pageno){
-  $.getJSON(getRootpath()+"/home/videolist.do",{pageno: pageno},function(json){
+function getVideolist(vm,pageno,cateName,platform){
+  $.getJSON(getRootpath()+"/home/videolist.do",{pageno: pageno,cateName: cateName,platform: platform},function(json){
      vm.videos=json.videos;
      vm.total=json.total;
      vm.pagesize=json.pagesize;

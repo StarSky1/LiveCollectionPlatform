@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.lf.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,18 @@ public class Video_categoryService {
 			map.put(cate.getVideo_type(), cate);
 		}
 		return map;
+	}
+	
+	/**
+	 * 更新直播分类图片Url到本地url
+	 */
+	public void updateAllcategoryURL(){
+		List<Video_category> list=getVideo_categoryList();
+		for (Video_category cate : list) {
+			String url=cate.getVideo_type_img();
+			String suffix=url.substring(url.lastIndexOf("."));
+			url=StringUtils.getUUID()+suffix;
+			update_video_img_url(cate.getVideo_type_id(), url);
+		}
 	}
 }

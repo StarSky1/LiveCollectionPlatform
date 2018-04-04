@@ -101,9 +101,9 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 		Map<String,Object> map=new HashMap<>();
 		//request params
 		map.put("status", 2);
-		map.put("order", "person_num");
+		map.put("order", "top");
 		map.put("pagenum", pagenum);
-		map.put("_", "1515551847186");
+		map.put("_", "1521897878150");
 		map.put("pageno", pageno);
 		//request headers
 		Map<String,String> requestHeadersMap=new HashMap<>();

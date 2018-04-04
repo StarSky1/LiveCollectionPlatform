@@ -4,7 +4,6 @@
 <html>
 <head>
   <title>首页</title>
-</head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,6 +21,7 @@
   <script type="text/javascript" src="./bootstrap-3.3.7-dist/js/bootstrap.js"></script>
   <script type="text/javascript" src="./js/vue.js"></script>
   <script type="text/javascript" src="./js/main.js"></script>
+</head>
 <body>
   <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
@@ -48,7 +48,7 @@
           </form>
         </li>
         <li><a href="#">所有直播</a></li>
-        <li><a href="#">所有分类</a></li>
+        <li><a href="category/showCategory.do">所有分类</a></li>
         <li><a href="#">上传直播源</a></li>
         <li><a href="#">我的主页</a></li>
         <li><a href="#">登录/注册</a></li>
@@ -58,74 +58,10 @@
 </nav>
 
 <div class="main-content container-fluid">
-    <div class="row  suggestion">
-      <!-- 推荐直播间 -->
-      <div class="col-md-3  col-sm-6 col-xs-6 suggestion_list">
-        <ul>
-          <li><a href="#"><img src="https://i.h2.pdim.gs/cb9bab1140b9cff9afbcbfc643560d1c.webp" alt="" class="suggested_LiveRoom"></a></li>
-          <li><a href="#"><img src="https://i.h2.pdim.gs/cb9bab1140b9cff9afbcbfc643560d1c.webp" alt="" class="suggested_LiveRoom"></a></li>
-          <li><a href="#"><img src="https://i.h2.pdim.gs/cb9bab1140b9cff9afbcbfc643560d1c.webp" alt="" class="suggested_LiveRoom"></a></li>
-          <li><a href="#"><img src="https://i.h2.pdim.gs/cb9bab1140b9cff9afbcbfc643560d1c.webp" alt="" class="suggested_LiveRoom"></a></li>
-          <li><a href="#"><img src="https://i.h2.pdim.gs/cb9bab1140b9cff9afbcbfc643560d1c.webp" alt="" class="suggested_LiveRoom"></a></li>
-          <li><a href="#"><img src="https://i.h2.pdim.gs/cb9bab1140b9cff9afbcbfc643560d1c.webp" alt="" class="suggested_LiveRoom"></a></li>
-        </ul>
-      </div>
-      <div class="col-md-7 col-sm-6 col-xs-6 well suggested_video">
-          <video  src="./video/b.mp4"  controls="controls">
-            您的浏览器不支持 video 标签。
-          </video>
-      </div>
-      <div class="col-md-1"></div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3 col-sm-6 col-xs-6 well">
-        <!-- 轮播图片 -->
-        <div id="carousel-pictures" class="carousel slide" data-ride="carousel">
-          <!-- 图片指示器 -->
-          <ol class="carousel-indicators">
-            <li data-target="#carousel-pictures" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-pictures" data-slide-to="1"></li>
-            <li data-target="#carousel-pictures" data-slide-to="2"></li>
-          </ol>
-
-          <!-- 幻灯片的wrapper -->
-          <div class="carousel-inner" role="listbox">
-            <div class="item active">
-              <img src="./assets/1.jpg" class="carousel-img" alt="图片一">
-              <div class="carousel-caption">
-                <h3>图片一</h3>
-              </div>
-            </div>
-            <div class="item">
-              <img src="./assets/2.jpg" class="carousel-img" alt="图片二">
-              <div class="carousel-caption">
-                <h3>图片二</h3>
-              </div>
-            </div>
-            <div class="item">
-              <img src="./assets/3.jpg" class="carousel-img" alt="图片三">
-              <div class="carousel-caption">
-                <h3>图片三</h3>
-              </div>
-            </div>
-          </div>
-
-          <!-- Controls -->
-          <a class="left carousel-control" href="#carousel-pictures" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">上一张</span>
-          </a>
-          <a class="right carousel-control" href="#carousel-pictures" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">下一张</span>
-          </a>
-        </div>
-      </div>
-    </div>
-    <div id="liveList" class="row liveList">
+      <div id="liveList" class="liveList row">
         <a  v-for="video in videos" :href="video.video_room_url" target="_blank" class="col-lg-3 col-md-4 col-sm-6 ellipsis ">
         <img :src="video.video_img" onerror="this.onerror=&quot;&quot;;this.src=&quot;./res/404.jpg&quot;">
-        <img :src="video.video_platform_img" class="platform-icon">
+        <img :src="'res/platform_img/'+video.video_platform_img" class="platform-icon">
         <h5>&nbsp;{{ video.video_title }}</h5>
         <div class="row">
           <div class="col-sm-7">
@@ -135,9 +71,9 @@
             <span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ video.video_number }}
           </div>
         </div>
-      </a>
+        </a>
+      </div>
 
-    </div>
     <div class="row">
       <nav aria-label="Page navigation" class="col-md-6 col-md-offset-2 Page">
         <ul class="pagination pagination-lg">
