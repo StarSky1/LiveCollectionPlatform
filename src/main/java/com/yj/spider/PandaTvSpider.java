@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.yj.pojo.Video_category;
 import com.yj.pojo.Video_host;
@@ -100,9 +101,9 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 		Map<String,Object> map=new HashMap<>();
 		//request params
 		map.put("status", 2);
-		map.put("order", "person_num");
+		map.put("order", "top");
 		map.put("pagenum", pagenum);
-		map.put("_", "1515551847186");
+		map.put("_", "1521897878150");
 		map.put("pageno", pageno);
 		//request headers
 		Map<String,String> requestHeadersMap=new HashMap<>();
@@ -124,7 +125,13 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 	 * @param jsonStr
 	 */
 	public void parseVideo_items_JSONStr(String live_dataStr,List<Video_host> host_list,List<Video_source> source_list){
-		JSONObject json=JSON.parseObject(live_dataStr);
+		JSONObject json=null;
+		try{
+			json=JSON.parseObject(live_dataStr);
+		}catch(JSONException e){
+			logger.error("解析json字符串失败"+e.getMessage());
+			return;
+		}
 		JSONArray items=json.getJSONObject("data").getJSONArray("items");
 		for(int j=0;j<items.size();j++){
 			json=items.getJSONObject(j);

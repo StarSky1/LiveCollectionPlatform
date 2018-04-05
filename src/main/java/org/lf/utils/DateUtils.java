@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
@@ -68,11 +69,15 @@ public class DateUtils {
 	}
 	
 	public static int getYear(Date d) {
-		return d.getYear() + 1900;
+		Calendar c=Calendar.getInstance();
+		c.setTime(d);
+		return c.get(Calendar.YEAR) + 1900;
 	}
 	
 	public static int getMonth(Date d) {
-		return d.getMonth() + 1;
+		Calendar c=Calendar.getInstance();
+		c.setTime(d);
+		return c.get(Calendar.MONTH) + 1;
 	}
 	
 	public static Date getRandomDate(Date minDate, Date maxDate) {

@@ -375,6 +375,36 @@ public class HtmlSpiderUtils {
 	}
 	
 	/**
+	 * 爬取数据(默认使用循环方法爬取)
+	 */
+	public JSONObject crawlData(String live_lists_url, int total_page){
+		return getTv_Video_sourceByCircle(live_lists_url, total_page);
+	}
+	
+	/**
+	 * 循环爬取直播平台数据
+	 * @param live_lists_url
+	 * @param total_page
+	 * @return
+	 */
+	public JSONObject getTv_Video_sourceByCircle(String live_lists_url, int total_page) {
+		JSONObject json=new JSONObject();
+		List<Video_host> host_list=new ArrayList<>();
+		List<Video_source> source_list=new ArrayList<>();
+		cate_map=video_categoryService.getVideo_cateMap();
+		video_platform=video_platformService.getVideo_platformByName(platform);
+		
+		for(int i=1;i<=total_page;i++){
+			logger.debug(platform+"爬虫开始获取第"+i+"页的数据...");
+			String live_dataStr=getTv_Video_source(live_lists_url, i);
+			parseVideo_items_JSONStr(live_dataStr, host_list, source_list);
+		}
+		json.put("host_list", host_list);
+		json.put("source_list", source_list);
+		return json;
+	}
+	
+	/**
 	 * 开启多个线程，并行获取1-total_page页的直播平台 所有正在直播的直播间和主播信息
 	 * @param live_lists_url
 	 * @param total_page
