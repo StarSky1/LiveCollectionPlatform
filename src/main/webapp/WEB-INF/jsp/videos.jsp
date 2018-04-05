@@ -33,7 +33,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">YangTV</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -47,7 +47,7 @@
             <button type="submit" class="btn btn-default">搜索</button>
           </form>
         </li>
-        <li><a href="#">所有直播</a></li>
+        <li><a href="/liveplatform">所有直播</a></li>
         <li><a href="category/showCategory.do">所有分类</a></li>
         <li><a href="#">上传直播源</a></li>
         <li><a href="#">我的主页</a></li>

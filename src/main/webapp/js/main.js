@@ -11,3 +11,4 @@ function getVideolist(vm,pageno,cateName,platform){
      vm.pagesize=json.pagesize;
   });
 }
+

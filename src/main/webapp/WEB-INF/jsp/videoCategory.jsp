@@ -107,11 +107,11 @@
             <button type="submit" class="btn btn-default">搜索</button>
           </form>
         </li>
-        <li><a href="#">所有直播</a></li>
-        <li><a href="#">所有分类</a></li>
-        <li><a href="#">上传直播源</a></li>
+       <li><a href="/liveplatform">所有直播</a></li>
+        <li><a href="category/showCategory.do">所有分类</a></li>
         <li><a href="#">我的主页</a></li>
-        <li><a href="#">登录/注册</a></li>
+        <li><a href="/liveplatform/login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
+        <li style="position: relative;left: -30px;"><a href="/liveplatform/login/showRegister.do">注册</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -121,7 +121,7 @@
 			<p>平台分类</p>
 			<div class="row">
 				<div class="col-md-6" v-for="platform in platform_imgs">
-				<a :href="'showVideos.do?platform='+platform.video_platform" target="_blank">
+				<a :href="'showVideos.do?platform='+platform.video_platform">
 					<img :src="'../res/platform_img/'+platform.video_platform_img"/>
 					<p>{{ platform.video_platform }}</p>
 				</a>
@@ -131,7 +131,7 @@
 		<div class="container cate_list">
 			<ul class="row">
 				<li class="col-md-3 cate_item" v-for="img in category_imgs">
-				<a :href="'showVideos.do?cateName='+img.video_type"  target="_blank">
+				<a :href="'showVideos.do?cateName='+img.video_type">
 					<img :src="'../res/cate_img/'+img.video_type_img"/>
 					<div class="cate_title">{{ img.video_type }}</div>
 				</a>

@@ -33,11 +33,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">YangTV</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+    <div class="collapse navbar-collapse"  id="navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li>
           <form class="navbar-form">
@@ -51,12 +51,16 @@
         <li><a href="category/showCategory.do">所有分类</a></li>
         <li><a href="#">上传直播源</a></li>
         <li><a href="#">我的主页</a></li>
-        <li><a href="#">登录/注册</a></li>
+        <li><a href="login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
+        <li style="position: relative;left: -30px;"><a href="#">注册</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
+<div class="main-header">
+	<i class="header-line"></i>
+	<h3 class="header-title-firstname">所有直播</h3>
+</div>
 <div class="main-content container-fluid">
       <div id="liveList" class="liveList row">
         <a  v-for="video in videos" :href="video.video_room_url" target="_blank" class="col-lg-3 col-md-4 col-sm-6 ellipsis ">
