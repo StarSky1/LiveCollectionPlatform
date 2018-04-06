@@ -1,8 +1,17 @@
 package com.yj.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javax.servlet.http.HttpSession;
+
+import org.lf.utils.BaseProperties;
 import org.lf.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yj.dao.UserMapper;
 import com.yj.pojo.User;
@@ -40,6 +49,44 @@ public class UserService {
 		if(i>0) return true;
 		return false;
 	}
+	
+	public boolean updateUser(User user){
+		int i=userMapper.updateByPrimaryKeySelective(user);
+		if(i>0) return true;
+		return false;
+	}
+	
+	public String uploadUserImg(int userId,MultipartFile file,String suffix,HttpSession session) {
+		String root=session.getServletContext().getRealPath("/");
+		System.out.println(root);
+		User user=userMapper.selectByPrimaryKey(userId);
+		String filename=user.getUserName()+suffix;
+		File dest=new File(root,filename);
+		File dest1=new File(BaseProperties.getProperty("userImgDir"),filename);
+		try {
+			file.transferTo(dest);
+			copyFile(dest, dest1);
+		} catch (IllegalStateException | IOException e) {
+			e.printStackTrace();
+			return "error";
+		}
+		user.setUserHeadImg(filename);
+		session.setAttribute("currentUser", user);
+		return filename;
+	}
+	
+	public void copyFile(File fromFile,File toFile) throws IOException{
+        FileInputStream ins = new FileInputStream(fromFile);
+        FileOutputStream out = new FileOutputStream(toFile);
+        byte[] b = new byte[1024];
+        int n=0;
+        while((n=ins.read(b))!=-1){
+            out.write(b, 0, n);
+        }
+        
+        ins.close();
+        out.close();
+    }
 	
 	public boolean validateUsername(String username){
 		User user=userMapper.selectByUsername(username);

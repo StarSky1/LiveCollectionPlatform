@@ -13,6 +13,26 @@ body {
   padding: 15px 50px;
 }
 
+.userimg {
+	width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    margin-top: 1px;
+    margin-right: 50px;
+    margin-left: 20px;
+}
+
+.user_dropdown {
+	margin-left: -40px;
+    margin-top: 20px;
+}
+
+li > span.user_dropdown~.dropdown-menu {
+	margin-top: 20px;
+	width: 130px;
+    right: 10px;
+}
+
 /*  well背景样式 */
 /* .well {
   border: 1px solid #ccc;

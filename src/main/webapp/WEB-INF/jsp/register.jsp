@@ -249,6 +249,7 @@
 				$.getJSON(getRootpath()+"/login/register.do",{username: vm.username,password: vm.password,phone: vm.phone,email: vm.email},function(json){
 					if(!json.status){ swal("提示！", "注册失败", "error"); }
 				    else{
+				    	swal("提示！", "注册成功", "success");
 				    	window.location.href='http://localhost:8080/liveplatform/login/login.do';
 				    }
 				 });

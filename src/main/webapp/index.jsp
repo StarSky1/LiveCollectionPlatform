@@ -49,10 +49,23 @@
         </li>
         <li><a href="#">所有直播</a></li>
         <li><a href="category/showCategory.do">所有分类</a></li>
-        <li><a href="#">上传直播源</a></li>
-        <li><a href="#">我的主页</a></li>
-        <li><a href="login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
-        <li style="position: relative;left: -30px;"><a href="#">注册</a></li>
+        <li><a href="#">用户排行榜</a></li>
+        <li v-if="logined">
+        	<img class="userimg" src="res/user_head_img/${currentUser.userHeadImg}">
+        </li>
+        <li v-if="logined">
+        	<span class="user_dropdown glyphicon glyphicon-chevron-down dropdown-toggle" data-toggle="dropdown"></span>
+			  <ul class="dropdown-menu">
+				<li><a href="user/showProfile.do" target="_blank"><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
+				<li><a id="changePassword" href="/user/changePassword" target="dialog" rel="changePassword" mask="true" height="380" width="500"><i class="glyphicon glyphicon-wrench"></i> 修改密码</a></li>
+				<li>
+				<a class="checkin-btn" href="/my/checkin" action="ajaxData"><i class="glyphicon glyphicon-ok-sign"></i> 签到</a></li>
+				<li role="separator" class="divider"></li>
+				<li><a href="/logout?refer=/"><i class="glyphicon glyphicon-off"></i> 退出</a></li>
+			  </ul>
+        </li>
+        <li v-if="!logined"><a href="login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
+        <li v-if="!logined" style="position: relative;left: -30px;"><a href="#">注册</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -116,6 +129,13 @@
   Copyright &copy;&nbsp;2018 杨靖 All Rights Reserved
 </footer>
 <script>
+	var vm1=new Vue({
+		el: "nav",
+		data: {
+			logined: false
+		}
+	});
+	vm1.logined="${logined}";
   var start,end;
   var vm=new Vue({
     el: ".main-content",

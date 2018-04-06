@@ -39,7 +39,10 @@ public class LoginController {
 			session.setAttribute("checked", remember);
 		}
 		boolean bl=userService.validateUser(username, password);
-		if(bl) session.setAttribute("currentUser", userService.getUserByUserName(username));
+		if(bl){
+			session.setAttribute("currentUser", userService.getUserByUserName(username));
+			session.setAttribute("logined", true);
+		} 
 		json.put("status", bl);
 		return json;
 	}
