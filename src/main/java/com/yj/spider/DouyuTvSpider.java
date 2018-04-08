@@ -52,7 +52,7 @@ public class DouyuTvSpider extends HtmlSpiderUtils{
 		requestHeadersMap.put("accept", "text/plain, */*; q=0.01");
 		requestHeadersMap.put("accept-encoding", "gzip, deflate, sdch, br");
 		requestHeadersMap.put("accept-language", "zh-CN,zh;q=0.8");
-		requestHeadersMap.put("cookie", "TY_SESSION_ID=f666e5b1-1203-474e-96dd-47ba6da3eef6; dy_did=c3c9d81c2b977844c69a900300001501; smidV2=20180117104127493b2e9e675bded09eb2530e16af475700d3b0bdd77184ff0; _dys_lastPageCode=page_studio_normal,; acf_did=c3c9d81c2b977844c69a900300001501; Hm_lvt_e99aee90ec1b2106afe7ec3b199020a7=1516096205,1516154509; Hm_lpvt_e99aee90ec1b2106afe7ec3b199020a7=1516159303");
+		//requestHeadersMap.put("cookie", "TY_SESSION_ID=f666e5b1-1203-474e-96dd-47ba6da3eef6; dy_did=c3c9d81c2b977844c69a900300001501; smidV2=20180117104127493b2e9e675bded09eb2530e16af475700d3b0bdd77184ff0; _dys_lastPageCode=page_studio_normal,; acf_did=c3c9d81c2b977844c69a900300001501; Hm_lvt_e99aee90ec1b2106afe7ec3b199020a7=1516096205,1516154509; Hm_lpvt_e99aee90ec1b2106afe7ec3b199020a7=1516159303");
 		requestHeadersMap.put("referer", "https://www.douyu.com/directory/all");
 		requestHeadersMap.put("X-Requested-With", "XMLHttpRequest");
 		requestHeadersMap.put("Host", "www.douyu.com");
@@ -85,8 +85,8 @@ public class DouyuTvSpider extends HtmlSpiderUtils{
 			source.setVideo_img(json.getString("rs1"));
 			source.setVideo_title(json.getString("rn"));
 			source.setVideo_number(json.getIntValue("ol"));
-			//如果直播间观看人数小于10，则不录入数据库
-			if(source.getVideo_number()<10){
+			//如果直播间观看人数小于1000，则不录入数据库
+			if(source.getVideo_number()<1000){
 				continue;
 			}
 			//source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));

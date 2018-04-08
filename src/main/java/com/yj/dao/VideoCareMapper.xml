@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.dao.VideoCareMapper">
+  <resultMap id="BaseResultMap" type="com.yj.pojo.VideoCare">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="videoId" jdbcType="VARCHAR" property="videoid" />
+  </resultMap>
+  
+  <resultMap id="video_room_ResultMap" type="com.yj.pojo.Video_room">
+	<id column="video-id" jdbcType="VARCHAR" property="video_id"/>
+		<result column="video-title" jdbcType="VARCHAR" property="video_title"/>
+		<result column="video-img" jdbcType="VARCHAR" property="video_img"/>
+		<result column="video-number" jdbcType="INTEGER" property="video_number"/>
+		<result column="video-station-number" jdbcType="INTEGER" property="video_station_number"/>
+		<result column="video-url" jdbcType="VARCHAR" property="video_url"/>
+		<result column="video-status" jdbcType="INTEGER" property="video_status"/>
+		<result column="video-host-nickname" jdbcType="VARCHAR" property="video_host_nickname"/>
+		<result column="video-host-level" jdbcType="INTEGER" property="video_host_level"/>
+		<result column="video-host-avatar" jdbcType="VARCHAR" property="video_host_avatar"/>
+		<result column="video-platform" jdbcType="VARCHAR" property="video_platform"/>
+		<result column="video-platform-domain" jdbcType="VARCHAR" property="video_platform_domain"/>
+		<result column="video-platform-img" jdbcType="VARCHAR" property="video_platform_img"/>
+		<result column="video-room-url" jdbcType="VARCHAR" property="video_room_url"/>
+		<result column="video-type" jdbcType="VARCHAR" property="video_type"/>
+		<result column="video-type-img" jdbcType="VARCHAR" property="video_type_img"/>
+	</resultMap>
+  <sql id="Base_Column_List">
+    id, userId, videoId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `video-care`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectVideoSourceByUserId" parameterType="int" resultMap="video_room_ResultMap">
+  	SELECT b.* FROM `video-care` a,`video-room` b where a.userId=#{userId,jdbcType=INTEGER} and a.videoId=b.`video-id`
+  	 order by b.`video-number` desc;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from `video-care`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByUserIdAndVideoId" parameterType="com.yj.pojo.VideoCare">
+  	delete from `video-care` where userId=#{userid,jdbcType=INTEGER} and videoId=#{videoid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yj.pojo.VideoCare">
+    insert into `video-care` (id, userId, videoId
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{videoid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yj.pojo.VideoCare">
+    insert into `video-care`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="videoid != null">
+        videoId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="videoid != null">
+        #{videoid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yj.pojo.VideoCare">
+    update `video-care`
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="videoid != null">
+        videoId = #{videoid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yj.pojo.VideoCare">
+    update `video-care`
+    set userId = #{userid,jdbcType=INTEGER},
+      videoId = #{videoid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

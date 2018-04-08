@@ -101,6 +101,7 @@ i {
   margin: 0 auto;
 } */
 
+
 .suggested_video{
   padding: 0;
   height: 720px;
@@ -156,6 +157,16 @@ i {
     top: 0;
     right: 20px;
 }
+
+.liveList img.heart-icon {
+	width: 20px;
+    height: 20px;
+    /* position: absolute;
+    top: 10px;
+    left: 30px;
+    z-index: 101; */
+}
+
 
 .liveList a {
     color: #000;

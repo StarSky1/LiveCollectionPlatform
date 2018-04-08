@@ -4,11 +4,16 @@ function getRootpath() {
   return localObj.protocol + "//" + localObj.host + "/" + contextPath;
 }
 
-function getVideolist(vm,pageno,cateName,platform){
-  $.getJSON(getRootpath()+"/home/videolist.do",{pageno: pageno,cateName: cateName,platform: platform},function(json){
+function getVideolist(vm,logined,pageno,searchWord,cateName,platform){
+  $.getJSON(getRootpath()+"/home/videolist.do",{pageno: pageno,searchWord: searchWord,cateName: cateName,platform: platform},function(json){
      vm.videos=json.videos;
      vm.total=json.total;
      vm.pagesize=json.pagesize;
   });
+  if(logined){
+	  $.getJSON(getRootpath()+"/user/carelist.do",{userId: "${currentUser.userId}"},function(json){
+			vm.cares=json;
+		});
+  }
 }
 

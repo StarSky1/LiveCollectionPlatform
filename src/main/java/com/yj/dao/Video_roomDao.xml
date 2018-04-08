@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yj.dao.Video_roomDao">
 	<resultMap id="video_room_ResultMap" type="com.yj.pojo.Video_room">
+	<id column="video-id" jdbcType="VARCHAR" property="video_id"/>
 		<result column="video-title" jdbcType="VARCHAR" property="video_title"/>
 		<result column="video-img" jdbcType="VARCHAR" property="video_img"/>
 		<result column="video-number" jdbcType="INTEGER" property="video_number"/>
@@ -22,6 +23,10 @@
 	<select id="selectList" parameterType="java.util.Map" resultMap="video_room_ResultMap">
 		select * from `video-room`
 		<where>
+			<if test="searchWord != null">
+			`video-title` like concat('%',#{searchWord},'%')
+			or `video-host-nickname` like concat('%',#{searchWord},'%')
+			</if>
 			<if test="type !=null">
 			and `video-type`=#{type}
 			</if>
@@ -39,6 +44,10 @@
 	<select id="selectVideoCount" parameterType="java.util.Map" resultType="int">
 		select count(*) from `video-room`
 		<where>
+			<if test="searchWord != null">
+			`video-title` like concat('%',#{searchWord},'%')
+			or `video-host-nickname` like concat('%',#{searchWord},'%')
+			</if>
 			<if test="type !=null">
 			and `video-type`=#{type}
 			</if>

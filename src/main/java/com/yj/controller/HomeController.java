@@ -24,17 +24,17 @@ public class HomeController {
 	
 	@RequestMapping("videolist.do")
 	@ResponseBody
-	public JSONObject getVideoList(int pageno,String platform,String cateName) throws UnsupportedEncodingException{
+	public JSONObject getVideoList(int pageno,String searchWord,String platform,String cateName) throws UnsupportedEncodingException{
+		searchWord=searchWord==null?null:new String(searchWord.getBytes("ISO8859-1"),"utf-8");
 		platform=platform==null?null:new String(platform.getBytes("ISO8859-1"),"utf-8");
 		cateName=cateName==null?null:new String(cateName.getBytes("ISO8859-1"),"utf-8");
-		List<Video_room> list=video_roomService.getVideoList(platform, cateName, pageno, pagesize);
+		List<Video_room> list=video_roomService.getVideoList(searchWord,platform, cateName, pageno, pagesize);
 		JSONArray videos=JSON.parseArray(JSON.toJSONString(list));
-		int total=video_roomService.getVideoCount(platform, cateName);
+		int total=video_roomService.getVideoCount(searchWord,platform, cateName);
 		JSONObject json=new JSONObject();
 		json.put("videos", videos);
 		json.put("total", total);
 		json.put("pagesize", pagesize);
 		return json;
 	}
-	
 }

@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>登录YangTV</title>
+<link rel="icon" type="image/x-icon" href="../res/logo.png" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
@@ -64,11 +65,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse"  id="navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">所有直播</a></li>
-        <li><a href="category/showCategory.do">所有分类</a></li>
-        <li><a href="#">上传直播源</a></li>
-        <li><a href="#">我的主页</a></li>
-        <li><a href="login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
+        <li><a href="/liveplatform">所有直播</a></li>
+        <li><a href="/liveplatform/category/showCategory.do">所有分类</a></li>
+        <li><a @click.prevent="myprofile()" href="#">我的主页</a></li>
+        <li><a @click.prevent="mycare()" href="#">我的关注</a></li>
+        <li><a href="showLogin.do">登录&nbsp;/&nbsp;</a></li>
         <li style="position: relative;left: -30px;"><a href="showRegister.do">注册</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -107,6 +108,30 @@
   Copyright &copy;&nbsp;2018 杨靖 All Rights Reserved
 </footer>
 <script type="text/javascript">
+var vm1=new Vue({
+	el: "nav",
+	data: {
+		logined: false
+	},
+	methods: {
+		myprofile: function(){
+			if(this.logined){
+				window.location.href="http://localhost:8080/liveplatform/user/showProfile.do";
+			}else{
+				swal("提示","你还没有登录","info");
+			}
+		},
+		mycare: function(){
+			if(this.logined){
+				window.location.href="http://localhost:8080/liveplatform/user/showCare.do";
+			}else{
+				swal("提示","你还没有登录","info");
+			}
+		}
+	}
+});
+vm1.logined="${logined}";
+	
 	var vm=new Vue({
 	    el: ".main-content",
 	    data: {

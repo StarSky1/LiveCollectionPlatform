@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>${currentUser.userNickname}的主页</title>
+<link rel="icon" type="image/x-icon" href="../res/logo.png" />
 <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,6 +33,7 @@
    	margin-bottom: 20px;
    	height: 800px;
    	border-radius: 2%;
+   	overflow-x: hidden;
    }
   	.u_header {
 	    height: 50px;
@@ -130,30 +132,22 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse"  id="navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li>
-          <form class="navbar-form">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="搜索游戏或主播">
-            </div>
-            <button type="submit" class="btn btn-default">搜索</button>
-          </form>
-        </li>
-        <li><a href="#">所有直播</a></li>
-        <li><a href="category/showCategory.do">所有分类</a></li>
-        <li><a href="#">上传直播源</a></li>
-        <li><a href="#">我的主页</a></li>
+        <li><a href="/liveplatform">所有直播</a></li>
+        <li><a href="/liveplatform/category/showCategory.do">所有分类</a></li>
+        <li><a @click.prevent="myprofile()" href="#">我的主页</a></li>
+        <li><a @click.prevent="mycare()" href="#">我的关注</a></li>
         <li v-if="logined">
         	<img class="userimg" src="../res/user_head_img/${currentUser.userHeadImg}">
         </li>
         <li v-if="logined">
         	<span class="user_dropdown glyphicon glyphicon-chevron-down dropdown-toggle" data-toggle="dropdown"></span>
 			  <ul class="dropdown-menu">
-				<li><a href="user/showProfile.do" target="_blank"><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
-				<li><a id="changePassword" href="/user/changePassword" target="dialog" rel="changePassword" mask="true" height="380" width="500"><i class="glyphicon glyphicon-wrench"></i> 修改密码</a></li>
+				<li><a href="showProfile.do" target="_blank"><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
+				<li><a id="changePassword" href="showUpdatePwd.do"><i class="glyphicon glyphicon-wrench"></i> 修改密码</a></li>
 				<li>
-				<a class="checkin-btn" href="/my/checkin" action="ajaxData"><i class="glyphicon glyphicon-ok-sign"></i> 签到</a></li>
+				<a class="checkin-btn" @click.prevent="signIn()" href="#" action="ajaxData"><i class="glyphicon glyphicon-ok-sign"></i> 签到</a></li>
 				<li role="separator" class="divider"></li>
-				<li><a href="/logout?refer=/"><i class="glyphicon glyphicon-off"></i> 退出</a></li>
+				<li><a @click.prevent="quit()" href="#"><i class="glyphicon glyphicon-off"></i> 退出</a></li>
 			  </ul>
         </li>
         <li v-if="!logined"><a href="/liveplatform/login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
@@ -170,10 +164,10 @@
 	<div class="row">
 	<div class="u_nav col-md-4">
 		<div class="btn-group-vertical" role="group">
-			<button type="button" class="btn btn-success btn-lg"><i class="u_nav_icon1"></i>我的资料</button>
-  			<button type="button" class="btn btn-success btn-lg"><i class="u_nav_icon2"></i>站内信</button>
-  			<button type="button" class="btn btn-success btn-lg"><i class="u_nav_icon2"></i>我的关注</button>
-  			<button type="button" class="btn btn-success btn-lg"><i class="u_nav_icon2"></i>我的等级</button>
+			<button type="button" class="btn btn-success btn-lg" @click.prevent="myprofile()"><i class="u_nav_icon1"></i>我的资料</button>
+  			<!-- <button type="button" class="btn btn-success btn-lg"><i class="u_nav_icon2"></i>站内信</button> -->
+  			<button type="button" class="btn btn-success btn-lg" @click.prevent="mycare()"><i class="u_nav_icon2"></i>我的关注</button>
+  			<!-- <button type="button" class="btn btn-success btn-lg"><i class="u_nav_icon2"></i>我的等级</button> -->
 		</div>
     </div>
     <div class="user_myprofile col-md-8">
@@ -185,7 +179,7 @@
         <div class="container user-form">
         	<div class="row">
         		<div class="col-md-2">
-        			<img class="user_img" alt="" src="../res/user_head_img/default.jpg">
+        			<img class="user_img" alt="" src="../res/user_head_img/${currentUser.userHeadImg}">
         			<input v-if="isEdit" type="file" class="fileInput" id="InputFile">
         			<div class="row edit-row" :class="{edit: isEdit}">
 						<button type="button" v-if="!isEdit" @click.prevent="isEdit=true" class="btn btn-info">编辑信息</button>
@@ -206,7 +200,7 @@
         			</div>
         			<div class="row">
         				<div class="col-md-4">
-        					<p><span>等级：</span><span>${currentUser.userVideoLevel}</span></p>
+        					<p><span>签到：</span><span>${currentUser.userVideoLevel}天</span></p>
         				</div>
         				<div class="col-md-4">
         					<p v-if="isEdit"><span>性别：</span><input type="text" v-model="sex" class="form-control" placeholder="写点东西"></p>
@@ -248,7 +242,7 @@
         			</div>
         			<div class="row">
         				<div class="col-md-4">
-        					<p v-if="isEdit"><span>简介：</span><input type="text" v-model="resume" class="form-control" placeholder="写点东西"></p>
+        					<p v-if="isEdit"><span>简介：</span><textarea v-model="resume" placeholder="写点东西" class="form-control" rows="3"></textarea></p>
         					<p v-if="!isEdit"><span>简介：</span><span>${currentUser.userResume}</span></p>
         					<p v-show="resumeError" style="color: red;">{{ resumeMessage }}</p>
         				</div>
@@ -268,6 +262,40 @@ var vm1=new Vue({
 	el: "nav",
 	data: {
 		logined: false
+	},
+	methods: {
+		myprofile: function(){
+			if(this.logined){
+				window.location.href="http://localhost:8080/liveplatform/user/showProfile.do";
+			}else{
+				swal("提示","你还没有登录","info");
+			}
+		},
+		mycare: function(){
+			if(this.logined){
+				window.location.href="http://localhost:8080/liveplatform/user/showCare.do";
+			}else{
+				swal("提示","你还没有登录","info");
+			}
+		},	
+		signIn: function(){
+			$.getJSON(getRootpath()+"/login/signIn.do",{},function(json){
+			    if(!json.status){ swal("提示！", "今日已经签到", "error");  }
+			    else{
+			    	swal("提示！", "签到成功", "success");
+			    	window.location.href='http://localhost:8080/liveplatform/user/showProfile.do';
+			    }
+		   });
+		},
+		quit: function(){
+	    	  $.getJSON(getRootpath()+"/login/quit.do",{},function(json){
+				    if(!json.status){ swal("提示！", "退出登录失败", "error");  }
+				    else{
+				    	swal("提示！", "退出成功", "success");
+				    	window.location.href='http://localhost:8080/liveplatform';
+				    }
+			   });
+	      }
 	}
 });
 vm1.logined="${logined}";
@@ -309,9 +337,9 @@ var vm=new Vue({
 	        	this.nicknameMessage="昵称不能大于12位";
 	    		return true;
 	        }
-	        var reg = new RegExp("^[a-zA-Z0-9_]+$"); 
+	        var reg = new RegExp("^[a-zA-Z0-9_\\u4E00-\\u9FFF]+$"); 
 	        if(!reg.test(this.nickname)){
-	        	this.nicknameMessage="昵称只能包含大写、小写、数字和下划线";
+	        	this.nicknameMessage="昵称只能包含中文、字母、数字和下划线";
 	    		return true;
 	        }
 	      	return false;
@@ -385,6 +413,12 @@ var vm=new Vue({
 	    }
 	 },
 	methods: {
+		myprofile: function(){
+			window.location.href="http://localhost:8080/liveplatform/user/showProfile.do";
+		},
+		mycare: function(){
+			window.location.href="http://localhost:8080/liveplatform/user/showCare.do";
+		},		
 		submit: function(){
 			this.first=false;
 			if(this.nicknameError || this.authenticError || this.sexError || this.birthdayError || this.phoneError || this.emailError || this.resumeError) return;

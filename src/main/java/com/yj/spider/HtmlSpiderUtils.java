@@ -198,7 +198,7 @@ public class HtmlSpiderUtils {
 		}else{
 			httpget.setHeader("accept", "*/*");  
 		}
-		httpget.setHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400"); //user-agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400
+		httpget.setHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36"); //user-agent:Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.104 Safari/537.36 Core/1.53.4033.400 QQBrowser/9.6.12624.400
         CloseableHttpResponse response=null;  
         try {  
             response = httpclient.execute(httpget);  
@@ -378,7 +378,7 @@ public class HtmlSpiderUtils {
 	 * 爬取数据(默认使用循环方法爬取)
 	 */
 	public JSONObject crawlData(String live_lists_url, int total_page){
-		return getTv_Video_sourceByCircle(live_lists_url, total_page);
+		return getTv_Video_sourceBymulti_thread(live_lists_url, total_page);
 	}
 	
 	/**

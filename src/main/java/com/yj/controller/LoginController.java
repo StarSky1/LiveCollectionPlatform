@@ -1,5 +1,7 @@
 package com.yj.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yj.pojo.User;
 import com.yj.service.UserService;
 
 @Controller
@@ -40,10 +43,46 @@ public class LoginController {
 		}
 		boolean bl=userService.validateUser(username, password);
 		if(bl){
-			session.setAttribute("currentUser", userService.getUserByUserName(username));
+			User user=userService.getUserByUserName(username);
+			//记录登录时间
+			user.setLoginTime(new Date());
+			session.setAttribute("currentUser", user);
 			session.setAttribute("logined", true);
 		} 
 		json.put("status", bl);
+		return json;
+	}
+	
+	@RequestMapping("quit.do")
+	@ResponseBody
+	public JSONObject quit(HttpSession session){
+		User curUser=(User) session.getAttribute("currentUser");
+		session.removeAttribute("currentUser");
+		session.removeAttribute("logined");
+		session.removeAttribute("signed");
+		User user=new User();
+		user.setUserId(curUser.getUserId());
+		user.setQuitTime(new Date());
+		userService.updateUser(user);
+		JSONObject json=new JSONObject();
+		json.put("status", true);
+		return json;
+	}
+	
+	@RequestMapping("signIn.do")
+	@ResponseBody
+	public JSONObject signIn(HttpSession session){
+		JSONObject json=new JSONObject();
+		if(session.getAttribute("signed")!=null){
+			json.put("status", false);
+			return json;
+		}
+		User curUser=(User) session.getAttribute("currentUser");
+		int level=curUser.getUserVideoLevel();
+		curUser.setUserVideoLevel(level+1);
+		userService.updateLevel(curUser.getUserId(), level+1);
+		session.setAttribute("signed", true);
+		json.put("status", true);
 		return json;
 	}
 	

@@ -26,6 +26,10 @@ public class UserService {
 		return userMapper.selectByUsername(username);
 	}
 	
+	public User getUserById(int userId){
+		return userMapper.selectByPrimaryKey(userId);
+	}
+	
 	public boolean validateUser(String username,String password){
 		User user=getUserByUserName(username);
 		if(user==null) return false;
@@ -50,6 +54,20 @@ public class UserService {
 		return false;
 	}
 	
+	public boolean updatePassword(int userId,String password){
+		User user=new User();
+		user.setUserId(userId);
+		user.setUserPassword(StringUtils.toMD5(password+salt));
+		return updateUser(user);
+	}
+	
+	public boolean updateLevel(int userId,int level){
+		User user=new User();
+		user.setUserId(userId);
+		user.setUserVideoLevel(level);
+		return updateUser(user);
+	}
+	
 	public boolean updateUser(User user){
 		int i=userMapper.updateByPrimaryKeySelective(user);
 		if(i>0) return true;
@@ -61,7 +79,7 @@ public class UserService {
 		System.out.println(root);
 		User user=userMapper.selectByPrimaryKey(userId);
 		String filename=user.getUserName()+suffix;
-		File dest=new File(root,filename);
+		File dest=new File(root+"/res/user_head_img",filename);
 		File dest1=new File(BaseProperties.getProperty("userImgDir"),filename);
 		try {
 			file.transferTo(dest);

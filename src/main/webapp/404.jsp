@@ -4,6 +4,8 @@
 <html>
 
 <head>
+	<title>404</title>
+	<link rel="icon" type="image/x-icon" href="./res/logo.png" />
     <meta charset="utf-8">
     <style type="text/css">
     .me404 {

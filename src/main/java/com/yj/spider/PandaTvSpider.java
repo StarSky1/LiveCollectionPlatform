@@ -145,8 +145,8 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 			source.setVideo_img(json.getJSONObject("pictures").getString("img"));
 			source.setVideo_title(json.getString("name"));
 			source.setVideo_number(Integer.parseInt(json.getString("person_num")));
-			//如果直播间观看人数小于10，则不录入数据库
-			if(source.getVideo_number()<10){
+			//如果直播间观看人数小于1000，则不录入数据库
+			if(source.getVideo_number()<1000){
 				continue;
 			}
 			source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));

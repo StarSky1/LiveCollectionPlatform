@@ -151,8 +151,8 @@ public class LongzhuLiveSpider extends HtmlSpiderUtils{
 			source.setVideo_img(json.getString("preview"));
 			source.setVideo_title(channel.getString("status"));
 			source.setVideo_number(Integer.parseInt(json.getString("viewers")));
-			//如果直播间观看人数小于10，则不录入数据库
-			if(source.getVideo_number()<10){
+			//如果直播间观看人数小于1000，则不录入数据库
+			if(source.getVideo_number()<1000){
 				continue;
 			}
 			//source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));
