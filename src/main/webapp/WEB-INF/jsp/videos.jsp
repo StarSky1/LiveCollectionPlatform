@@ -44,12 +44,12 @@
         <li>
           <form class="navbar-form">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="搜索房间或主播">
+              <input type="text" v-model="searchWord" class="form-control" placeholder="搜索房间或主播">
             </div>
-            <button type="submit" @click.prevent="search()" class="btn btn-default">搜索</button>
+            <button type="submit"  @click.prevent="search()" class="btn btn-default">搜索</button>
           </form>
         </li>
-        <li><a href="#">所有直播</a></li>
+        <li><a href="/liveplatform">所有直播</a></li>
         <li><a href="showCategory.do">所有分类</a></li>
         <li><a @click.prevent="myprofile()" href="#">我的主页</a></li>
         <li><a @click.prevent="mycare()" href="#">我的关注</a></li>

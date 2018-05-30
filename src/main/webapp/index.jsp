@@ -170,9 +170,8 @@
 		    	  $.getJSON(getRootpath()+"/login/quit.do",{},function(json){
 					    if(!json.status){ swal("提示！", "退出登录失败", "error");  }
 					    else{
-					    	swal("提示！", "退出成功", "success",function(){
-					    		window.location.href='http://localhost:8080/liveplatform';
-					    	});
+					    	swal("提示！", "退出成功", "success");
+					    	window.location.href='http://localhost:8080/liveplatform';
 					    }
 				   });
 		      }
