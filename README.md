@@ -19,4 +19,12 @@ character-set-server=utf8mb4
 default-character-set=utf8mb4
 
 ```
+## LICENSE
+
+MIT
+
+欢迎 Star 和 Fork ~
+
+如果你有什么问题请提 Issue
+
 
