@@ -19,6 +19,14 @@ character-set-server=utf8mb4
 default-character-set=utf8mb4
 
 ```
+
+![所有直播](https://github.com/StarSky1/LiveCollectionPlatform/pictures/1.png)
+![平台和分类](https://github.com/StarSky1/LiveCollectionPlatform/pictures/2.png)
+![个人注册](https://github.com/StarSky1/LiveCollectionPlatform/pictures/3.png)
+![我的关注](https://github.com/StarSky1/LiveCollectionPlatform/pictures/6.png)
+![](https://github.com/StarSky1/LiveCollectionPlatform/pictures/7.png)
+![其他](https://github.com/StarSky1/LiveCollectionPlatform/pictures/8.png)
+
 ## LICENSE
 
 MIT
@@ -26,5 +34,3 @@ MIT
 欢迎 Star 和 Fork ~
 
 如果你有什么问题请提 Issue
-
-
