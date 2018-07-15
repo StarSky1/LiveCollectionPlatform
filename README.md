@@ -20,11 +20,16 @@ default-character-set=utf8mb4
 
 ```
 ## 图片介绍
+1.所有直播
 ![所有直播](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/1.png)
+2.平台和分类
 ![平台和分类](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/2.png)
+3.个人注册
 ![个人注册](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/3.png)
+4.我的关注
 ![我的关注](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/6.png)
 ![](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/7.png)
+5.其他
 ![其他](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/8.png)
 
 ## LICENSE
