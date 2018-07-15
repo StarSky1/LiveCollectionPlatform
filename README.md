@@ -23,24 +23,24 @@ default-character-set=utf8mb4
 
 ### 所有直播
 
-![所有直播](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/1.png)
+![所有直播](pictures/1.png)
 
 ### 平台和分类
 
-![平台和分类](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/2.png)
+![平台和分类](pictures/2.png)
 
 ### 个人注册
 
-![个人注册](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/3.png)
+![个人注册](pictures/3.png)
 
 ### 我的关注
 
-![我的关注](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/6.png)
-![](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/7.png)
+![我的关注](pictures/6.png)
+![](pictures/7.png)
 
 ### 其他
 
-![其他](https://github.com/StarSky1/LiveCollectionPlatform/blob/master/pictures/8.png)
+![其他](pictures/8.png)
 
 ## LICENSE
 
