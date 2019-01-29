@@ -25,12 +25,12 @@
 
   <dependencies>
     <!-- tag::junit[] -->
-	<dependency>
-		<groupId>junit</groupId>
-		<artifactId>junit</artifactId>
-		<version>${junit-version}</version>
-		<scope>test</scope>
-	</dependency>
+	  <dependency>
+		  <groupId>junit</groupId>
+		  <artifactId>junit</artifactId>
+		  <version>${junit-version}</version>
+		  <scope>test</scope>
+	  </dependency>
 	<!-- end::junit[] -->
 	<!-- spring start -->
 		<!-- spring-context -->
@@ -213,7 +213,7 @@
 	    <artifactId>httpclient</artifactId>
 	    <version>4.5.4</version>
 	</dependency>
-  <!-- apache httpclient end -->
+	  <!-- apache httpclient end -->
   </dependencies>
   <build>
     <plugins>
@@ -261,6 +261,14 @@
 			<version>1.0-beta-7</version>
 		</extension>
 	</extensions>
+	  <resources>
+		  <resource>
+			  <directory>src/main/java</directory>
+			  <includes>
+				  <include>**/*.xml</include>
+			  </includes>
+		  </resource>
+	  </resources>
   </build>
   <distributionManagement>
     <site>

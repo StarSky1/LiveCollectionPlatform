@@ -26,7 +26,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,7 +38,7 @@ import com.yj.pojo.Video_source;
 import com.yj.service.Video_categoryService;
 import com.yj.service.Video_platformService;
 
-/** * @author  wenchen 
+/** * @author  yangjing
  * @date 创建时间：2017年8月15日 下午2:03:23 
  * @version 1.0 
  * @parameter */
@@ -266,8 +265,7 @@ public class HtmlSpiderUtils {
 		}
 		return body;
 	}
-	
-	@Test
+
 	public void testGetHtmlBodyStr(){
 		Map<String,Object> map=new HashMap<>();
 		map.put("pdt", new String("1.18.pheader-n.1.5gqdti53n1u")); //pdt=1.18.pheader-n.1.5gqdti53n1u
@@ -348,7 +346,7 @@ public class HtmlSpiderUtils {
 	
 	/**
 	 * 获取直播平台 全部直播页面总页数
-	 * @param video_platform_all_url
+	 * @param live_lists_url
 	 * @return
 	 */
 	public int getTv_videos_totalPage(String live_lists_url){
@@ -359,7 +357,7 @@ public class HtmlSpiderUtils {
 	 * 获取直播平台 正在直播页面中指定页号的直播间和主播信息
 	 * 返回值是json字符串
 	 * @param live_lists_url
-	 * @param total_page
+	 * @param pageno
 	 * @return
 	 */
 	public String getTv_Video_source(String live_lists_url,int pageno){
@@ -368,7 +366,6 @@ public class HtmlSpiderUtils {
 	
 	/**
 	 * 解析Json字符串，生成直播间和主播对象信息
-	 * @param jsonStr
 	 */
 	public void parseVideo_items_JSONStr(String live_dataStr,List<Video_host> host_list,List<Video_source> source_list){
 		throw new UnsupportedOperationException();
