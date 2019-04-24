@@ -1,4 +1,7 @@
 # LiveCollectionPlatform
+[![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu) 
+[![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
+
 用Java编写的一个直播平台聚合网站，收集各大直播平台热门有趣的直播，享受直播的乐趣吧！
 
 ## 添加了dev分支，欢迎大家分享意见和代码。
@@ -44,7 +47,7 @@ default-character-set=utf8mb4
 
 ## LICENSE
 
-MIT
+MIT Anti996
 
 欢迎 Star 和 Fork ~
 
