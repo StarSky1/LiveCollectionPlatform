@@ -9,7 +9,7 @@
     <springframework.version>4.3.9.RELEASE</springframework.version>
     <junit-version>4.12</junit-version>
     <!-- jackson版本号 -->  
-    <jackson.version>2.8.8</jackson.version>
+    <jackson.version>2.10.0.pr1</jackson.version>
     <!-- mybatis版本号 -->  
     <mybatis.version>3.4.4</mybatis.version>  
     <!-- MYBATIS与spring集成jar版本 -->
