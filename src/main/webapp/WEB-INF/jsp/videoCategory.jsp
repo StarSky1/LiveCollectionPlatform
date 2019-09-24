@@ -30,7 +30,7 @@
   	}
   	img {
   		width: 100%;
-  		height: 100%
+  		height: 100%;
   	}
   	a:hover {
   		text-decoration: none;
@@ -60,7 +60,7 @@
   	}
   	.cate_list {
   		width: 80%;
-  		margin-left: 250px;
+  		margin-left: 280px;
   		margin-right: 250px;
   	}
   	.cate_item {
@@ -80,6 +80,11 @@
 	    -webkit-transition: all 250ms;
 	    transition: all 250ms;
   	}
+
+    .videoTypeImg {
+        width: 286.594px;
+        height: 397.313px;
+    }
   	
   
   </style>
@@ -101,7 +106,7 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse"  id="navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/liveplatform">所有直播</a></li>
+        <li><a href="/">所有直播</a></li>
         <li><a href="showCategory.do">所有分类</a></li>
         <li><a @click.prevent="myprofile()" href="#">我的主页</a></li>
         <li><a @click.prevent="mycare()" href="#">我的关注</a></li>
@@ -111,16 +116,16 @@
         <li v-if="logined">
         	<span class="user_dropdown glyphicon glyphicon-chevron-down dropdown-toggle" data-toggle="dropdown"></span>
 			  <ul class="dropdown-menu">
-				<li><a href="/liveplatform/user/showProfile.do" target="_blank"><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
-				<li><a id="changePassword" href="/liveplatform/user/showUpdatePwd.do" ><i class="glyphicon glyphicon-wrench"></i> 修改密码</a></li>
+				<li><a href="/user/showProfile.do" target="_blank"><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
+				<li><a id="changePassword" href="/user/showUpdatePwd.do" ><i class="glyphicon glyphicon-wrench"></i> 修改密码</a></li>
 				<li>
 				<a class="checkin-btn" @click.prevent="signIn()" href="#" action="ajaxData"><i class="glyphicon glyphicon-ok-sign"></i> 签到</a></li>
 				<li role="separator" class="divider"></li>
 				<li><a @click.prevent="quit()" href="#"><i class="glyphicon glyphicon-off"></i> 退出</a></li>
 			  </ul>
         </li>
-        <li v-if="!logined"><a href="/liveplatform/login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
-        <li v-if="!logined" style="position: relative;left: -30px;"><a href="/liveplatform/login/showRegister.do">注册</a></li>
+        <li v-if="!logined"><a href="/login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
+        <li v-if="!logined" style="position: relative;left: -30px;"><a href="/login/showRegister.do">注册</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -141,7 +146,7 @@
 			<ul class="row">
 				<li class="col-md-3 cate_item" v-for="img in category_imgs">
 				<a :href="'showVideos.do?cateName='+img.video_type">
-					<img :src="'../res/cate_img/'+img.video_type_img"/>
+					<img class="videoTypeImg" :src="'../res/cate_img/'+img.video_type_img"/>
 					<div class="cate_title">{{ img.video_type }}</div>
 				</a>
 				</li>
@@ -161,14 +166,14 @@ var vm1=new Vue({
 	methods: {
 		myprofile: function(){
 			if(this.logined){
-				window.location.href="http://localhost:8080/liveplatform/user/showProfile.do";
+				window.location.href="http://localhost:8080/user/showProfile.do";
 			}else{
 				swal("提示","你还没有登录","info");
 			}
 		},
 		mycare: function(){
 			if(this.logined){
-				window.location.href="http://localhost:8080/liveplatform/user/showCare.do";
+				window.location.href="http://localhost:8080/user/showCare.do";
 			}else{
 				swal("提示","你还没有登录","info");
 			}
@@ -186,7 +191,7 @@ var vm1=new Vue({
 				    if(!json.status){ swal("提示！", "退出登录失败", "error");  }
 				    else{
 				    	swal("提示！", "退出成功", "success");
-				    	window.location.href='http://localhost:8080/liveplatform/category/showCategory.do';
+				    	window.location.href='http://localhost:8080/category/showCategory.do';
 				    }
 			   });
 	      }

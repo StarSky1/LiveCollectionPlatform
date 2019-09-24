@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -16,9 +17,10 @@ import com.yj.spider.LongzhuLiveSpider;
 import com.yj.spider.PandaTvSpider;
 import com.yj.spider.QuanminTvSpider;
 import com.yj.spider.ZhanqiTvSpider;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring-mybatis.xml" })
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class TestVideo_sourceService {
 	@Autowired
 	private Video_sourceService video_sourceService;

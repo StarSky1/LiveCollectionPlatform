@@ -17,6 +17,9 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 
+import static com.yj.logger.Log4JConfigure.LOGERROR;
+import static com.yj.logger.Log4JConfigure.LOGINFO;
+
 /**
  * 二维码工具类
  * 
@@ -24,7 +27,6 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
  *
  */
 public class QrCodeUtils {
-	private static final Logger logger = LoggerFactory.getLogger(QrCodeUtils.class);
 	/**
 	 * 生成二维码参数
 	 */
@@ -61,7 +63,8 @@ public class QrCodeUtils {
 			MatrixToImageWriter.writeToStream(bitMatrix, DEFAULT_IMG_FORMAT, os);
 			os.flush();
 		} catch (Exception e) {
-			logger.error("生成二维码出错", e);
+			LOGINFO.error("生成二维码出错", e);
+			LOGERROR.error("生成二维码出错", e);
 		} finally {
 			if (os != null) {
 				try {
@@ -103,7 +106,8 @@ public class QrCodeUtils {
 			Path path = FileSystems.getDefault().getPath(directoryPath, fileName);
 			MatrixToImageWriter.writeToPath(bitMatrix, DEFAULT_IMG_FORMAT, path);
 		} catch (Exception e) {
-			logger.error("生成二维码出错", e);
+			LOGINFO.error("生成二维码出错", e);
+			LOGERROR.error("生成二维码出错", e);
 		}
 	}
 

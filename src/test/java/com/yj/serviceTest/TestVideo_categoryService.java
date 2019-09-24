@@ -6,15 +6,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.yj.pojo.Video_category;
 import com.yj.service.Video_categoryService;
 import com.yj.spider.HtmlSpiderUtils;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring-mybatis.xml" })
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class TestVideo_categoryService {
 	@Autowired
 	private Video_categoryService video_categoryService;

@@ -65,8 +65,8 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse"  id="navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/liveplatform">所有直播</a></li>
-        <li><a href="/liveplatform/category/showCategory.do">所有分类</a></li>
+        <li><a href="/">所有直播</a></li>
+        <li><a href="/category/showCategory.do">所有分类</a></li>
         <li><a @click.prevent="myprofile()" href="#">我的主页</a></li>
         <li><a @click.prevent="mycare()" href="#">我的关注</a></li>
         <li><a href="showLogin.do">登录&nbsp;/&nbsp;</a></li>
@@ -116,14 +116,14 @@ var vm1=new Vue({
 	methods: {
 		myprofile: function(){
 			if(this.logined){
-				window.location.href="http://localhost:8080/liveplatform/user/showProfile.do";
+				window.location.href="http://localhost:8080/user/showProfile.do";
 			}else{
 				swal("提示","你还没有登录","info");
 			}
 		},
 		mycare: function(){
 			if(this.logined){
-				window.location.href="http://localhost:8080/liveplatform/user/showCare.do";
+				window.location.href="http://localhost:8080/user/showCare.do";
 			}else{
 				swal("提示","你还没有登录","info");
 			}

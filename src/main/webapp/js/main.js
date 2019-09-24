@@ -1,7 +1,7 @@
 function getRootpath() {
   var localObj = window.location;
   var contextPath = localObj.pathname.split("/")[1];
-  return localObj.protocol + "//" + localObj.host + "/" + contextPath;
+  return localObj.protocol + "//" + localObj.host;
 }
 
 function getVideolist(vm,logined,pageno,searchWord,cateName,platform){

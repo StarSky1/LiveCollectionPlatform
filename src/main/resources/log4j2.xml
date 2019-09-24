@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status表示log4j2本身的日志信息打印级别，和下面的level，不是一个概念 -->
+<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!--Configuration后面的status，这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出-->
+<!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
+<Configuration status="INFO" monitorInterval="120">
+    <!-- 自定义常量 -->
+    <properties>
+        <!--${web:rootDir}指定的是当前web工程的根目录，与html文件同目录-->
+        <!--<property name="LOG_HOME">${web:rootDir}/logs</property>-->
+        <property name="LOG_HOME">./logs</property>
+        <!--<property name="LOG_HOME">/var/ftp/pub/LTOceanConnect/logs</property>-->
+        <property name="LOG_INFO">info</property>
+        <property name="LOG_ERROR">error</property>
+        <property name="LOG_Spring">spring</property>
+        <property name="FILE_NAME">mylog</property>
+    </properties>
+
+    <!-- 日志信息输出源 -->
+    <Appenders>
+        <!-- 控制台	-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
+        </Console>
+
+        <!-- info日志信息 -->
+        <!-- 这里按天生成info日志文件保存在info文件夹下，同时该文件夹下只保存31天的日志信息 -->
+        <RollingFile name="LogInfoFile" fileName="${LOG_HOME}/${LOG_INFO}/${FILE_NAME}.log"
+                     filePattern="${LOG_HOME}/${LOG_INFO}/${FILE_NAME}-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
+            <Policies>
+                <!--filePattern的时间粒度为天，这里interval会一天生成一个新的文件-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}/${LOG_INFO}" maxDepth="1">
+                    <IfFileName glob="${FILE_NAME}-*.log"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!-- error日志信息 -->
+        <RollingFile name="LogErrorFile" fileName="${LOG_HOME}/${LOG_ERROR}/${FILE_NAME}.log"
+                     filePattern="${LOG_HOME}/${LOG_ERROR}/${FILE_NAME}-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
+            <Policies>
+                <!--filePattern中最小时间粒度为天，这里interval会一天生成一个新的文件-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}/${LOG_ERROR}" maxDepth="1">
+                    <IfFileName glob="${FILE_NAME}-*.log"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!-- springboot日志信息 -->
+        <RollingFile name="LogSpringFile" fileName="${LOG_HOME}/${LOG_Spring}/${FILE_NAME}.log"
+                     filePattern="${LOG_HOME}/${LOG_Spring}/${FILE_NAME}-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
+            <Policies>
+                <!--filePattern中最小时间粒度为天，这里interval会一天生成一个新的文件-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}/${LOG_Spring}" maxDepth="1">
+                    <IfFileName glob="${FILE_NAME}-*.log"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <!-- 日志器 -->
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="LogSpringFile"/>
+        </Root>
+
+        <Logger name="LogInfo" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="LogInfoFile"/>
+        </Logger>
+
+        <Logger name="LogError" level="error" additivity="false">
+            <!-- 使日志信息在控制台上输出 -->
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="LogErrorFile"/>
+        </Logger>
+    </Loggers>
+</Configuration>

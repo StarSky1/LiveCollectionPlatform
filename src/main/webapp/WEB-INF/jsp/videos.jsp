@@ -49,7 +49,7 @@
             <button type="submit"  @click.prevent="search()" class="btn btn-default">搜索</button>
           </form>
         </li>
-        <li><a href="/liveplatform">所有直播</a></li>
+        <li><a href="/">所有直播</a></li>
         <li><a href="showCategory.do">所有分类</a></li>
         <li><a @click.prevent="myprofile()" href="#">我的主页</a></li>
         <li><a @click.prevent="mycare()" href="#">我的关注</a></li>
@@ -147,14 +147,14 @@ var vm1=new Vue({
 		},
 		myprofile: function(){
 			if(this.logined){
-				window.location.href="http://localhost:8080/liveplatform/user/showProfile.do";
+				window.location.href="http://localhost:8080/user/showProfile.do";
 			}else{
 				swal("提示","你还没有登录","info");
 			}
 		},
 		mycare: function(){
 			if(this.logined){
-				window.location.href="http://localhost:8080/liveplatform/user/showCare.do";
+				window.location.href="http://localhost:8080/user/showCare.do";
 			}else{
 				swal("提示","你还没有登录","info");
 			}

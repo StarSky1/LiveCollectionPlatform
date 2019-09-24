@@ -1,0 +1,79 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8080
+  servlet:
+    context-path:
+
+# mysql
+spring:
+  # 环境 dev|test|prod
+  #mvc: 
+    #view:
+     #prefix: /webapp/
+     #suffix: .xhtml
+  profiles:
+    active: dev
+# 配置jsp页面访问路径的前缀和后缀
+    #前端视图展示采用JSP
+  mvc:
+     view:
+        prefix: /WEB-INF/jsp/
+        suffix: .jsp
+  #配置编码过滤器
+  http:
+      encoding:
+          chaset: utf-8
+          enabled: true  #default true
+          force: true
+  servlet:
+    multipart:
+      max-file-size: 200MB
+      max-request-size: 200MB
+      enabled: true
+#  redis:
+#    database: 0
+#    cluster:
+#      nodes: localhost:6379
+#    password:      # 密码（默认为空）
+#      timeout: 6000ms  # 连接超时时长（毫秒）
+#    jedis:
+#      pool:
+#        max-active: 1000  # 连接池最大连接数（使用负值表示没有限制）
+#        max-wait: -1ms      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#        max-idle: 10      # 连接池中的最大空闲连接
+#        min-idle: 5       # 连接池中的最小空闲连接
+  datasource:
+    druid:
+      web-stat-filter:
+        principal-cookie-name:
+#  jpa:
+#      hibernate:
+#        ddl-auto: update
+#      show-sql: true
+#      database: mysql
+#      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect  #不加这句则默认为myisam引擎
+    
+renren:
+  redis:
+    open: false  # 是否开启redis缓存  true开启   false关闭
+  shiro:
+    redis: false # true表示shiro session存到redis里，需要开启redis，才会生效【分布式场景】
+
+mybatis:
+    mapper-locations: classpath*:com/yj/dao/*.xml
+    
+#logging:
+#   level: debug
+#    level:
+#      com.example.demo.mapper: DEBUG
+#    path: logs/
+#    file: api.log
+#    config: classpath:log4j2.xml
+
+multipart: 
+      maxFileSize: 50Mb
+      maxRequestSize: 50Mb
