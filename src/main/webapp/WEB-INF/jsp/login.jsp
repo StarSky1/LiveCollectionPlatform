@@ -1,27 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>登录YangTV</title>
-<link rel="icon" type="image/x-icon" href="../res/logo.png" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-  <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
-  <link rel="stylesheet" href="../css/main.css">
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  <script type="text/javascript" src="../js/jQuery1.12.4.js"></script>
-  <script type="text/javascript" src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-  <script type="text/javascript" src="../js/vue.js"></script>
-  <script type="text/javascript" src="../js/main.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <%@ include file="head.jsp"%>
   <style type="text/css">
   	img {
   		width: 440px;
@@ -183,10 +166,13 @@ vm1.logined="${logined}";
 			login: function(){
 				this.first=false;
 				if(this.usernameError || this.passwordError) return;
+				if(vm.checked==''){
+				    vm.checked=false;
+                }
 				$.getJSON(getRootpath()+"/login/login.do",{username: vm.username,password: vm.password,remember: vm.checked},function(json){
 				    if(!json.status){ swal("提示！", "用户名或密码错误", "error");  }
 				    else{
-				    	window.location.href='http://localhost:8080/liveplatform';
+				    	window.location.href='http://localhost:8080';
 				    }
 				 });
 			}

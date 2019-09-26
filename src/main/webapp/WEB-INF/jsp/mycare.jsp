@@ -3,30 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>${currentUser.userNickname}的关注</title>
-<link rel="icon" type="image/x-icon" href="../res/logo.png" />
-<meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-  <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="../bootstrap-3.3.7-dist/simple-sidebar.css">
-  <link rel="stylesheet" href="../css/bootstrap-datetimepicker.css">
-  <link rel="stylesheet" href="../css/main.css">
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  <script type="text/javascript" src="../js/jQuery1.12.4.js"></script>
-  <script type="text/javascript" src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-  <script type="text/javascript" src="../js/vue.js"></script>
-  <script type="text/javascript" src="../js/main.js"></script>
-  <script type="text/javascript" src="../js/bootstrap-datetimepicker.js"></script>
-  <script type="text/javascript" src="../js/bootstrap-datetimepicker.zh-CN.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <%@ include file="head.jsp"%>
   <style>
    .main-content {
    	background-color: #F6F6F6;
@@ -153,7 +131,7 @@
 				<li><a @click.prevent="quit()" href="#"><i class="glyphicon glyphicon-off"></i> 退出</a></li>
 			  </ul>
         </li>
-        <li v-if="!logined"><a href="/liveplatform/login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
+        <li v-if="!logined"><a href="/login/showLogin.do">登录&nbsp;/&nbsp;</a></li>
         <li v-if="!logined" style="position: relative;left: -30px;"><a href="#">注册</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -229,7 +207,7 @@ var vm1=new Vue({
 			    if(!json.status){ swal("提示！", "今日已经签到", "error");  }
 			    else{
 			    	swal("提示！", "签到成功", "success");
-			    	window.location.href='http://localhost:8080/liveplatform/user/showProfile.do';
+			    	window.location.href='http://localhost:8080/user/showProfile.do';
 			    }
 		   });
 		},
@@ -238,7 +216,7 @@ var vm1=new Vue({
 				    if(!json.status){ swal("提示！", "退出登录失败", "error");  }
 				    else{
 				    	swal("提示！", "退出成功", "success");
-				    	window.location.href='http://localhost:8080/liveplatform';
+				    	window.location.href='http://localhost:8080';
 				    }
 			   });
 	      }
@@ -257,10 +235,10 @@ var vm=new Vue({
 	 },
 	methods: {
 		myprofile: function(){
-			window.location.href="http://localhost:8080/liveplatform/user/showProfile.do";
+			window.location.href="http://localhost:8080/user/showProfile.do";
 		},
 		mycare: function(){
-			window.location.href="http://localhost:8080/liveplatform/user/showCare.do";
+			window.location.href="http://localhost:8080/user/showCare.do";
 		},
 		addCare: function(videoId){
 	    	  if(vm1.logined){

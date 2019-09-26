@@ -66,13 +66,15 @@ renren:
 mybatis:
     mapper-locations: classpath*:com/yj/dao/*.xml
     
-#logging:
+logging:
 #   level: debug
 #    level:
 #      com.example.demo.mapper: DEBUG
 #    path: logs/
 #    file: api.log
-#    config: classpath:log4j2.xml
+    config: classpath:log4j2.xml
+
+
 
 multipart: 
       maxFileSize: 50Mb

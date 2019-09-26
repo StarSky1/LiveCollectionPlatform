@@ -3,25 +3,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>用户注册</title>
-<link rel="icon" type="image/x-icon" href="../res/logo.png" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-  <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
-  <link rel="stylesheet" href="../css/main.css">
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  <script type="text/javascript" src="../js/jQuery1.12.4.js"></script>
-  <script type="text/javascript" src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-  <script type="text/javascript" src="../js/vue.js"></script>
-  <script type="text/javascript" src="../js/main.js"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<%@ include file="head.jsp"%>
   <style type="text/css">
   	img {
   		width: 440px;
@@ -270,12 +253,12 @@ vm1.logined="${logined}";
 						return;
 					}
 				});
-				if(!flag) return;
+				if(flag) return;
 				$.getJSON(getRootpath()+"/login/register.do",{username: vm.username,password: vm.password,phone: vm.phone,email: vm.email},function(json){
 					if(!json.status){ swal("提示！", "注册失败", "error"); }
 				    else{
 				    	swal("提示！", "注册成功", "success");
-				    	window.location.href='http://localhost:8080/liveplatform/login/login.do';
+				    	window.location.href='http://localhost:8080/login/showLogin.do';
 				    }
 				 });
 			}

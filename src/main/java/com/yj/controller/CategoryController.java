@@ -48,8 +48,6 @@ public class CategoryController {
 	@RequestMapping("showVideos.do")
 	public ModelAndView showVideos(String platform,String cateName) throws UnsupportedEncodingException{
 		ModelAndView mv=new ModelAndView("videos");
-		platform=platform==null?null:new String(platform.getBytes("ISO8859-1"),"utf-8");
-		cateName=cateName==null?null:new String(cateName.getBytes("ISO8859-1"),"utf-8");
 		mv.addObject("cateName", cateName);
 		mv.addObject("platform", platform);
 		return mv;
