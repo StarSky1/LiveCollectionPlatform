@@ -19,4 +19,9 @@ public class HelloController {
         m.addAttribute("showSearch",true);
         return "index";
     }
+
+    @RequestMapping("/404")
+    public String error_404(){
+        return "/error/404";
+    }
 }
