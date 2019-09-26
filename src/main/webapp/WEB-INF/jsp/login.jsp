@@ -4,7 +4,7 @@
 <html>
 <head>
 <title>登录YangTV</title>
-    <%@ include file="head.jsp"%>
+    <%@ include file="../common/head.jsp"%>
   <style type="text/css">
   	img {
   		width: 440px;
@@ -29,35 +29,13 @@
 	  	text-align: center;
 	    margin-top: -5px;
 	}
+	  .main-content {
+		  margin-top: 50px;
+	  }
   </style>
 </head>
 <body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">折叠导航开关按钮</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">YangTV</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse"  id="navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/">所有直播</a></li>
-        <li><a href="/category/showCategory.do">所有分类</a></li>
-        <li><a @click.prevent="myprofile()" href="#">我的主页</a></li>
-        <li><a @click.prevent="mycare()" href="#">我的关注</a></li>
-        <li><a href="showLogin.do">登录&nbsp;/&nbsp;</a></li>
-        <li style="position: relative;left: -30px;"><a href="showRegister.do">注册</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+<%@ include file="../common/topBar.jsp"%>
 <div class="main-content container-fluid">
 	<div class="col-md-8">
 		<img alt="图片" src="../res/img.jpg">
@@ -91,30 +69,6 @@
   Copyright &copy;&nbsp;2018 杨靖 All Rights Reserved
 </footer>
 <script type="text/javascript">
-var vm1=new Vue({
-	el: "nav",
-	data: {
-		logined: false
-	},
-	methods: {
-		myprofile: function(){
-			if(this.logined){
-				window.location.href="http://localhost:8080/user/showProfile.do";
-			}else{
-				swal("提示","你还没有登录","info");
-			}
-		},
-		mycare: function(){
-			if(this.logined){
-				window.location.href="http://localhost:8080/user/showCare.do";
-			}else{
-				swal("提示","你还没有登录","info");
-			}
-		}
-	}
-});
-vm1.logined="${logined}";
-	
 	var vm=new Vue({
 	    el: ".main-content",
 	    data: {

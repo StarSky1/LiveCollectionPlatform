@@ -50,6 +50,7 @@ public class CategoryController {
 		ModelAndView mv=new ModelAndView("videos");
 		mv.addObject("cateName", cateName);
 		mv.addObject("platform", platform);
+		mv.addObject("showSearch",true);
 		return mv;
 	}
 	
