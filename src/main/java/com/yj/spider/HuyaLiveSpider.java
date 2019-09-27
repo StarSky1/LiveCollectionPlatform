@@ -1,18 +1,17 @@
 package com.yj.spider;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.yj.pojo.Video_host;
 import com.yj.pojo.Video_source;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 战旗tv 爬虫
@@ -82,31 +81,31 @@ public class HuyaLiveSpider extends HtmlSpiderUtils{
 			if(!cate_map.containsKey(video_type)){
 				continue;
 			}
-			int video_type_id=cate_map.get(video_type).getVideo_type_id();
+			int video_type_id=cate_map.get(video_type).getVideoTypeId();
 			Video_source source=new Video_source();
-			source.setVideo_room_url(json.getString("privateHost"));
-			source.setVideo_img(json.getString("screenshot"));
-			source.setVideo_title(json.getString("introduction"));
-			source.setVideo_number(Integer.parseInt(json.getString("totalCount")));
+			source.setVideoRoomUrl(json.getString("privateHost"));
+			source.setVideoImg(json.getString("screenshot"));
+			source.setVideoTitle(json.getString("introduction"));
+			source.setVideoNumber(Integer.parseInt(json.getString("totalCount")));
 			//如果直播间观看人数小于1000，则不录入数据库
-			if(source.getVideo_number()<1000){
+			if(source.getVideoNumber()<1000){
 				continue;
 			}
 			//source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));
-			source.setVideo_type(video_type_id);
+			source.setVideoType(video_type_id);
 			
-			source.setVideo_platform(video_platform.getVideo_platform_id());
-			source.setVideo_id("Huyalive_"+json.getString("privateHost"));
-			source.setVideo_status(1);
+			source.setVideoPlatform(video_platform.getVideoPlatformId());
+			source.setVideoId("Huyalive_"+json.getString("privateHost"));
+			source.setVideoStatus(1);
 			
 			Video_host host=new Video_host();
 //			if(json.getString("hotsLevel")!=null){
 //				host.setVideo_host_level(Integer.parseInt(json.getString("hotsLevel")));
 //			}
-			host.setVideo_host_id("Huyalive"+json.getString("uid"));
-			host.setVideo_host_nickname(json.getString("nick"));
-			host.setVideo_host_avatar(json.getString("avatar180"));
-			host.setVideo_room_id(source.getVideo_id());
+			host.setVideoHostId("Huyalive"+json.getString("uid"));
+			host.setVideoHostNickname(json.getString("nick"));
+			host.setVideoHostAvatar(json.getString("avatar180"));
+			host.setVideoRoomId(source.getVideoId());
 			
 			host_list.add(host);
 			source_list.add(source);

@@ -78,9 +78,9 @@
 			<p>平台分类</p>
 			<div class="row">
 				<div class="col-md-6" v-for="platform in platform_imgs">
-				<a :href="'showVideos.do?platform='+platform.video_platform">
-					<img :src="'../res/platform_img/'+platform.video_platform_img"/>
-					<p>{{ platform.video_platform }}</p>
+				<a :href="'showVideos.do?platform='+platform.videoPlatform">
+					<img :src="'../res/platform_img/'+platform.videoPlatformImg"/>
+					<p>{{ platform.videoPlatform }}</p>
 				</a>
 				</div>
 			</div>
@@ -88,9 +88,9 @@
 		<div class="container cate_list">
 			<ul class="row">
 				<li class="col-md-3 cate_item" v-for="img in category_imgs">
-				<a :href="'showVideos.do?cateName='+img.video_type">
-					<img class="videoTypeImg" :src="'../res/cate_img/'+img.video_type_img"/>
-					<div class="cate_title">{{ img.video_type }}</div>
+				<a :href="'showVideos.do?cateName='+img.videoType">
+					<img class="videoTypeImg" :src="'../res/cate_img/'+img.videoTypeImg"/>
+					<div class="cate_title">{{ img.videoType }}</div>
 				</a>
 				</li>
 			</ul>

@@ -1,8 +1,14 @@
 package com.yj.pojo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
+@Entity
+@Table(name = "video_user")
 public class User {
+    @Id
     private Integer userId;
 
     private String userName;

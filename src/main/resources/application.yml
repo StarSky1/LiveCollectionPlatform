@@ -50,12 +50,14 @@ spring:
     druid:
       web-stat-filter:
         principal-cookie-name:
-#  jpa:
-#      hibernate:
-#        ddl-auto: update
-#      show-sql: true
-#      database: mysql
-#      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect  #不加这句则默认为myisam引擎
+  jpa:
+      hibernate:
+        ddl-auto: update
+        naming:
+          physical-strategy: com.yj.config.CustomNamingStrategyConfig  #自定义命名策略
+      show-sql: true
+      database: mysql
+      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect  #不加这句则默认为myisam引擎
     
 renren:
   redis:
@@ -63,8 +65,8 @@ renren:
   shiro:
     redis: false # true表示shiro session存到redis里，需要开启redis，才会生效【分布式场景】
 
-mybatis:
-    mapper-locations: classpath*:com/yj/dao/*.xml
+#mybatis:
+#    mapper-locations: classpath*:com/yj/dao/*.xml
     
 logging:
 #   level: debug

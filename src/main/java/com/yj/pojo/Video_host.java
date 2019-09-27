@@ -1,43 +1,57 @@
 package com.yj.pojo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="video_host")
 public class Video_host {
-	
-	private String video_host_id;
-	private String video_host_nickname;
-	private int video_host_level=1;
-	private String video_host_avatar="null";
-	private String video_room_id;
-	
-	
-	public String getVideo_host_avatar() {
-		return video_host_avatar;
+	@Id
+	private String videoHostId;
+	private String videoHostNickname;
+	private int videoHostLevel=1;
+	private String videoHostAvatar="null";
+	private String videoRoomId;
+
+
+	public String getVideoHostId() {
+		return videoHostId;
 	}
-	public void setVideo_host_avatar(String video_host_avatar) {
-		this.video_host_avatar = video_host_avatar;
+
+	public void setVideoHostId(String videoHostId) {
+		this.videoHostId = videoHostId;
 	}
-	public String getVideo_host_nickname() {
-		return video_host_nickname;
+
+	public String getVideoHostNickname() {
+		return videoHostNickname;
 	}
-	public void setVideo_host_nickname(String video_host_nickname) {
-		this.video_host_nickname = video_host_nickname;
+
+	public void setVideoHostNickname(String videoHostNickname) {
+		this.videoHostNickname = videoHostNickname;
 	}
-	public int getVideo_host_level() {
-		return video_host_level;
+
+	public int getVideoHostLevel() {
+		return videoHostLevel;
 	}
-	public void setVideo_host_level(int video_host_level) {
-		this.video_host_level = video_host_level;
+
+	public void setVideoHostLevel(int videoHostLevel) {
+		this.videoHostLevel = videoHostLevel;
 	}
-	public String getVideo_host_id() {
-		return video_host_id;
+
+	public String getVideoHostAvatar() {
+		return videoHostAvatar;
 	}
-	public void setVideo_host_id(String video_host_id) {
-		this.video_host_id = video_host_id;
+
+	public void setVideoHostAvatar(String videoHostAvatar) {
+		this.videoHostAvatar = videoHostAvatar;
 	}
-	public String getVideo_room_id() {
-		return video_room_id;
+
+	public String getVideoRoomId() {
+		return videoRoomId;
 	}
-	public void setVideo_room_id(String video_room_id) {
-		this.video_room_id = video_room_id;
+
+	public void setVideoRoomId(String videoRoomId) {
+		this.videoRoomId = videoRoomId;
 	}
-	
 }

@@ -1,37 +1,47 @@
 package com.yj.pojo;
 
-public class Video_platform {
-	
-	private int video_platform_id;
-	private String video_platform;
-	private String video_platform_domain;
-	private String video_platform_img;
-	
-	public String getVideo_platform_img() {
-		return video_platform_img;
-	}
-	public void setVideo_platform_img(String video_platform_img) {
-		this.video_platform_img = video_platform_img;
-	}
-	public int getVideo_platform_id() {
-		return video_platform_id;
-	}
-	public void setVideo_platform_id(int video_platform_id) {
-		this.video_platform_id = video_platform_id;
-	}
-	public String getVideo_platform() {
-		return video_platform;
-	}
-	public void setVideo_platform(String video_platform) {
-		this.video_platform = video_platform;
-	}
-	public String getVideo_platform_domain() {
-		return video_platform_domain;
-	}
-	public void setVideo_platform_domain(String video_platform_domain) {
-		this.video_platform_domain = video_platform_domain;
-	}
-	
-	
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "video_platform")
+public class Video_platform {
+	@Id
+	private int videoPlatformId;
+	private String videoPlatform;
+	private String videoPlatformDomain;
+	private String videoPlatformImg;
+
+	public int getVideoPlatformId() {
+		return videoPlatformId;
+	}
+
+	public void setVideoPlatformId(int videoPlatformId) {
+		this.videoPlatformId = videoPlatformId;
+	}
+
+	public String getVideoPlatform() {
+		return videoPlatform;
+	}
+
+	public void setVideoPlatform(String videoPlatform) {
+		this.videoPlatform = videoPlatform;
+	}
+
+	public String getVideoPlatformDomain() {
+		return videoPlatformDomain;
+	}
+
+	public void setVideoPlatformDomain(String videoPlatformDomain) {
+		this.videoPlatformDomain = videoPlatformDomain;
+	}
+
+	public String getVideoPlatformImg() {
+		return videoPlatformImg;
+	}
+
+	public void setVideoPlatformImg(String videoPlatformImg) {
+		this.videoPlatformImg = videoPlatformImg;
+	}
 }

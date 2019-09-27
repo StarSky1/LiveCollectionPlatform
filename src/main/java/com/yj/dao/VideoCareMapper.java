@@ -1,31 +1,14 @@
 package com.yj.dao;
 
+import com.yj.pojo.VideoCare;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
 
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
-
-import com.yj.pojo.VideoCare;
-import com.yj.pojo.Video_room;
-
-public interface VideoCareMapper {
-    int deleteByPrimaryKey(Integer id);
+public interface VideoCareMapper extends JpaRepository<VideoCare,Integer> {
     
-    int deleteByUserIdAndVideoId(VideoCare care);
-
-    int insert(VideoCare record);
-
-    int insertSelective(VideoCare record);
-
-    VideoCare selectByPrimaryKey(Integer id);
-    
-    @Select("select * from `video-care` where userId=#{userId,jdbcType=INTEGER}")
-    @ResultMap("BaseResultMap")
+    @Query(value = "select v from VideoCare v where v.userid=?1")
     List<VideoCare> selectByUserId(int userId);
-    
-    List<Video_room> selectVideoSourceByUserId(int userId);
 
-    int updateByPrimaryKeySelective(VideoCare record);
-
-    int updateByPrimaryKey(VideoCare record);
 }

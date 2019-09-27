@@ -1,79 +1,103 @@
 package com.yj.pojo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "video_source")
 public class Video_source {
 	
-	private String video_title;
-	private String video_img;
-	private int video_number;
-	private int video_station_num;
-	private String video_url;
-	private String video_room_url;
-	private String video_id;
-	private int video_platform;
-	private int video_type;
-	private int video_status;
-	
-	
-	public int getVideo_status() {
-		return video_status;
+	private String videoTitle;
+	private String videoImg;
+	private int videoNumber;
+	private int videoStationNum;
+	private String videoUrl;
+	private String videoRoomUrl;
+	@Id
+	private String videoId;
+	private int videoPlatform;
+	private int videoType;
+	private int videoStatus;
+
+
+	public String getVideoTitle() {
+		return videoTitle;
 	}
-	public void setVideo_status(int video_status) {
-		this.video_status = video_status;
+
+	public void setVideoTitle(String videoTitle) {
+		this.videoTitle = videoTitle;
 	}
-	public String getVideo_title() {
-		return video_title;
+
+	public String getVideoImg() {
+		return videoImg;
 	}
-	public void setVideo_title(String video_title) {
-		this.video_title = video_title;
+
+	public void setVideoImg(String videoImg) {
+		this.videoImg = videoImg;
 	}
-	public String getVideo_img() {
-		return video_img;
+
+	public int getVideoNumber() {
+		return videoNumber;
 	}
-	public void setVideo_img(String video_img) {
-		this.video_img = video_img;
+
+	public void setVideoNumber(int videoNumber) {
+		this.videoNumber = videoNumber;
 	}
-	public int getVideo_number() {
-		return video_number;
+
+	public int getVideoStationNum() {
+		return videoStationNum;
 	}
-	public void setVideo_number(int video_number) {
-		this.video_number = video_number;
+
+	public void setVideoStationNum(int videoStationNum) {
+		this.videoStationNum = videoStationNum;
 	}
-	public int getVideo_station_num() {
-		return video_station_num;
+
+	public String getVideoUrl() {
+		return videoUrl;
 	}
-	public void setVideo_station_num(int video_station_num) {
-		this.video_station_num = video_station_num;
+
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
 	}
-	public int getVideo_platform() {
-		return video_platform;
+
+	public String getVideoRoomUrl() {
+		return videoRoomUrl;
 	}
-	public void setVideo_platform(int video_platform) {
-		this.video_platform = video_platform;
+
+	public void setVideoRoomUrl(String videoRoomUrl) {
+		this.videoRoomUrl = videoRoomUrl;
 	}
-	public int getVideo_type() {
-		return video_type;
+
+	public String getVideoId() {
+		return videoId;
 	}
-	public void setVideo_type(int video_type) {
-		this.video_type = video_type;
+
+	public void setVideoId(String videoId) {
+		this.videoId = videoId;
 	}
-	public String getVideo_url() {
-		return video_url;
+
+	public int getVideoPlatform() {
+		return videoPlatform;
 	}
-	public void setVideo_url(String video_url) {
-		this.video_url = video_url;
+
+	public void setVideoPlatform(int videoPlatform) {
+		this.videoPlatform = videoPlatform;
 	}
-	public String getVideo_room_url() {
-		return video_room_url;
+
+	public int getVideoType() {
+		return videoType;
 	}
-	public void setVideo_room_url(String video_room_url) {
-		this.video_room_url = video_room_url;
+
+	public void setVideoType(int videoType) {
+		this.videoType = videoType;
 	}
-	public String getVideo_id() {
-		return video_id;
+
+	public int getVideoStatus() {
+		return videoStatus;
 	}
-	public void setVideo_id(String video_id) {
-		this.video_id = video_id;
+
+	public void setVideoStatus(int videoStatus) {
+		this.videoStatus = videoStatus;
 	}
-	
-	
 }

@@ -1,28 +1,38 @@
 package com.yj.pojo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "video_category")
 public class Video_category {
-	
-	private int video_type_id;
-	private String video_type;
-	private String video_type_img;
-	public int getVideo_type_id() {
-		return video_type_id;
+	@Id
+	private int videoTypeId;
+	private String videoType;
+	private String videoTypeImg;
+
+	public int getVideoTypeId() {
+		return videoTypeId;
 	}
-	public void setVideo_type_id(int video_type_id) {
-		this.video_type_id = video_type_id;
+
+	public void setVideoTypeId(int videoTypeId) {
+		this.videoTypeId = videoTypeId;
 	}
-	public String getVideo_type() {
-		return video_type;
+
+	public String getVideoType() {
+		return videoType;
 	}
-	public void setVideo_type(String video_type) {
-		this.video_type = video_type;
+
+	public void setVideoType(String videoType) {
+		this.videoType = videoType;
 	}
-	public String getVideo_type_img() {
-		return video_type_img;
+
+	public String getVideoTypeImg() {
+		return videoTypeImg;
 	}
-	public void setVideo_type_img(String video_type_img) {
-		this.video_type_img = video_type_img;
+
+	public void setVideoTypeImg(String videoTypeImg) {
+		this.videoTypeImg = videoTypeImg;
 	}
-	
-	
 }

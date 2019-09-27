@@ -1,14 +1,5 @@
 package com.yj.spider;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
@@ -16,6 +7,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.yj.pojo.Video_category;
 import com.yj.pojo.Video_host;
 import com.yj.pojo.Video_source;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 熊猫tv 爬虫
@@ -45,7 +44,7 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 		String bodyStr=getHtmlBodyStr(htmlStr);
 		Map<String,Video_category> map=new HashMap<>();
 		for (Video_category cate : list) {
-			map.put(cate.getVideo_type(), cate);
+			map.put(cate.getVideoType(), cate);
 		}
 		Pattern pattern=Pattern.compile("<aclass=\"video-list-item-wrap\"[^>]*?>.*?<imgsrc=\"(.*?)\"[^>]*?>.*?<divclass=\"cate-title\">"
 				+ "(.*?)</div></a>");
@@ -53,7 +52,7 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 		while(matcher.find()){
 			String cate_name=matcher.group(2).trim();
 			if(map.containsKey(cate_name)){
-				map.get(cate_name).setVideo_type_img(matcher.group(1));
+				map.get(cate_name).setVideoTypeImg(matcher.group(1));
 			}
 		}
 		return list;
@@ -94,7 +93,7 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 	/**
 	 * 获取熊猫tv 正在直播页面中指定页号的直播间和主播信息
 	 * @param live_lists_url
-	 * @param total_page
+	 * @param
 	 * @return
 	 */
 	public String getTv_Video_source(String live_lists_url,int pageno){
@@ -122,7 +121,7 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 	
 	/**
 	 * 解析Json字符串，生成直播间和主播对象信息
-	 * @param jsonStr
+	 *
 	 */
 	public void parseVideo_items_JSONStr(String live_dataStr,List<Video_host> host_list,List<Video_source> source_list){
 		JSONObject json=null;
@@ -139,31 +138,31 @@ public class PandaTvSpider extends HtmlSpiderUtils{
 			if(!cate_map.containsKey(video_type)){
 				continue;
 			}
-			int video_type_id=cate_map.get(video_type).getVideo_type_id();
+			int video_type_id=cate_map.get(video_type).getVideoTypeId();
 			Video_source source=new Video_source();
-			source.setVideo_room_url(json.getString("id"));
-			source.setVideo_img(json.getJSONObject("pictures").getString("img"));
-			source.setVideo_title(json.getString("name"));
-			source.setVideo_number(Integer.parseInt(json.getString("person_num")));
+			source.setVideoRoomUrl(json.getString("id"));
+			source.setVideoImg(json.getJSONObject("pictures").getString("img"));
+			source.setVideoTitle(json.getString("name"));
+			source.setVideoNumber(Integer.parseInt(json.getString("person_num")));
 			//如果直播间观看人数小于1000，则不录入数据库
-			if(source.getVideo_number()<1000){
+			if(source.getVideoNumber()<1000){
 				continue;
 			}
-			source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));
-			source.setVideo_type(video_type_id);
+			source.setVideoStationNum(json.getJSONObject("ticket_rank_info").getInteger("score"));
+			source.setVideoType(video_type_id);
 			
-			source.setVideo_platform(video_platform.getVideo_platform_id());
-			source.setVideo_id("Pandatv_"+source.getVideo_room_url());
-			source.setVideo_status(1);
+			source.setVideoPlatform(video_platform.getVideoPlatformId());
+			source.setVideoId("Pandatv_"+source.getVideoRoomUrl());
+			source.setVideoStatus(1);
 			
 			Video_host host=new Video_host();
 			if(json.getJSONObject("host_level_info")!=null){
-				host.setVideo_host_level(json.getJSONObject("host_level_info").getIntValue("c_lv"));
+				host.setVideoHostLevel(json.getJSONObject("host_level_info").getIntValue("c_lv"));
 			}
-			host.setVideo_host_id("Pandatv"+json.getJSONObject("userinfo").getIntValue("rid"));
-			host.setVideo_host_nickname(json.getJSONObject("userinfo").getString("nickName"));
-			host.setVideo_host_avatar(json.getJSONObject("userinfo").getString("avatar"));
-			host.setVideo_room_id(source.getVideo_id());
+			host.setVideoHostId("Pandatv"+json.getJSONObject("userinfo").getIntValue("rid"));
+			host.setVideoHostNickname(json.getJSONObject("userinfo").getString("nickName"));
+			host.setVideoHostAvatar(json.getJSONObject("userinfo").getString("avatar"));
+			host.setVideoRoomId(source.getVideoId());
 			
 			host_list.add(host);
 			source_list.add(source);

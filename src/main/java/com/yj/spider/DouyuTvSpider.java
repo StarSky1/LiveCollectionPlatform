@@ -1,18 +1,17 @@
 package com.yj.spider;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.yj.pojo.Video_host;
 import com.yj.pojo.Video_source;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 斗鱼tv 爬虫
@@ -79,30 +78,30 @@ public class DouyuTvSpider extends HtmlSpiderUtils{
 			if(!cate_map.containsKey(video_type)){
 				continue;
 			}
-			int video_type_id=cate_map.get(video_type).getVideo_type_id();
+			int video_type_id=cate_map.get(video_type).getVideoTypeId();
 			Video_source source=new Video_source();
-			source.setVideo_room_url(json.getString("url"));
-			source.setVideo_img(json.getString("rs1"));
-			source.setVideo_title(json.getString("rn"));
-			source.setVideo_number(json.getIntValue("ol"));
+			source.setVideoRoomUrl(json.getString("url"));
+			source.setVideoImg(json.getString("rs1"));
+			source.setVideoTitle(json.getString("rn"));
+			source.setVideoNumber(json.getIntValue("ol"));
 			//如果直播间观看人数小于1000，则不录入数据库
-			if(source.getVideo_number()<1000){
+			if(source.getVideoNumber()<1000){
 				continue;
 			}
 			//source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));
-			source.setVideo_type(video_type_id);
-			source.setVideo_platform(video_platform.getVideo_platform_id());
-			source.setVideo_id("Douyutv_"+json.getString("rid"));
-			source.setVideo_status(1);
+			source.setVideoType(video_type_id);
+			source.setVideoPlatform(video_platform.getVideoPlatformId());
+			source.setVideoId("Douyutv_"+json.getString("rid"));
+			source.setVideoStatus(1);
 			
 			Video_host host=new Video_host();
 //			if(json.getJSONObject("host_level_info")!=null){
 //				host.setVideo_host_level(json.getJSONObject("host_level_info").getIntValue("c_lv"));
 //			}
-			host.setVideo_host_id("Douyutv"+json.getString("uid"));
-			host.setVideo_host_nickname(json.getString("nn"));
+			host.setVideoHostId("Douyutv"+json.getString("uid"));
+			host.setVideoHostNickname(json.getString("nn"));
 //			host.setVideo_host_avatar(json.getJSONObject("userinfo").getString("avatar"));
-			host.setVideo_room_id(source.getVideo_id());
+			host.setVideoRoomId(source.getVideoId());
 			
 			host_list.add(host);
 			source_list.add(source);

@@ -1,23 +1,22 @@
 package com.yj.dao;
 
 import com.yj.pojo.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-public interface UserMapper {
-    int deleteByPrimaryKey(Integer userId);
+public interface UserMapper extends JpaRepository<User,Integer> {
 
-    int insert(User record);
+    @Query(value = "select u from User u where u.userId=:userId")
+    User selectByPrimaryKey(@Param("userId") Integer userId);
 
-    int insertSelective(User record);
+    @Query(value = "select u from User u where u.userName=:username")
+    User selectByUsername(@Param("username") String username);
 
-    User selectByPrimaryKey(Integer userId);
-    
-    User selectByUsername(String username);
-    
-    User selectByPhone(String phone);
-    
-    User selectByEmail(String email);
+    @Query(value = "select u from User u where u.userPhone=:phone")
+    User selectByPhone(@Param("phone") String phone);
 
-    int updateByPrimaryKeySelective(User record);
+    @Query(value = "select u from User u where u.userEmail=:email")
+    User selectByEmail(@Param("email") String email);
 
-    int updateByPrimaryKey(User record);
 }

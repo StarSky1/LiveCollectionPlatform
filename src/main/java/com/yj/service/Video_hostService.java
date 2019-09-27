@@ -1,12 +1,11 @@
 package com.yj.service;
 
-import java.util.List;
-
+import com.yj.dao.Video_hostDao;
+import com.yj.pojo.Video_host;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yj.dao.Video_hostDao;
-import com.yj.pojo.Video_host;
+import java.util.List;
 
 @Service
 public class Video_hostService {
@@ -19,8 +18,8 @@ public class Video_hostService {
 	 * @param video_host
 	 * @return
 	 */
-	public int insertVideo_host(Video_host video_host){
-		return video_hostDao.insertVideo_host(video_host);
+	public void insertVideo_host(Video_host video_host){
+		video_hostDao.save(video_host);
 	}
 	
 	/**
@@ -28,8 +27,8 @@ public class Video_hostService {
 	 * @param host_list
 	 * @return
 	 */
-	public int replace_host_list(List<Video_host> host_list){
-		return video_hostDao.replace_host_list(host_list);
+	public void replace_host_list(List<Video_host> host_list){
+		video_hostDao.saveAll(host_list);
 	}
 	
 }

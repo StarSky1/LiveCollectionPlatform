@@ -119,18 +119,18 @@
         </div>
         <div class="container user-form">
         	<div id="liveList" class="liveList row">
-		        <a  v-for="video in videos" :href="video.video_room_url" target="_blank" class="col-lg-6 col-md-6 col-sm-6 ellipsis">
-		        <img :src="video.video_img" onerror="this.onerror=&quot;&quot;;this.src=&quot;../res/404.jpg&quot;">
-		        <img :src="'../res/platform_img/'+video.video_platform_img" class="platform-icon">
-		        <h5>&nbsp;{{ video.video_title }}</h5>
+		        <a  v-for="video in videos" :href="video.videoRoomUrl" target="_blank" class="col-lg-6 col-md-6 col-sm-6 ellipsis">
+		        <img :src="video.videoImg" onerror="this.onerror=&quot;&quot;;this.src=&quot;../res/404.jpg&quot;">
+		        <img :src="'../res/platform_img/'+video.videoPlatformImg" class="platform-icon">
+		        <h5>&nbsp;{{ video.videoTitle }}</h5>
 		        <div class="row">
 		          <div class="col-sm-7">
-		            <span class="glyphicon glyphicon-user"></span>&nbsp;{{ video.video_host_nickname }}
+		            <span class="glyphicon glyphicon-user"></span>&nbsp;{{ video.videoHostNickname }}
 		          </div>
 		          <div class="col-sm-5 text-right">
-		            <img v-show="!cares[video.video_id]" :id="video.video_id+'_'" @click.prevent="addCare(video.video_id)" src="../res/heart-empty.png" class="heart-icon" >
-		            <img v-show="cares[video.video_id]" :id="video.video_id+'__'" @click.prevent="cancelCare(video.video_id)" src="../res/heart.png" class="heart-icon" >
-		            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ video.video_number }}
+		            <img v-show="!cares[video.videoId]" :id="video.videoId+'_'" @click.prevent="addCare(video.videoId)" src="../res/heart-empty.png" class="heart-icon" >
+		            <img v-show="cares[video.videoId]" :id="video.videoId+'__'" @click.prevent="cancelCare(video.videoId)" src="../res/heart.png" class="heart-icon" >
+		            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ video.videoNumber }}
 		          </div>
 		        </div>
 		        </a>

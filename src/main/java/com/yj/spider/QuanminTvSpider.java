@@ -1,16 +1,15 @@
 package com.yj.spider;
 
-import java.util.List;
-
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.yj.pojo.Video_host;
 import com.yj.pojo.Video_source;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 全民tv 爬虫
@@ -66,32 +65,32 @@ public class QuanminTvSpider extends HtmlSpiderUtils{
 			if(!cate_map.containsKey(video_type)){
 				continue;
 			}
-			int video_type_id=cate_map.get(video_type).getVideo_type_id();
+			int video_type_id=cate_map.get(video_type).getVideoTypeId();
 			Video_source source=new Video_source();
-			source.setVideo_room_url(json.getString("uid"));
-			source.setVideo_img(json.getString("thumb"));
-			source.setVideo_title(json.getString("title"));
-			source.setVideo_number(Integer.parseInt(json.getString("view")));
+			source.setVideoRoomUrl(json.getString("uid"));
+			source.setVideoImg(json.getString("thumb"));
+			source.setVideoTitle(json.getString("title"));
+			source.setVideoNumber(Integer.parseInt(json.getString("view")));
 			//如果直播间观看人数小于1000，则不录入数据库
-			if(source.getVideo_number()<1000){
+			if(source.getVideoNumber()<1000){
 				continue;
 			}
 			//source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));
-			source.setVideo_type(video_type_id);
+			source.setVideoType(video_type_id);
 			
-			source.setVideo_platform(video_platform.getVideo_platform_id());
-			source.setVideo_id("Quanmintv_"+json.getString("uid"));
-			source.setVideo_url(json.getString("stream"));
-			source.setVideo_status(1);
+			source.setVideoPlatform(video_platform.getVideoPlatformId());
+			source.setVideoId("Quanmintv_"+json.getString("uid"));
+			source.setVideoUrl(json.getString("stream"));
+			source.setVideoStatus(1);
 			
 			Video_host host=new Video_host();
 			if(json.getString("hotsLevel")!=null){
-				host.setVideo_host_level(Integer.parseInt(json.getString("hotsLevel")));
+				host.setVideoHostLevel(Integer.parseInt(json.getString("hotsLevel")));
 			}
-			host.setVideo_host_id("Quanmintv"+json.getString("id"));
-			host.setVideo_host_nickname(json.getString("nick"));
-			host.setVideo_host_avatar(json.getString("avatar"));
-			host.setVideo_room_id(source.getVideo_id());
+			host.setVideoHostId("Quanmintv"+json.getString("id"));
+			host.setVideoHostNickname(json.getString("nick"));
+			host.setVideoHostAvatar(json.getString("avatar"));
+			host.setVideoRoomId(source.getVideoId());
 			
 			host_list.add(host);
 			source_list.add(source);

@@ -1,20 +1,21 @@
 package com.yj.service;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import javax.servlet.http.HttpSession;
-
+import com.yj.dao.UserMapper;
+import com.yj.pojo.User;
 import org.lf.utils.BaseProperties;
 import org.lf.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yj.dao.UserMapper;
-import com.yj.pojo.User;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import static com.yj.logger.Log4JConfigure.LOGERROR;
+import static com.yj.logger.Log4JConfigure.LOGINFO;
 
 @Service
 public class UserService {
@@ -49,8 +50,13 @@ public class UserService {
 		user.setUserPassword(StringUtils.toMD5(password+salt));
 		user.setUserPhone(phone);
 		user.setUserEmail(email);
-		int i=userMapper.insertSelective(user);
-		if(i>0) return true;
+		try {
+			userMapper.save(user);
+			return true;
+		}catch (Exception e){
+			LOGINFO.error("addUser error",e);
+			LOGERROR.error("addUser error",e);
+		}
 		return false;
 	}
 	
@@ -69,8 +75,13 @@ public class UserService {
 	}
 	
 	public boolean updateUser(User user){
-		int i=userMapper.updateByPrimaryKeySelective(user);
-		if(i>0) return true;
+		try{
+			userMapper.save(user);
+			return true;
+		}catch (Exception e){
+			LOGINFO.error("updateUser error",e);
+			LOGERROR.error("updateUser error",e);
+		}
 		return false;
 	}
 	

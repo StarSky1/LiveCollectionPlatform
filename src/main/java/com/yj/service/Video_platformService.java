@@ -1,12 +1,11 @@
 package com.yj.service;
 
-import java.util.List;
-
+import com.yj.dao.Video_platformDao;
+import com.yj.pojo.Video_platform;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.yj.dao.Video_platformDao;
-import com.yj.pojo.Video_platform;
+import java.util.List;
 
 @Service
 public class Video_platformService {
@@ -32,8 +31,8 @@ public class Video_platformService {
 	 * @param platform_img
 	 * @return
 	 */
-	public int updateVideo_platformImg(int platform_id,String platform_img){
-		return video_platformDao.updateVideo_platformImg(platform_id, platform_img);
+	public void updateVideo_platformImg(int platform_id,String platform_img){
+		video_platformDao.updateVideo_platformImg(platform_id, platform_img);
 	}
 	
 	

@@ -1,26 +1,22 @@
 package com.yj.dao;
 
+import com.yj.pojo.Video_platform;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
 
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.springframework.stereotype.Repository;
+public interface Video_platformDao extends JpaRepository<Video_platform,Integer>{
 
-import com.yj.pojo.Video_platform;
-
-@Repository
-public interface Video_platformDao {
-
-	@Select("select * from `video-platform` where `video-platform`=#{video_platform,jdbcType=VARCHAR}")
-	@ResultMap(value={"video_platform_ResultMap"})
-	public Video_platform selectVideo_platformByName(String video_platform);
+	@Query(value = "select v from Video_platform v where v.videoPlatform=?1")
+	Video_platform selectVideo_platformByName(String video_platform);
 	
-	@Select("select * from `video-platform`")
-	@ResultMap(value={"video_platform_ResultMap"})
-	public List<Video_platform> selectVideo_platformList();
+	@Query("select p from Video_platform p")
+	List<Video_platform> selectVideo_platformList();
 	
-	@Update("update `video-platform` set `video-platform-img`=#{arg1,jdbcType=VARCHAR} "
-			+ "where `video-platform-id`=#{arg0,jdbcType=INTEGER}")
-	public int updateVideo_platformImg(int video_platform_id,String platform_img);
+	@Query("update Video_platform p set p.videoPlatformImg=?2"
+			+ "where p.videoPlatformId=?1")
+	@Modifying
+	void updateVideo_platformImg(int video_platform_id,String platform_img);
 }
