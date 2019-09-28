@@ -87,7 +87,7 @@
 			vm.cares=json;
 		});
   }
-  getVideolist(vm,logined,1,vm1.searchWord);
+  getVideolist(vm,page_vm,logined,1,vm1.searchWord);
  
 </script>
 

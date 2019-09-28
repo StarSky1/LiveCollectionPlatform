@@ -105,7 +105,7 @@
                     $(".prePage").removeClass("disabled");
                     $(".nextPage").removeClass("disabled");
                 }
-                getVideolist(vm,vm1.logined,this.pageno,vm1.searchWord);
+                getVideolist(vm,page_vm,vm1.logined,this.pageno,vm1.searchWord);
             },
             prePage: function(event){
                 var current=this.pageno-1;
@@ -114,7 +114,7 @@
                 }
                 $(".nextPage").removeClass("disabled");
                 this.pageno=current;
-                getVideolist(this,vm1.logined,current,vm1.searchWord);
+                getVideolist(vm,page_vm,vm1.logined,current,vm1.searchWord);
             },
             nextPage: function(event){
                 var current=this.pageno+1;
@@ -124,7 +124,7 @@
                 }
                 $(".prePage").removeClass("disabled");
                 this.pageno=current;
-                getVideolist(this,vm1.logined,current,vm1.searchWord);
+                getVideolist(vm,page_vm,vm1.logined,current,vm1.searchWord);
             }
         }
     });

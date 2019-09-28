@@ -10,8 +10,8 @@ public interface VideoRoomRepository extends JpaRepository<Video_room,String> {
 
     @Query(nativeQuery = true,value = "select * from `video_room` where 1=1 "+
             "and IF (?1 != '', `video_title` like concat('%',?1,'%') or `video_host_nickname` like concat('%',?1,'%'), 1=1) " +
-            "and IF (?2 != '', `video_type`=?2, 1=1) " +
-            "and IF (?3 != '', `video_platform`=?3, 1=1) " +
+            "and IF (?3 != '', `video_type`=?3, 1=1) " +
+            "and IF (?2 != '', `video_platform`=?2, 1=1) " +
             "and `video_status`=1 " +
             "order by `video_number` desc " +
             "limit ?4,?5 "
@@ -20,8 +20,8 @@ public interface VideoRoomRepository extends JpaRepository<Video_room,String> {
 
     @Query(nativeQuery = true,value = "select count(*) from `video_room` where 1=1 "+
             "and IF (?1 != '', `video_title` like concat('%',?1,'%') or `video_host_nickname` like concat('%',?1,'%'), 1=1) " +
-            "and IF (?2 != '', `video_type`=?2, 1=1) " +
-            "and IF (?3 != '', `video_platform`=?3, 1=1) " +
+            "and IF (?3 != '', `video_type`=?3, 1=1) " +
+            "and IF (?2 != '', `video_platform`=?2, 1=1) " +
             "and `video_status`=1 "
     )
     int countVideoRoomList(String searchWord,String platform,String type);

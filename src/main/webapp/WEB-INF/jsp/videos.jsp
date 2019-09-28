@@ -91,7 +91,7 @@
   }
   var cateName="${cateName}";
   var platform="${platform}";
-  getVideolist(vm,logined,1,vm1.searchWord,cateName,platform);
+  getVideolist(vm,page_vm,logined,1,vm1.searchWord,cateName,platform);
 </script>
 
 </body>
