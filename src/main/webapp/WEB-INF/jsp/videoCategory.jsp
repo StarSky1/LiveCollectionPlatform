@@ -42,8 +42,8 @@
   	}
   	.cate_list {
   		width: 80%;
-  		margin-left: 280px;
-  		margin-right: 250px;
+  		margin-left: auto;
+  		margin-right: auto;
   	}
   	.cate_item {
   		margin-bottom: 20px;
@@ -64,8 +64,9 @@
   	}
 
     .videoTypeImg {
-        width: 286.594px;
-        height: 397.313px;
+		width: 280px;
+		height: 350px;
+        display: block;
     }
   	
   
@@ -78,22 +79,22 @@
 			<p>平台分类</p>
 			<div class="row">
 				<div class="col-md-6" v-for="platform in platform_imgs">
-				<a :href="'showVideos.do?platform='+platform.videoPlatform">
-					<img :src="'../res/platform_img/'+platform.videoPlatformImg"/>
-					<p>{{ platform.videoPlatform }}</p>
-				</a>
+					<a :href="'showVideos.do?platform='+platform.videoPlatform">
+						<img :src="'../res/platform_img/'+platform.videoPlatformImg"/>
+						<p>{{ platform.videoPlatform }}</p>
+					</a>
 				</div>
 			</div>
 		</div>
-		<div class="container cate_list">
-			<ul class="row">
-				<li class="col-md-3 cate_item" v-for="img in category_imgs">
-				<a :href="'showVideos.do?cateName='+img.videoType">
-					<img class="videoTypeImg" :src="'../res/cate_img/'+img.videoTypeImg"/>
-					<div class="cate_title">{{ img.videoType }}</div>
-				</a>
-				</li>
-			</ul>
+		<div class="col-md-10 col-md-offset-2">
+				<ul class="row cate_list">
+					<li class="col-md-3 cate_item" v-for="img in category_imgs">
+						<a :href="'showVideos.do?cateName='+img.videoType">
+							<img  class="videoTypeImg" :src="'../res/cate_img/'+img.videoTypeImg"/>
+							<div  class="cate_title">{{ img.videoType }}</div>
+						</a>
+					</li>
+				</ul>
 		</div>
 </div>
 
