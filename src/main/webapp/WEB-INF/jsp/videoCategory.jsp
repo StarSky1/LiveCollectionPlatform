@@ -64,9 +64,9 @@
   	}
 
     .videoTypeImg {
-		width: 280px;
-		height: 350px;
-        display: block;
+        max-width: 280px;
+        height: 350px;
+        /*display: block;*/
     }
   	
   
@@ -114,6 +114,7 @@ $.getJSON(getRootpath()+"/category/getCategory.do",{},function(json){
     vm.platform_imgs=json.platform_imgs;
     vm.category_imgs=json.category_imgs;
  });
+
 </script>
 
 </body>

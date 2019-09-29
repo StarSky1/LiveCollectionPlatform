@@ -1,7 +1,7 @@
 <%@ page  language="java" pageEncoding="UTF-8" %>
 <nav id="pageNation" aria-label="Page navigation" class="col-md-6 col-md-offset-2 Page">
     <ul class="pagination pagination-lg">
-        <li class="disabled prePage">
+        <li class="prePage" :class="{disabled: prePageDisabled}">
             <a href="#" aria-label="Previous" @click.prevent="prePage">
                 <span aria-hidden="true">&laquo;</span>
             </a>
@@ -10,7 +10,7 @@
             <a v-if="item.display==undefined" href="#" class="pagebtn"  @click.prevent="turnPage">{{ item.pageno }}</a>
             <a v-else>···</a>
         </li>
-        <li class="nextPage">
+        <li class="nextPage" :class="{disabled: nextPageDisabled}">
             <a href="#liveList" aria-label="Next" @click.prevent="nextPage">
                 <span aria-hidden="true">&raquo;</span>
             </a>
@@ -35,6 +35,8 @@
             total: 0,
             pagesize: 0,
             pageno: 1,
+            prePageDisabled: true,
+            nextPageDisabled: false
         },
         computed: {
             // 计算属性的 getter
@@ -43,7 +45,10 @@
                 var pages=[];
                 var total_page=Math.ceil(this.total / this.pagesize);
                 var show_size=10;
-                if(total_page<show_size){
+                if(total_page==1){
+                    this.nextPageDisabled=true;
+                }
+                if(total_page<=show_size){
                     start=1;
                     end=total_page;
                 }else{
@@ -51,7 +56,7 @@
                     end=10;
                 }
                 if(total_page>show_size && this.pageno>=end){
-                    start=Math.floor(this.pageno/10)*10-1;
+                    start=Math.floor(this.pageno/show_size)*show_size-1;
                     end=start+show_size+1;
                     pages.push({pageno: 1});   //始终显示第一页
                     pages.push({display: false}); //在start前显示省略号
@@ -66,11 +71,10 @@
                     pages.push(obj);
                 }
                 if(total_page>show_size && end<total_page-2){
-                    pages.splice(end,0,{display: false});
-                    for(var i=total_page-2;i<total_page;i++){
+                    pages.push({display: false});
+                    for(var i=total_page-2;i<=total_page;i++){  //显示最后三页
                         pages.push({pageno: i});
                     }
-                    pages.push({pageno: total_page});  //始终显示最后一页
                 }
                 if(total_page>show_size && end>=total_page-2 && end<total_page){
                     for(var i=end+1;i<=total_page;i++){
@@ -78,7 +82,8 @@
                     }
                 }
                 if(end>=total_page){
-                    pages.splice(total_page-start+3,end-total_page);
+                    var len=end-total_page; //多出的页数
+                    pages.splice(-len,len);
                 }
                 return pages;
             }
@@ -96,14 +101,14 @@
                 }
                 this.pageno=pageno;
                 if(this.pageno==1){
-                    $(".prePage").addClass("disabled");
-                    $(".nextPage").removeClass("disabled");
+                    this.prePageDisabled=true;
+                    this.nextPageDisabled=false;
                 }else if(this.pageno==total_page){
-                    $(".nextPage").addClass("disabled");
-                    $(".prePage").removeClass("disabled");
+                    this.prePageDisabled=false;
+                    this.nextPageDisabled=true;
                 }else{
-                    $(".prePage").removeClass("disabled");
-                    $(".nextPage").removeClass("disabled");
+                    this.prePageDisabled=false;
+                    this.nextPageDisabled=false;
                 }
                 getVideolist(vm,page_vm,vm1.logined,this.pageno,vm1.searchWord);
             },
