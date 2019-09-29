@@ -3,7 +3,7 @@
 [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE)
 
 用Java编写的一个直播平台聚合网站，收集各大直播平台热门有趣的直播，享受直播的乐趣吧！
-
+## 演示地址：[http://live.starsky1.cn](http://live.starsky1.cn)
 ## 欢迎大家分享意见和代码。
 ## 最新版在dev分支，开发或贡献代码请加入dev分支。
 
