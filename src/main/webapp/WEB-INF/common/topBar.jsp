@@ -63,14 +63,14 @@
             },
             myprofile: function(){
                 if(this.logined){
-                    window.location.href="http://localhost:8080/user/showProfile.do";
+                    window.location.href="/user/showProfile.do";
                 }else{
                     swal("提示","你还没有登录","info");
                 }
             },
             mycare: function(){
                 if(this.logined){
-                    window.location.href="http://localhost:8080/user/showCare.do";
+                    window.location.href="/user/showCare.do";
                 }else{
                     swal("提示","你还没有登录","info");
                 }
@@ -88,7 +88,7 @@
                     if(!json.status){ swal("提示！", "退出登录失败", "error");  }
                     else{
                         swal("提示！", "退出成功", "success");
-                        window.location.href='http://localhost:8080';
+                        window.location.href='/';
                     }
                 });
             }

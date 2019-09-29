@@ -311,10 +311,10 @@ var vm=new Vue({
 	 },
 	methods: {
 		myprofile: function(){
-			window.location.href="http://localhost:8080/user/showProfile.do";
+			window.location.href="/user/showProfile.do";
 		},
 		mycare: function(){
-			window.location.href="http://localhost:8080/user/showCare.do";
+			window.location.href="/user/showCare.do";
 		},		
 		submit: function(){
 			this.first=false;
@@ -344,7 +344,7 @@ var vm=new Vue({
 						   if(!json.status){ swal("提示！", "修改失败", "error"); }
 						    else{
 						    	swal({title: "提示！",text: "修改成功",type: "success"});
-						    	window.location.href='http://localhost:8080/user/showProfile.do';
+						    	window.location.href='/user/showProfile.do';
 						    }
 					   }
 					   

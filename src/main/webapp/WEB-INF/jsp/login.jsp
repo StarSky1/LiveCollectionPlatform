@@ -126,7 +126,7 @@
 				$.getJSON(getRootpath()+"/login/login.do",{username: vm.username,password: vm.password,remember: vm.checked},function(json){
 				    if(!json.status){ swal("提示！", "用户名或密码错误", "error");  }
 				    else{
-				    	window.location.href='http://localhost:8080';
+				    	window.location.href='/';
 				    }
 				 });
 			}

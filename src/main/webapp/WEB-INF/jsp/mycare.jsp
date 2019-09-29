@@ -154,10 +154,10 @@ var vm=new Vue({
 	 },
 	methods: {
 		myprofile: function(){
-			window.location.href="http://localhost:8080/user/showProfile.do";
+			window.location.href="/user/showProfile.do";
 		},
 		mycare: function(){
-			window.location.href="http://localhost:8080/user/showCare.do";
+			window.location.href="/user/showCare.do";
 		},
 		addCare: function(videoId){
 	    	  if(vm1.logined){

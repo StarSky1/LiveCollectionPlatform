@@ -47,11 +47,15 @@
   Copyright &copy;&nbsp;2018 杨靖 All Rights Reserved
 </footer>
 <script>
+    var cateName="${cateName}";
+    var platform="${platform}";
   var vm=new Vue({
     el: ".main-content",
     data: {
       videos: [],
-      cares: {}
+      cares: {},
+      cateName: cateName,
+      platform: platform
     },
     computed: {
       // 计算属性的 getter
@@ -89,8 +93,7 @@
 			vm.cares=json;
 		});
   }
-  var cateName="${cateName}";
-  var platform="${platform}";
+
   getVideolist(vm,page_vm,logined,1,vm1.searchWord,cateName,platform);
 </script>
 

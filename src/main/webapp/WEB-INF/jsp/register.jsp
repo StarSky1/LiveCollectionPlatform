@@ -212,7 +212,7 @@
 					if(!json.status){ swal("提示！", "注册失败", "error"); }
 				    else{
 				    	swal("提示！", "注册成功", "success");
-				    	window.location.href='http://localhost:8080/login/showLogin.do';
+				    	window.location.href='/login/showLogin.do';
 				    }
 				 });
 			}

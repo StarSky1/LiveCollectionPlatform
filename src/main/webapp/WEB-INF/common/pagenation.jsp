@@ -110,18 +110,20 @@
                     this.prePageDisabled=false;
                     this.nextPageDisabled=false;
                 }
-                getVideolist(vm,page_vm,vm1.logined,this.pageno,vm1.searchWord);
+                getVideolist(vm,page_vm,vm1.logined,this.pageno,vm1.searchWord,vm.cateName,vm.platform);
             },
             prePage: function(event){
+                if(this.prePageDisabled) return;
                 var current=this.pageno-1;
                 if(current==1){
                     $(".prePage").addClass("disabled");
                 }
                 $(".nextPage").removeClass("disabled");
                 this.pageno=current;
-                getVideolist(vm,page_vm,vm1.logined,current,vm1.searchWord);
+                getVideolist(vm,page_vm,vm1.logined,current,vm1.searchWord,vm.cateName,vm.platform);
             },
             nextPage: function(event){
+                if(this.nextPageDisabled) return;
                 var current=this.pageno+1;
                 var total_page=Math.ceil(this.total / this.pagesize);
                 if(this.pageno==total_page){
@@ -129,7 +131,7 @@
                 }
                 $(".prePage").removeClass("disabled");
                 this.pageno=current;
-                getVideolist(vm,page_vm,vm1.logined,current,vm1.searchWord);
+                getVideolist(vm,page_vm,vm1.logined,current,vm1.searchWord,vm.cateName,vm.platform);
             }
         }
     });
