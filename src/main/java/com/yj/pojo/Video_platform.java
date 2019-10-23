@@ -1,13 +1,12 @@
 package com.yj.pojo;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "video_platform")
 public class Video_platform {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int videoPlatformId;
 	private String videoPlatform;
 	private String videoPlatformDomain;
