@@ -1,13 +1,12 @@
 package com.yj.pojo;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "video_category")
 public class Video_category {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int videoTypeId;
 	private String videoType;
 	private String videoTypeImg;
