@@ -6,10 +6,12 @@ import com.yj.pojo.Video_host;
 import com.yj.pojo.Video_source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class Video_sourceService {
 	@Autowired
 	public Video_sourceDao video_sourceDao;

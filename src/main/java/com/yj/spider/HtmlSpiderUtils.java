@@ -1,25 +1,12 @@
 package com.yj.spider;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
-
+import com.alibaba.fastjson.JSONObject;
+import com.yj.pojo.Video_category;
+import com.yj.pojo.Video_host;
+import com.yj.pojo.Video_platform;
+import com.yj.pojo.Video_source;
+import com.yj.service.Video_categoryService;
+import com.yj.service.Video_platformService;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -30,13 +17,14 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.JSONObject;
-import com.yj.pojo.Video_category;
-import com.yj.pojo.Video_host;
-import com.yj.pojo.Video_platform;
-import com.yj.pojo.Video_source;
-import com.yj.service.Video_categoryService;
-import com.yj.service.Video_platformService;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 /** * @author  yangjing
  * @date 创建时间：2017年8月15日 下午2:03:23 
@@ -427,7 +415,7 @@ public class HtmlSpiderUtils {
 							if(crawled_page<total_page){
 								crawled_page++;
 								pageno=crawled_page;
-								logger.debug(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
+								logger.info(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
 							}else{
 								break;
 							}
@@ -437,11 +425,6 @@ public class HtmlSpiderUtils {
 					}
 					synchronized(signal){
 						waitThread++;
-						try {
-							signal.wait();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
 					}
 				}
 			},"线程"+i);
@@ -449,7 +432,7 @@ public class HtmlSpiderUtils {
 		}
 		while(waitThread<threadCount){
 			//等待所有爬虫线程执行完后返回数据...
-			logger.trace("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
+			logger.info("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
 		}
 		
 		return json;
