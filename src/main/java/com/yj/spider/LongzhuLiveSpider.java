@@ -23,7 +23,7 @@ import java.util.Map;
 public class LongzhuLiveSpider extends HtmlSpiderUtils{
 	
 	public LongzhuLiveSpider(){
-		threadCount=25;	//线程数量
+		threadCount=10;	//线程数量
 		waitThread=0;	//等待线程的数量
 		crawled_page=0;	//已爬取的页数
 		pagenum=18;
@@ -183,7 +183,7 @@ public class LongzhuLiveSpider extends HtmlSpiderUtils{
 		video_platform=video_platformService.getVideo_platformByName(platform);
 		
 		for(int i=1;i<=total_page;i++){
-			logger.debug("龙珠爬虫开始获取第"+i+"页的数据...");
+			logger.info("龙珠爬虫开始获取第"+i+"页的数据...");
 			String live_dataStr=getTv_Video_source(live_lists_url, i);
 			parseVideo_items_JSONStr(live_dataStr, host_list, source_list);
 		}

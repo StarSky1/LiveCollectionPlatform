@@ -22,7 +22,7 @@ import java.util.Map;
 public class DouyuTvSpider extends HtmlSpiderUtils{
 	
 	public DouyuTvSpider(){
-		threadCount=25;	//线程数量
+		threadCount=10;	//线程数量
 		waitThread=0;	//等待线程的数量
 		crawled_page=0;	//已爬取的页数
 		pagenum=120;

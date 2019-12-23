@@ -26,6 +26,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
+import static com.yj.logger.Log4JConfigure.LOGINFO;
+
 /** * @author  yangjing
  * @date 创建时间：2017年8月15日 下午2:03:23 
  * @version 1.0 
@@ -58,7 +60,7 @@ public class HtmlSpiderUtils {
 	
 	public static final Object signal = new Object();   //线程间通信变量  
 	
-	int threadCount=25;	//线程数量
+	int threadCount=10;	//线程数量
 	
 	int waitThread=0;	//等待线程的数量
 	
@@ -380,7 +382,7 @@ public class HtmlSpiderUtils {
 		video_platform=video_platformService.getVideo_platformByName(platform);
 		
 		for(int i=1;i<=total_page;i++){
-			logger.debug(platform+"爬虫开始获取第"+i+"页的数据...");
+            LOGINFO.info(platform+"爬虫开始获取第"+i+"页的数据...");
 			String live_dataStr=getTv_Video_source(live_lists_url, i);
 			parseVideo_items_JSONStr(live_dataStr, host_list, source_list);
 		}
@@ -415,7 +417,7 @@ public class HtmlSpiderUtils {
 							if(crawled_page<total_page){
 								crawled_page++;
 								pageno=crawled_page;
-								logger.info(Thread.currentThread()+"开始获取第"+crawled_page+"页的数据...");
+								LOGINFO.info(Thread.currentThread()+" {}爬虫开始获取第"+crawled_page+"页的数据...",platform);
 							}else{
 								break;
 							}
@@ -432,7 +434,7 @@ public class HtmlSpiderUtils {
 		}
 		while(waitThread<threadCount){
 			//等待所有爬虫线程执行完后返回数据...
-			logger.info("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
+            //LOGINFO.info("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
 		}
 		
 		return json;

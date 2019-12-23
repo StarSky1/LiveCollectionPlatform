@@ -13,6 +13,7 @@
         <property name="LOG_INFO">info</property>
         <property name="LOG_ERROR">error</property>
         <property name="LOG_Spring">spring</property>
+        <property name="LOG_SQL">sql</property>
         <property name="FILE_NAME">mylog</property>
     </properties>
 
@@ -72,6 +73,22 @@
                 </Delete>
             </DefaultRolloverStrategy>
         </RollingFile>
+
+        <!-- sql语句日志信息 -->
+        <RollingFile name="LogSQLFile" fileName="${LOG_HOME}/${LOG_SQL}/${FILE_NAME}.log"
+                     filePattern="${LOG_HOME}/${LOG_SQL}/${FILE_NAME}-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss.SSS} [%t] %-5level %l - %msg%n"/>
+            <Policies>
+                <!--filePattern中最小时间粒度为天，这里interval会一天生成一个新的文件-->
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_HOME}/${LOG_SQL}" maxDepth="1">
+                    <IfFileName glob="${FILE_NAME}-*.log"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
     </Appenders>
 
     <!-- 日志器 -->
@@ -93,10 +110,22 @@
         </Logger>
 
         <!-- 将业务dao接口填写进去,并用控制台输出即可 -->
-        <!--<logger name="com.yj.dao" level="debug" additivity="false">-->
-            <!--<appender-ref ref="Console"/>-->
-            <!--<appender-ref ref="LogSpringFile"/>-->
-        <!--</logger>-->
+<!--        <logger name="com.yj.dao" level="debug" additivity="false">-->
+<!--            <appender-ref ref="Console"/>-->
+<!--            <appender-ref ref="LogSpringFile"/>-->
+<!--        </logger>-->
+
+        <!-- 1. 输出SQL 到控制台和文件-->
+        <logger name="org.hibernate.SQL" level="DEBUG" additivity="false" >
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="LogSQLFile"/>
+        </logger>
+
+        <!-- 2. 输出SQL 的参数到控制台和文件-->
+<!--        <logger name="org.hibernate.type.descriptor.sql.BasicBinder"  additivity="false" level="TRACE" >-->
+<!--            <AppenderRef ref="Console"/>-->
+<!--            <AppenderRef ref="LogSQLFile"/>-->
+<!--        </logger>-->
 
     </Loggers>
 </Configuration>
