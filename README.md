@@ -17,6 +17,12 @@ my.ini
 
 max_allowed_packet=20M
 
+character-set-server=utf8mb4
+
+[mysql]
+
+default-character-set=utf8mb4
+
 ```
 ## 图片介绍
 
