@@ -1,4 +1,4 @@
-package com.yj.serviceTest;
+package com.yj.serviceTest.jvmTest;
 
 /**
  * 单分派、多分派演示

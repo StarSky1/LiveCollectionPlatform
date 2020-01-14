@@ -1,4 +1,4 @@
-package com.yj.serviceTest;
+package com.yj.serviceTest.jvmTest;
 
 import java.io.Serializable;
 

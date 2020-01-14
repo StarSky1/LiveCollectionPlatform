@@ -1,11 +1,14 @@
-package com.yj.serviceTest;
+package com.yj.serviceTest.jvmTest;
+
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ClassLoaderTest {
+public class JVMStudyTest {
 
-    public static void main(String[] args) throws Exception {
+    @Test
+    public void ClassLoaderTest() throws Exception{
         ClassLoader myLoader=new ClassLoader() {
             @Override
             public Class<?> loadClass(String name) throws ClassNotFoundException {
@@ -24,9 +27,16 @@ public class ClassLoaderTest {
             }
         };
 
-        Object obj=myLoader.loadClass("com.yj.serviceTest.ClassLoaderTest").
+        Object obj=myLoader.loadClass("com.yj.serviceTest.JVMStudyTest.ClassLoaderTest").
                 newInstance();
         System.out.println(obj.getClass());
-        System.out.println(obj instanceof com.yj.serviceTest.ClassLoaderTest);
+        System.out.println(obj instanceof JVMStudyTest.ClassLoaderTest);
     }
+
+    class ClassLoaderTest {
+
+    }
+
 }
+
+

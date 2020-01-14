@@ -1,4 +1,4 @@
-package com.yj.serviceTest;
+package com.yj.serviceTest.threadTest;
 
 public class ThreadTest {
 

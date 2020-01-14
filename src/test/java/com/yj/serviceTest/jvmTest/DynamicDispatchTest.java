@@ -1,4 +1,4 @@
-package com.yj.serviceTest;
+package com.yj.serviceTest.jvmTest;
 
 /**
  * 方法动态分派展示
