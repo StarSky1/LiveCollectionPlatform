@@ -60,11 +60,11 @@ public class HtmlSpiderUtils {
 	
 	public static final Object signal = new Object();   //线程间通信变量  
 	
-	int threadCount=10;	//线程数量
+	int threadCount=6;	//线程数量
 	
-	int waitThread=0;	//等待线程的数量
+	volatile int waitThread=0;	//等待线程的数量
 	
-	int crawled_page=0;	//已爬取的页数
+	volatile int crawled_page=0;	//已爬取的页数
 	
 	int pagenum=120;
 	
@@ -411,18 +411,16 @@ public class HtmlSpiderUtils {
 			Thread t=new Thread(new Runnable(){
 				@Override
 				public void run() {
-					int pageno=0;
 					while(crawled_page<total_page){
 						synchronized(signal){
 							if(crawled_page<total_page){
 								crawled_page++;
-								pageno=crawled_page;
 								LOGINFO.info(Thread.currentThread()+" {}爬虫开始获取第"+crawled_page+"页的数据...",platform);
 							}else{
 								break;
 							}
 						}
-						String data_str=getTv_Video_source(live_lists_url, pageno);
+						String data_str=getTv_Video_source(live_lists_url, crawled_page);
 						parseVideo_items_JSONStr(data_str, host_list, source_list);
 					}
 					synchronized(signal){

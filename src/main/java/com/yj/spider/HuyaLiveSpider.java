@@ -22,10 +22,6 @@ import java.util.Map;
 public class HuyaLiveSpider extends HtmlSpiderUtils{
 	
 	public HuyaLiveSpider(){
-		threadCount=10;	//线程数量
-		waitThread=0;	//等待线程的数量
-		crawled_page=0;	//已爬取的页数
-		pagenum=120;
 		platform="虎牙直播";
 		logger=LoggerFactory.getLogger(HuyaLiveSpider.class);
 	}

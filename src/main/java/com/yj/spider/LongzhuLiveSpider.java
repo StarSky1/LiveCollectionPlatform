@@ -23,10 +23,6 @@ import java.util.Map;
 public class LongzhuLiveSpider extends HtmlSpiderUtils{
 	
 	public LongzhuLiveSpider(){
-		threadCount=10;	//线程数量
-		waitThread=0;	//等待线程的数量
-		crawled_page=0;	//已爬取的页数
-		pagenum=18;
 		platform="龙珠直播";
 		logger=LoggerFactory.getLogger(LongzhuLiveSpider.class);
 	}

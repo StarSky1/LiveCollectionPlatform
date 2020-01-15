@@ -1,22 +1,13 @@
 package com.yj.serviceTest;
 
+import com.alibaba.fastjson.JSONObject;
+import com.yj.service.Video_sourceService;
+import com.yj.spider.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import com.alibaba.fastjson.JSONObject;
-import com.yj.service.Video_sourceService;
-import com.yj.spider.DouyuTvSpider;
-import com.yj.spider.HtmlSpiderUtils;
-import com.yj.spider.HuyaLiveSpider;
-import com.yj.spider.LongzhuLiveSpider;
-import com.yj.spider.PandaTvSpider;
-import com.yj.spider.QuanminTvSpider;
-import com.yj.spider.ZhanqiTvSpider;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -72,7 +63,7 @@ public class TestVideo_sourceService {
 		JSONObject json;
 		live_lists_url="https://www.douyu.com/gapi/rkc/directory/0_0";
 		total_page=douyuTvSpider.getTv_videos_totalPage(live_lists_url);
-		json=douyuTvSpider.getTv_Video_sourceByCircle(live_lists_url, total_page);
+		json=douyuTvSpider.getTv_Video_sourceBymulti_thread(live_lists_url, total_page);
 		video_sourceService.updateVideo_source(json);
 	}
 	
