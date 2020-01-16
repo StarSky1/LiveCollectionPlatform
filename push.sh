@@ -4,8 +4,8 @@
 set -e
 
 #推送到原仓库
-git push origin master
+git push origin dev
 #推送到码云
-git push gitee master
+git push gitee dev
 
 cd -
