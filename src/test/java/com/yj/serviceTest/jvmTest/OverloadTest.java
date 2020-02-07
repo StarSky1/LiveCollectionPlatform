@@ -1,6 +1,8 @@
 package com.yj.serviceTest.jvmTest;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * 重载方法匹配优先级 char->int->long->float->double->Character->Serializable         -> Object
@@ -47,5 +49,16 @@ public class OverloadTest {
 
     public static void main(String[] args) {
         sayHello('a');
+
+        Calendar calendar=Calendar.getInstance();
+        calendar.set(2020,1,4);
+        Date now=calendar.getTime();
+        System.out.println(calendar.getTime());
+        calendar.set(2019,5,6);
+        Date before=calendar.getTime();
+        System.out.println(before);
+        long diff=now.getTime()-before.getTime();
+        long bottom=1000*60*60*24;
+        System.out.println(diff/bottom);
     }
 }

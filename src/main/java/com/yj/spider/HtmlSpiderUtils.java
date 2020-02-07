@@ -60,7 +60,7 @@ public class HtmlSpiderUtils {
 	
 	public static final Object signal = new Object();   //线程间通信变量  
 	
-	int threadCount=6;	//线程数量
+	int threadCount=10;	//线程数量
 	
 	volatile int waitThread=0;	//等待线程的数量
 	
@@ -433,6 +433,7 @@ public class HtmlSpiderUtils {
 		while(waitThread<threadCount){
 			//等待所有爬虫线程执行完后返回数据...
             //LOGINFO.info("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
+			Thread.yield();
 		}
 		
 		return json;
