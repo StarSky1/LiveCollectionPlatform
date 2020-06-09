@@ -82,9 +82,9 @@
 	</div>
 </div>
 
-<footer>
-  Copyright &copy;&nbsp;2018 杨靖 All Rights Reserved
-</footer>
+
+<%@ include file="../common/footer.jsp"%>
+
 <script type="text/javascript">
 	var vm=new Vue({
 	    el: ".main-content",

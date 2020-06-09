@@ -43,9 +43,9 @@
 
 <!-- <div class="opacity"></div>
 <div class="login">123</div> -->
-<footer>
-  Copyright &copy;&nbsp;2018 杨靖 All Rights Reserved
-</footer>
+
+  <%@ include file="../common/footer.jsp"%>
+
 <script>
     var cateName="${cateName}";
     var platform="${platform}";
