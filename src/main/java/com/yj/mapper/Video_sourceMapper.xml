@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.mapper.Video_sourceMapper">
+	<resultMap id="video_source_ResultMap" type="com.yj.pojo.Video_source">
+		<id column="video_id" jdbcType="VARCHAR" property="videoId" />
+		<result column="video_title" jdbcType="VARCHAR" property="videoTitle"/>
+		<result column="video_img" jdbcType="VARCHAR" property="videoImg"/>
+		<result column="video_number" jdbcType="INTEGER" property="videoNumber"/>
+		<result column="video_station_number" jdbcType="INTEGER" property="videoStationNumber"/>
+		<result column="video_url" jdbcType="VARCHAR" property="videoUrl"/>
+		<result column="video_room_url" jdbcType="VARCHAR" property="videoRoomUrl"/>
+		<result column="video_platform" jdbcType="INTEGER" property="videoPlatform"/>
+		<result column="video_type" jdbcType="INTEGER" property="videoType"/>
+		<result column="video_status" jdbcType="INTEGER" property="videoStatus"/>
+	</resultMap>
+	
+	<select id="selectList" parameterType="java.util.Map" resultMap="video_source_ResultMap">
+		select * from `video_source`
+		<where>
+			<if test="type !=null">
+			and `video_type`=#{type}
+			</if>
+			<if test="platform !=null">
+			and `video_platform`=#{platform}
+			</if>
+		</where>
+		order by `video_status` desc,`video_number` desc
+		<if test="offset != null">
+		 limit #{start},#{offset}
+		</if>
+	</select>
+	
+	<!-- 因为主键现在不是自增长，去除useGeneratedKeys="true" keyProperty="video_id" -->
+	<insert id="insert_video_source"  parameterType="com.yj.pojo.Video_source">
+		insert into `video_source` (`video_id`,`video_title`,`video_img`,
+			`video_number`,`video_station_num`,`video_url`,`video_room_url`,`video_platform`,
+			`video_type`,`video_status`) 
+			values(#{videoId,jdbcType=VARCHAR},#{videoTitle,jdbcType=VARCHAR},
+			#{videoImg,jdbcType=VARCHAR},#{videoNumber,jdbcType=INTEGER},
+			#{videoStationNum,jdbcType=INTEGER},#{videoUrl,jdbcType=VARCHAR},
+			#{videoRoomUrl,jdbcType=VARCHAR},#{videoPlatform,jdbcType=INTEGER},
+			#{videoType,jdbcType=INTEGER},#{videoStatus,jdbcType=INTEGER})
+	</insert>
+	
+	<insert id="replace_source_list" parameterType="java.util.List">  
+	    REPLACE INTO `video_source`  
+	    (`video_id`,`video_title`,`video_img`,
+			`video_number`,`video_station_num`,`video_url`,`video_room_url`,`video_platform`,
+			`video_type`,`video_status`)  
+	    VALUES  
+	    <foreach collection="list" index="index" item="item"  
+	        separator=",">  
+	        (#{item.videoId,jdbcType=VARCHAR},#{item.videoTitle,jdbcType=VARCHAR},
+			#{item.videoImg,jdbcType=VARCHAR},#{item.videoNumber,jdbcType=INTEGER},
+			#{item.videoStationNum,jdbcType=INTEGER},#{item.videoUrl,jdbcType=VARCHAR},
+			#{item.videoRoomUrl,jdbcType=VARCHAR},#{item.videoPlatform,jdbcType=INTEGER},
+			#{item.videoType,jdbcType=INTEGER},#{item.videoStatus,jdbcType=INTEGER})  
+	    </foreach>  
+	</insert>  
+	
+</mapper>

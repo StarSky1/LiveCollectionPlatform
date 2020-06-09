@@ -84,7 +84,7 @@ public class HuyaLiveSpider extends HtmlSpiderUtils{
 			source.setVideoTitle(json.getString("introduction"));
 			source.setVideoNumber(Integer.parseInt(json.getString("totalCount")));
 			//如果直播间观看人数小于1000，则不录入数据库
-			if(source.getVideoNumber()<1000){
+			if(source.getVideoNumber()<1000 || source.getVideoImg().length()>255){
 				continue;
 			}
 			//source.setVideo_station_num(json.getJSONObject("ticket_rank_info").getInteger("score"));

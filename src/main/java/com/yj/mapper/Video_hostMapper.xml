@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.mapper.Video_hostMapper">
+	<resultMap id="video_host_ResultMap" type="com.yj.pojo.Video_host">
+		<id column="video_host_id" jdbcType="VARCHAR" property="videoHostId" />
+		<result column="video_host_nickname" jdbcType="VARCHAR" property="videoHostNickname"/>
+		<result column="video_host_level" jdbcType="INTEGER" property="videoHostLevel"/>
+		<result column="video_host_avatar" jdbcType="VARCHAR" property="videoHostAvatar"/>
+		<result column="video_room_id" jdbcType="VARCHAR" property="videoRoomId"/>
+	</resultMap>
+	<!-- 因为现在主键不是自增长，去除useGeneratedKeys="true" keyProperty="video_host_id" -->
+	<insert id="insertVideo_host"  parameterType="com.yj.pojo.Video_host">
+		insert into `video_host`(`video_host_id`,`video_host_nickname`,`video_host_level`,
+		`video_host_avatar`,`video_room_id`) values(#{videoHostId,jdbcType=VARCHAR},#{videoHostNickname,jdbcType=VARCHAR},
+		#{videoHostLevel,jdbcType=INTEGER},#{videoHostAvatar,jdbcType=VARCHAR},
+		#{videoRoomId,jdbcType=VARCHAR})
+	</insert>
+	
+	<update id="updateVideo_host" parameterType="com.yj.pojo.Video_host">
+		update `video_host` set `video_host_level`=#{videoHostLevel,jdbcType=INTEGER},
+		`video_host_avatar`=#{videoHostAvatar,jdbcType=VARCHAR},
+		`video_room_url`=#{videoRoomUrl,jdbcType=VARCHAR}
+		where `video_host_id`=#{videoHostId,jdbcType=VARCHAR}
+	</update>
+	
+	<insert id="replace_host_list" parameterType="java.util.List">  
+	    REPLACE INTO `video_host`  
+	    (`video_host_id`,`video_host_nickname`,`video_host_level`,
+		`video_host_avatar`,`video_room_id`)  
+	    VALUES  
+	    <foreach collection="list" index="index" item="item"  
+	        separator=",">  
+	        (#{item.videoHostId,jdbcType=VARCHAR},#{item.videoHostNickname,jdbcType=VARCHAR},
+		#{item.videoHostLevel,jdbcType=INTEGER},#{item.videoHostAvatar,jdbcType=VARCHAR},
+		#{item.videoRoomId,jdbcType=VARCHAR})
+	    </foreach>  
+	</insert>  
+	
+</mapper>

@@ -15,15 +15,22 @@ my.ini
 在文件最后一行加入
 [mysqld]
 
-max_allowed_packet=20M
-
-character-set-server=utf8mb4
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
 
 [mysql]
 
-default-character-set=utf8mb4
+default-character-set = utf8mb4
+
+[client]
+
+default-character-set = utf8mb4
 
 ```
+另外，在jdbc的连接地址后面，去除characterEncoding=UTF-8参数
+
+具体原因请查看：[JDBC对Mysql utf8mb4字符集的处理](https://www.cnblogs.com/liuge36/p/9882785.html)
 ## 图片介绍
 
 ### 所有直播

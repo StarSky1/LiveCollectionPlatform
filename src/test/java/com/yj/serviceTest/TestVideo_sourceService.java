@@ -39,8 +39,9 @@ public class TestVideo_sourceService {
 		String live_lists_url;
 		int total_page;
 		JSONObject json;
-		HtmlSpiderUtils[] spiders={pandaSpider,zhanqiTvSpider,huyaLiveSpider,longzhuLiveSpider,quanminTvSpider};
-		String url_list[]={"https://www.panda.tv/live_lists",
+		HtmlSpiderUtils[] spiders={//pandaSpider,
+				zhanqiTvSpider,huyaLiveSpider,longzhuLiveSpider,quanminTvSpider};
+		String url_list[]={//"https://www.panda.tv/live_lists",
 				"http://www.zhanqi.tv/api/static/v2.1/live/list/20","http://www.huya.com/cache.php",
 				"http://api.plu.cn/tga/streams","http://www.quanmin.tv/json/play/list"};
 		//将直播间表中现有直播间的直播状态全部修改为0  未开播
@@ -50,6 +51,10 @@ public class TestVideo_sourceService {
 			//更新直播间
 			live_lists_url=url_list[i];
 			total_page=spider.getTv_videos_totalPage(live_lists_url);
+
+			if(total_page>10){
+				total_page=10;
+			}
 			json=spider.crawlData(live_lists_url, total_page);
 			video_sourceService.updateVideo_source(json);
 			i++;
@@ -63,7 +68,7 @@ public class TestVideo_sourceService {
 		JSONObject json;
 		live_lists_url="https://www.douyu.com/gapi/rkc/directory/0_0";
 		total_page=douyuTvSpider.getTv_videos_totalPage(live_lists_url);
-		json=douyuTvSpider.getTv_Video_sourceBymulti_thread(live_lists_url, total_page);
+		json=douyuTvSpider.getTv_Video_sourceBymulti_thread(live_lists_url, 10);
 		video_sourceService.updateVideo_source(json);
 	}
 	
