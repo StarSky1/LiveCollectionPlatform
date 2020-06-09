@@ -61,14 +61,14 @@ public class UserService {
 	}
 	
 	public boolean updatePassword(int userId,String password){
-		User user=new User();
+		User user=userMapper.selectByPrimaryKey(userId);
 		user.setUserId(userId);
 		user.setUserPassword(StringUtils.toMD5(password+salt));
 		return updateUser(user);
 	}
 	
 	public boolean updateLevel(int userId,int level){
-		User user=new User();
+		User user=userMapper.selectByPrimaryKey(userId);
 		user.setUserId(userId);
 		user.setUserVideoLevel(level);
 		return updateUser(user);
