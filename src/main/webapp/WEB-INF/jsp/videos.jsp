@@ -92,7 +92,7 @@
   });
 
   var logined=Boolean("${logined}");
-  getVideolist(vm,page_vm,logined,1,vm1.searchWord,cateName,platform);
+  getVideolist(vm,page_vm,"${currentUser.userId}",1,vm1.searchWord,cateName,platform);
 </script>
 
 </body>
