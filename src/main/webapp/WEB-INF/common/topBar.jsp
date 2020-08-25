@@ -59,7 +59,7 @@
         },
         methods: {
             search: function(){
-                getVideolist(vm,page_vm,vm1.logined,1,vm1.searchWord,null,null);
+                getVideolist(vm,page_vm,"${currentUser.userId}",1,vm1.searchWord,null,null);
             },
             myprofile: function(){
                 if(this.logined){

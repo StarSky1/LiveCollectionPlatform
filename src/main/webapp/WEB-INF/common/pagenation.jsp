@@ -110,7 +110,7 @@
                     this.prePageDisabled=false;
                     this.nextPageDisabled=false;
                 }
-                getVideolist(vm,page_vm,vm1.logined,this.pageno,vm1.searchWord,vm.cateName,vm.platform);
+                getVideolist(vm,page_vm,"${currentUser.userId}",this.pageno,vm1.searchWord,vm.cateName,vm.platform);
             },
             prePage: function(event){
                 if(this.prePageDisabled) return;
@@ -120,7 +120,7 @@
                 }
                 $(".nextPage").removeClass("disabled");
                 this.pageno=current;
-                getVideolist(vm,page_vm,vm1.logined,current,vm1.searchWord,vm.cateName,vm.platform);
+                getVideolist(vm,page_vm,"${currentUser.userId}",current,vm1.searchWord,vm.cateName,vm.platform);
             },
             nextPage: function(event){
                 if(this.nextPageDisabled) return;
@@ -131,7 +131,7 @@
                 }
                 $(".prePage").removeClass("disabled");
                 this.pageno=current;
-                getVideolist(vm,page_vm,vm1.logined,current,vm1.searchWord,vm.cateName,vm.platform);
+                getVideolist(vm,page_vm,"${currentUser.userId}",current,vm1.searchWord,vm.cateName,vm.platform);
             }
         }
     });
