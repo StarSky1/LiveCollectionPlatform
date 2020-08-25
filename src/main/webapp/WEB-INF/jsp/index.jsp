@@ -25,7 +25,7 @@
           <div class="col-sm-5 text-right">
             <img v-show="!cares[video.videoId]" :id="video.videoId+'_'" @click.prevent="addCare(video.videoId)" src="../../res/heart-empty.png" class="heart-icon" >
             <img v-show="cares[video.videoId]" :id="video.videoId+'__'" @click.prevent="cancelCare(video.videoId)" src="../../res/heart.png" class="heart-icon" >
-            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ video.videoNumber }}
+            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ formatNumber(video.videoNumber) }}
           </div>
         </div>
         </a>
@@ -75,6 +75,10 @@
      			 swal("提示","取消关注失败","error");
      		 } 
      	  });
+      },
+      formatNumber: function(videoNumber){
+        let nums=videoNumber/10000;
+        return nums>0?nums.toFixed(2)+'万':(videoNumber/1000).toFixed(2)+'千';
       }
 
     }
