@@ -86,7 +86,7 @@
         },
         formatNumber: function(videoNumber){
           let nums=videoNumber/10000;
-          return nums>0?nums.toFixed(2)+'万':(videoNumber/1000).toFixed(2)+'千';
+          return nums.toFixed(0)>0?nums.toFixed(2)+'万':(videoNumber/1000).toFixed(2)+'千';
         }
     }
   });
