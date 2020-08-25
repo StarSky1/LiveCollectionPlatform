@@ -253,6 +253,14 @@ i {
   margin-left: -40px;
 }
 
+/* 分页栏样式 */
+.pagination > li > .disabledLink,.pagination > li > .disabledLink:hover {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+}
+
 
 
 /* 页脚样式 */

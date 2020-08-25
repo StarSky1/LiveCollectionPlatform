@@ -81,11 +81,6 @@
   });
 
   var logined=Boolean("${logined}");
-  if(logined){
-	  $.getJSON(getRootpath()+"/user/carelist.do",{userId: "${currentUser.userId}"},function(json){
-			vm.cares=json;
-		});
-  }
   getVideolist(vm,page_vm,logined,1,vm1.searchWord);
  
 </script>
