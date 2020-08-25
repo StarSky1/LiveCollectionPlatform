@@ -31,4 +31,5 @@ bin
 .classpath
 .project
 logs
+*prod.yml
 

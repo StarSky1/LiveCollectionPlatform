@@ -8,10 +8,10 @@
         </li>
         <li v-for="item in pages" :class="{active : item.isActive}">
             <a v-if="item.display==undefined" href="#" class="pagebtn"  @click.prevent="turnPage">{{ item.pageno }}</a>
-            <a v-else>···</a>
+            <a v-else class="disabledLink">···</a>
         </li>
         <li class="nextPage" :class="{disabled: nextPageDisabled}">
-            <a href="#liveList" aria-label="Next" @click.prevent="nextPage">
+            <a href="#" aria-label="Next" @click.prevent="nextPage">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
@@ -53,10 +53,10 @@
                     end=total_page;
                 }else{
                     start=1;
-                    end=10;
+                    end=show_size;
                 }
-                if(total_page>show_size && this.pageno>=end){
-                    start=Math.floor(this.pageno/show_size)*show_size-1;
+                if(total_page>show_size && this.pageno>end){
+                    start=Math.floor(this.pageno/show_size)*show_size;
                     end=start+show_size+1;
                     pages.push({pageno: 1});   //始终显示第一页
                     pages.push({display: false}); //在start前显示省略号
