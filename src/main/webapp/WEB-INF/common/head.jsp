@@ -5,6 +5,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 解决b站图片无法跨域访问问题 -->
+<meta name="referrer" content="no-referrer"/>
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../../bootstrap-3.3.7-dist/simple-sidebar.css">
