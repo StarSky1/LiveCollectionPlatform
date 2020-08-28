@@ -1,10 +1,13 @@
 package com.yj.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.yj.pojo.User;
+import com.yj.pojo.VideoCare;
+import com.yj.pojo.Video_room;
+import com.yj.service.UserService;
+import com.yj.service.VideoCareService;
 import org.lf.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,14 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.yj.pojo.User;
-import com.yj.pojo.VideoCare;
-import com.yj.pojo.Video_room;
-import com.yj.service.UserService;
-import com.yj.service.VideoCareService;
+import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user/")
@@ -57,7 +55,7 @@ public class UserController {
 	@ResponseBody
 	public JSONObject editUserInfo(int userId,HttpSession session,@RequestParam(required=false,name="file")MultipartFile file,String nickname,String sex,String authenticName,String birthday,String phone,String email,String resume){
 		JSONObject json=new JSONObject();
-		User user=new User();
+		User user=(User) session.getAttribute("currentUser");
 		if(file!=null && !file.isEmpty()){
 			String filename=file.getOriginalFilename();
 			String suffix=filename.substring(filename.lastIndexOf("."));
