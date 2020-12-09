@@ -22,10 +22,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 
+import static com.yj.logger.Log4JConfigure.LOGERROR;
 import static com.yj.logger.Log4JConfigure.LOGINFO;
 
 /** * @author  yangjing
@@ -64,7 +67,7 @@ public class HtmlSpiderUtils {
 	
 	volatile int waitThread=0;	//等待线程的数量
 	
-	volatile int crawled_page=0;	//已爬取的页数
+	AtomicInteger crawled_page=new AtomicInteger(0);	//已爬取的页数
 	
 	int pagenum=120;
 	
@@ -406,36 +409,50 @@ public class HtmlSpiderUtils {
 		
 		cate_map=video_categoryService.getVideo_cateMap();
 		video_platform=video_platformService.getVideo_platformByName(platform);
+
+		//使用 countdownLatch线程辅助类，优化多线程并发获取分页数据逻辑
+		// 以线程数 threadCount 10初始化countdownLatch，
+		// 让主线程main调用countdownLatch的await方法，如果countdownLatch计数不为0，则主线程陷入等待
+		// 当有一个线程爬取到最后一页时，countdownLatch的计数 减1
+		// 当所有线程都爬取完，并发现到达最后一页时，所有线程都调用countdownLatch 进行计数减1
+		// 当countdownLatch计数为0时，将唤醒主线程，进行后续程序执行
+		CountDownLatch countDownLatch=new CountDownLatch(threadCount);
 		
 		for(int i=1;i<=threadCount;i++){
 			Thread t=new Thread(new Runnable(){
 				@Override
 				public void run() {
-					while(crawled_page<total_page){
-						synchronized(signal){
-							if(crawled_page<total_page){
-								crawled_page++;
+					while(crawled_page.get()<total_page){
+//						synchronized(signal){
+							if(crawled_page.get()<total_page){
+								crawled_page.incrementAndGet();
 								LOGINFO.info(Thread.currentThread()+" {}爬虫开始获取第"+crawled_page+"页的数据...",platform);
 							}else{
 								break;
 							}
-						}
-						String data_str=getTv_Video_source(live_lists_url, crawled_page);
+//						}
+						String data_str=getTv_Video_source(live_lists_url, crawled_page.get());
 						parseVideo_items_JSONStr(data_str, host_list, source_list);
 					}
-					synchronized(signal){
-						waitThread++;
-					}
+//					synchronized(signal){
+//						waitThread++;
+//					}
+					countDownLatch.countDown();
 				}
 			},"线程"+i);
 			t.start();
 		}
-		while(waitThread<threadCount){
-			//等待所有爬虫线程执行完后返回数据...
-            //LOGINFO.info("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
-			Thread.yield();
+//		while(waitThread<threadCount){
+//			//等待所有爬虫线程执行完后返回数据...
+//            //LOGINFO.info("还有"+(threadCount-waitThread)+"爬虫线程在运行...");
+//			Thread.yield();
+//		}
+		try {
+			countDownLatch.await();
+		} catch (InterruptedException e) {
+			LOGERROR.error("主线程中断异常：",e);
 		}
-		
+
 		return json;
 	}
 	
