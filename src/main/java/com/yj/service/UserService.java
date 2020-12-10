@@ -86,15 +86,19 @@ public class UserService {
 	}
 	
 	public String uploadUserImg(int userId,MultipartFile file,String suffix,HttpSession session) {
-		String root=session.getServletContext().getRealPath("/");
-		System.out.println(root);
+		//String root=session.getServletContext().getRealPath("/");
+		//System.out.println(root);
 		User user=userMapper.selectByPrimaryKey(userId);
 		String filename=user.getUserName()+suffix;
-		File dest=new File(root+"/res/user_head_img",filename);
-		File dest1=new File(BaseProperties.getProperty("userImgDir"),filename);
+		//File dest=new File(root+"/res/user_head_img",filename);
+//		File dest1=new File(BaseProperties.getProperty("userImgDir"),filename);
+		File dest1=new File(System.getProperty("user.dir")+"/user_head_img/",filename);
 		try {
-			file.transferTo(dest);
-			copyFile(dest, dest1);
+			if(!dest1.getParentFile().exists()){
+				dest1.getParentFile().mkdir();
+			}
+			file.transferTo(dest1);
+			//copyFile(dest, dest1);
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 			return "error";
