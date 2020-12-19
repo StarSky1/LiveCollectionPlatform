@@ -67,9 +67,9 @@ public class HtmlSpiderUtils {
 	
 	volatile int waitThread=0;	//等待线程的数量
 	
-	AtomicInteger crawled_page=new AtomicInteger(0);	//已爬取的页数
+	volatile int crawled_page=0;	//已爬取的页数
 	
-	int pagenum=120;
+	volatile int pagenum=120;
 	
 	public Logger logger;
 	
@@ -378,13 +378,14 @@ public class HtmlSpiderUtils {
 	 * @return
 	 */
 	public JSONObject getTv_Video_sourceByCircle(String live_lists_url, int total_page) {
+		pagenum=total_page;
 		JSONObject json=new JSONObject();
 		List<Video_host> host_list=new ArrayList<>();
 		List<Video_source> source_list=new ArrayList<>();
 		cate_map=video_categoryService.getVideo_cateMap();
 		video_platform=video_platformService.getVideo_platformByName(platform);
 		
-		for(int i=1;i<=total_page;i++){
+		for(int i=1;i<=pagenum;i++){
             LOGINFO.info(platform+"爬虫开始获取第"+i+"页的数据...");
 			String live_dataStr=getTv_Video_source(live_lists_url, i);
 			parseVideo_items_JSONStr(live_dataStr, host_list, source_list);
@@ -401,6 +402,7 @@ public class HtmlSpiderUtils {
 	 * @return
 	 */
 	public JSONObject getTv_Video_sourceBymulti_thread(String live_lists_url, int total_page) {
+		pagenum=total_page;
 		JSONObject json=new JSONObject();
 		List<Video_host> host_list=Collections.synchronizedList(new ArrayList<>());
 		List<Video_source> source_list=Collections.synchronizedList(new ArrayList<>());
@@ -422,16 +424,16 @@ public class HtmlSpiderUtils {
 			Thread t=new Thread(new Runnable(){
 				@Override
 				public void run() {
-					while(crawled_page.get()<total_page){
-//						synchronized(signal){
-							if(crawled_page.get()<total_page){
-								crawled_page.incrementAndGet();
+					while(crawled_page<pagenum){
+						synchronized(signal){
+							if(crawled_page<pagenum){
+								crawled_page++;
 								LOGINFO.info(Thread.currentThread()+" {}爬虫开始获取第"+crawled_page+"页的数据...",platform);
 							}else{
 								break;
 							}
-//						}
-						String data_str=getTv_Video_source(live_lists_url, crawled_page.get());
+						}
+						String data_str=getTv_Video_source(live_lists_url, crawled_page);
 						parseVideo_items_JSONStr(data_str, host_list, source_list);
 					}
 //					synchronized(signal){
